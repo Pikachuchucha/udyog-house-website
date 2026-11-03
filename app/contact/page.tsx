@@ -1,49 +1,94 @@
 import type { Metadata } from "next";
-import SiteImage from "../../components/SiteImage";
 import Link from "next/link";
-import PlaceholderForm from "../../components/PlaceholderForm";
+import SiteImage, { imgSet, FIGURE_SIZES } from "../../components/SiteImage";
 import Reveal from "../../components/Reveal";
+import PreviewForm from "../../components/PreviewForm";
+import { Breadcrumbs, JsonLd, webPageSchema, breadcrumbSchema } from "../../components/Chrome";
+import { PREVIEW } from "../../lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact / Join — Udyog House (Preview, PLANNED)",
+  title: "Contact / Join — Udyog House | Preview contact",
   description:
-    "Contact and join forms on this preview site are placeholders and send no data. No public email or phone is published here yet.",
+    "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft. Preview form — sends nothing yet.",
   robots: { index: false, follow: false },
+  alternates: { canonical: `${PREVIEW}/contact/` },
+  openGraph: {
+    title: "Contact / Join — Udyog House",
+    description: "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.",
+    url: `${PREVIEW}/contact/`,
+    siteName: "Udyog House",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact / Join — Udyog House",
+    description: "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.",
+  },
 };
-
-const CAPTION = "AI-generated editorial illustration — not a Udyog House facility or member.";
 
 export default function Contact() {
   return (
     <>
-      <section className="hero hero-anim" aria-labelledby="c-h1">
-        <div className="hero-media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <SiteImage src="/img/workbench-hands-1600.webp" srcSet="/img/workbench-hands-800.webp 800w, /img/workbench-hands-1200.webp 1200w, /img/workbench-hands-1600.webp 1600w" sizes="100vw" alt="" fetchPriority="high" />
-        </div>
-        <div className="wrap hero-inner">
-          <p className="eyebrow">Contact / Join — Planned</p>
-          <h1 id="c-h1">Three routes. One honest form.</h1>
-          <p className="lede">Preview forms only. No public email or phone is published on this preview site yet. No reply timeframe is promised, because no form backend is live yet.</p>
-          <p className="mono" style={{ color: "var(--grey)" }}>{CAPTION}</p>
+      <JsonLd data={webPageSchema("/contact/", "Contact / Join — Udyog House", "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.")} />
+      <JsonLd data={breadcrumbSchema([{ label: "Contact / Join", path: "/contact/" }])} />
+      <Breadcrumbs items={[{ label: "Contact / Join" }]} />
+
+      <section className="hero-panel hero-anim" aria-labelledby="c-h1">
+        <div className="wrap">
+          <p><span className="pill-opaque">Contact / Join — Preview</span></p>
+          <h1 id="c-h1">No inbox yet. Start with the tools.</h1>
+          <p className="lede">
+            There is no public email address, phone number, or reply window published
+            on this preview site yet, and no form backend is live. That is stated
+            here rather than hidden behind a form that pretends otherwise.
+          </p>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="c-routes">
-        <div className="wrap">
-          <h2 id="c-routes">Three routes to start</h2>
-          <div className="grid-three">
-            <div className="card"><p className="mono">Route 1</p><h3>Manufacturers</h3><p>Express interest in a founding profile.</p><p><Link href="/manufacturers">For Manufacturers →</Link></p></div>
-            <div className="card"><p className="mono">Route 2</p><h3>Buyers</h3><p>Talk through a sourcing need in general terms.</p><p><Link href="/buyers">For Buyers →</Link></p></div>
-            <div className="card"><p className="mono">Route 3</p><h3>General / collaborators</h3><p>Ask a question or propose a collaboration, using the form below.</p></div>
+      <section className="section" aria-labelledby="c-next">
+        <div className="wrap ed-grid">
+          <div className="span-7">
+            <Reveal>
+              <p className="eyebrow">What happens next</p>
+              <h2 id="c-next">The honest next step today</h2>
+              <p>
+                The way to assess this idea today is the tools: build a draft record
+                if you run a shop, or check a brief if you buy. Both run in your
+                browser, both are copyable and printable, and neither sends anything
+                anywhere. A real contact route — with a named channel and a reply
+                window — is a launch decision, and it will be published as one when
+                it exists, rather than implied by a form that goes nowhere.
+              </p>
+              <p className="btn-row">
+                <Link className="btn" href="/manufacturers">For manufacturers — build a draft record</Link>
+                <Link className="btn btn-outline" href="/buyers">For buyers — check a brief</Link>
+              </p>
+              <h3>If you still want to leave a note</h3>
+              <p>The preview form below takes a draft only. It sends nothing, stores nothing, and promises no reply — because there is no backend to reply from yet. Describe your interest briefly.</p>
+            </Reveal>
           </div>
+          <div className="span-5">
+            <Reveal>
+              <figure className="figure">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <SiteImage src="/img/material-bars-1200.webp" srcSet={imgSet("material-bars", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Bars of steel, aluminium, and copper racked in a workshop store" loading="lazy" />
+              </figure>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-white" aria-labelledby="c-form">
+        <div className="wrap wrap-narrow">
           <Reveal>
-            <p>
-              Forms ask for minimal information only. Do not send confidential drawings, GST documents,
-              identity documents, or financial information. Consent is separate and unticked by default.
-            </p>
-            <PlaceholderForm variant="general" title="General contact (preview)" />
+            <p className="eyebrow">Preview form — secondary to the tools</p>
+            <h2 id="c-form">General contact (preview)</h2>
           </Reveal>
+          <PreviewForm variant="general" title="General contact (preview)" idPrefix="gen" />
+          <p className="btn-row">
+            <Link className="btn btn-outline" href="/">Home</Link>
+            <Link className="btn btn-outline" href="/trust-evidence">Trust &amp; Evidence</Link>
+          </p>
         </div>
       </section>
     </>

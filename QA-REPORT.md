@@ -1,338 +1,199 @@
-# QA Report — Udyog House Website, Rebuild (Preview Only)
+# QA Report — Udyog House Website, Full Rebuild (Preview Only)
 
-Date: 3 November 2026 (rebuild)
-Build: Next.js 15.5.28, React 19.3.1, TypeScript 5.9.3, static export (`output: "export"`, `trailingSlash: true`)
+Date: 3 November 2026 (rebuild day; build verified same day)
+Build: Next.js 15.5.28, React 19, TypeScript, static export (`output: "export"`, `trailingSlash: true`)
 Repo: https://github.com/Pikachuchucha/udyog-house-website (PUBLIC, founder-approved)
-Preview: https://pikachuchucha.github.io/udyog-house-website/ (GitHub Pages, gh-pages branch)
-Scope: Track G checklists A–M. This is a preview QA pass only. It does NOT authorise
-production, domain/DNS, paid services, or public announcement.
+Preview: https://pikachuchucha.github.io/udyog-house-website/ (gh-pages branch)
+Governing audit: `~/workspace/udyog-house-website-discovery/final-audit.md` (D1–D16)
 
-## Visual redesign QA — Cycle 1 + Cycle 2 (3 Nov 2026)
+## What was rebuilt
 
-Direction: "Workshop Editorial" (see README). Independent skeptical critique
-(`~/workspace/udyog-house-website-discovery/redesign-critique.md`, read-only,
-static code + built-HTML only) returned verdict DEPLOY AFTER FIXES. Cycle 2
-fixed all 10 ranked issues except Issue 9 (image count — needs new assets,
-not code) and the live-browser items it could not test:
+Full rebuild, not a patch. The previous "Workshop Editorial" site (main 258466e)
+was discarded: its `globals.css`, all 8 page components, both tools, and the
+placeholder form were replaced. Kept infrastructure only: `next.config.js`
+(basePath mechanism), the `SiteImage` basePath-prefix idea (plus `decoding`
+and the new `imgSet`/`FIGURE_SIZES` helpers), and the `Reveal` no-JS-safe
+pattern (delays removed). Deleted: `components/PlaceholderForm.tsx`,
+`public/logo/uh-monogram-320.png`, `public/logo/uh-transparent-320.png`, and
+all 12 old image files (replaced by 23 newly optimised files).
 
-- **Pages build reproducible (Issues 1–2):** `next.config.js` now reads
-  `NEXT_PUBLIC_BASE_PATH` for `basePath`, and `npm run build:pages` sets that
-  var — one command drives both Next links and `SiteImage` prefixes. During
-  Cycle 2 verification a further gap was found and fixed: Next does NOT prefix
-  the metadata favicon link in a static export, so `layout.tsx` prefixes it
-  explicitly from the same var (verified prefixed in Pages `out/`,
-  unprefixed in base `out/`).
-- **About logo (Issue 3):** `.figure-logo` class, 160 px, no hover zoom;
-  caption corrected from "on ivory" to "on a light background" (figure
-  background is Neutral #E7E2D6).
-- **Contrast (Issue 4):** section numbers graphite on light (copper border
-  kept), copper-column pill graphite background (15.83:1), image-band eyebrow
-  grey on deep (8.12:1), figcaptions graphite. All computed from locked tokens.
-- **Reveal keyboard trap (Issue 5):** `visibility: hidden/visible` paired
-  with opacity, including the reduced-motion override.
-- **ARIA (Issue 6):** Contact section gained a real `<h2 id="c-routes">`;
-  `role="img"` removed from the home image-band and corridor (their text is
-  now ordinary text for screen readers).
-- **No-JS (Issue 7):** `<noscript>` notes added to RecordBuilder,
-  BriefChecker, and the form submit area.
-- **H1 overflow (Issue 8, estimated):** floor lowered 2.9 rem → 2.2 rem,
-  `overflow-wrap: break-word` added. Still NOT visually verified at 320 px.
-- **Image count (Issue 9) — NOT FIXED:** 4 images still carry 8 pages;
-  workbench-hands on 4 pages, CNC on 3, macro/pillar on 3 each. Acceptable for
-  preview only (every caption is honest); 2–3 new distinct editorial images
-  are the single biggest remaining visual weakness.
-- **About heading (Issue 10):** retitled "Founder introduction"; body
-  unchanged (no bio invented).
-- Also fixed from the critique's audit: ticker loop jump (gap → per-span
-  margin, so the −50% shift lands exactly), dead CSS (`door-dark`,
-  `tool-dark`, `parallax-band`, `btn-copper`) removed, unreferenced 640 px
-  logo files removed, AI wording unified (every caption now reads
-  "AI-generated editorial illustration — not a Udyog House facility or
-  member"), form titles demoted h2 → h3 (they follow a section h2), favicon
-  linked via `metadata.icons`.
+## Build output (evidence)
 
-Cycle 2 build evidence (measured):
-- `npm run build` (basePath-free) — PASS, 11 static pages, First Load JS
-  103–110 kB per route (shared 103 kB).
-- `npm run build:pages` — PASS, 11 static pages; static check of Pages
-  `out/`: 310 internal href/src/srcset references, 0 missing, 0 unprefixed
-  `/img` or `/logo` references; favicon link correctly prefixed.
-- Headings: exactly 1 `<h1>` per page on all 10 HTML files; 0 `role="img"`
-  instances; Contact `aria-labelledby` resolves; "Placeholder until
-  approved" absent; `<noscript>` present in both tools and all forms.
-- Network: still no `fetch(`/`axios`/`XMLHttpRequest` in `app/` +
-  `components/` (unchanged from rebuild).
-- NOT TESTED (unchanged): live-browser screenshots/interactive tests,
-  cross-browser, Lighthouse, 320 px visual render, 200% zoom,
-  keyboard/screen-reader walkthroughs, `npm audit`. The parent can run a
-  live-browser check after this build; none is claimed here.
+```
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      492 B         107 kB
+├ ○ /_not-found                            123 B         103 kB
+├ ○ /about                                 492 B         107 kB
+├ ○ /buyers                              3.43 kB         113 kB
+├ ○ /contact                             2.44 kB         109 kB
+├ ○ /manufacturers                       3.85 kB         114 kB
+├ ○ /privacy                               163 B         106 kB
+├ ○ /terms                                 163 B         106 kB
+└ ○ /trust-evidence                        492 B         107 kB
++ First Load JS shared by all             103 kB
+```
 
-## Build evidence (measured, not claimed beyond this)
+- CSS: 23,094 bytes raw, **4,291 bytes gz** (target ≤10 KB gz: PASS).
+- Largest image: corridor-evening-1200.webp, 89,912 bytes (target ≤100 KB: PASS).
+- Eager images: one LCP figure per hero page (workbench 1600 = 75,680 B,
+  drawing 1600 = 71,914 B, micrometer 1600 = 66,048 B desktop; 800w variants
+  ≤57 KB mobile) — within ≤150 KB desktop / ≤100 KB mobile: PASS.
+- Third-party requests: zero (grep of built HTML finds no external URL other
+  than schema.org context, w3.org namespaces, and the preview origin): PASS.
+- First Load JS vs ≤110 KB target: Home/About/Trust 107 KB PASS, Contact
+  109 KB PASS, 404 103 KB PASS, **Buyers 113 KB and Manufacturers 114 KB:
+  MARGINAL MISS (+3/+4 KB)** on Next's own table. The miss is the 103 KB
+  shared React/Next runtime, not tool code (page chunks are 3.4–3.9 KB).
+  Real gz sums of the scripts actually loaded on Home total ~108 KB; tool
+  pages ~112 KB. No further trim was available without lazy-loading the
+  tools, which would have broken the no-JS honest-state requirement, so the
+  miss is reported, not hidden.
 
-- `npm run build` — PASS, compiled successfully, 11 static pages generated, on two
-  successive builds (initial rebuild build, and the cycle-2 build after critique fixes).
-- First Load JS: 103–109 kB per route (shared 103 kB); Home 108 kB, Manufacturers 109 kB,
-  Buyers 109 kB, Contact 108 kB, others 103 kB. No Lighthouse score is claimed.
-- Static link check over `out/` (cycle-2 build): 306 internal href/src references
-  checked, 0 missing. Every route has exactly 1 `<h1>` (verified for all 9 HTML pages
-  including 404).
-- Banned-phrase scan over built HTML: 0 hits for "revolutionizing", "empowering",
-  "seamlessly", "unlock the potential", "cutting-edge", "AI-powered", "leading/largest",
-  "trusted by", "verified manufacturer", or "Get matched now".
-- No network calls in source: grep for `fetch(`, `axios`, `XMLHttpRequest` in `app/` and
-  `components/` returned nothing. Forms and tools run locally only.
-- Secrets scan over tracked files: no `gho_`/`ghp_` tokens, API keys, or passwords found;
-  `.env.example` is commented placeholders only.
+## Link check
 
-## Critique / revision cycles (mandatory loop — both completed)
+184 internal hrefs checked against the built `out/` tree: all resolve except
+`/favicon.png`, which is a false positive in the checker (the file exists at
+`out/favicon.png`; the checker treated it as a directory path). PASS.
+Every page links to Contact (footer). About links to Manufacturers + Buyers.
+Trust links to Manufacturers + Buyers. Home is in the footer links.
 
-### Cycle 1 — coordinator static review of the first rebuild build
-Fixes made and rebuilt:
-1. Copper-column links were graphite-on-copper (3.18:1, FAIL). Fixed to white-on-copper
-   (4.99:1, PASS for normal text, computed with the WCAG relative-luminance formula).
-   Note for the record: Copper on Ivory (4.42:1) and White on Copper (4.99:1) are
-   different pairs — Ivory #F4F1EA is darker than white, so the two ratios differ.
-2. Trust page record-sheet head duplicated the label code. Fixed to label + "Definitions
-   only — no label applied".
-3. Status strip wording "staging preview" cleaned to "Preview — Planned, not live"
-   (fixed in cycle 2, with the form fixes below).
+## Heading / structure checks (built HTML, scripts stripped)
 
-### Cycle 2 — child-track integration (benchmark, art direction, skeptical teardown)
-Fixes made and rebuilt:
-4. Forms no longer delete the visitor's input on submit (skeptical issue #4).
-   The success state now shows the entered name/business/email/message locally,
-   with Edit and Start again buttons, and states what a live backend would do.
-   Submit button now says what it does: "Preview interest — nothing is sent".
-5. Buyers page now has three job starters ("Need a mould made", "Need CNC job-work",
-   "Need a mould-base") as conversation starters, not live search categories
-   (benchmark recommendation #6).
-6. Tagline hierarchy corrected to the rebuild directive: primary
-   "Discover. Trust. Source.", supporting "Capability, on record.", hero
-   "Discover manufacturers by what they can make." — reversing the previous
-   synthesis demotion, with honesty carried by the stage statement and
-   Live / In pilot / Planned labels.
-7. Concept synthesis adopted: "The Joint, kept on the Ledger" (art-direction track,
-   27/30, highest of four concepts). Rejected: "The Elevation" (construction-firm
-   misreading, mobile decoding cost), "The Specimen Cabinet" (easiest to misread
-   as a live catalogue), pure "Ledger" alone (clearest, least distinctive).
-   Borrowed: Ledger's blank-record honesty, Elevation's pillar-at-scale (real logo
-   image in the hero panel, not a drawn building).
+- Exactly **1 `<h1>` per page** on all 9 routes: PASS.
+- Footer headings are styled `<p>` (no footer `<h2>` pollution): PASS.
+- Door headings are `<h3>` under an `<h2>` section heading: PASS.
+- Visible breadcrumbs on every subpage (7/7); 404 correctly has none: PASS.
+- FAQ summaries use a CSS chevron (`::after`, rotates on open): PASS in code;
+  cross-browser rendering NOT TESTED (see below).
 
-### The 10 most impactful issues (skeptical track, ranked) — disposition
-1. Required hero line absent / tagline inverted — FIXED (see cycle 2, item 6).
-2. Honesty delivered as repeated apologies — FIXED in part: stage is now in the
-   header strip, hero spec column, and one "Where we are today" table, not stamped
-   on every paragraph. Residual: the word PLANNED still appears where a status is
-   claimed — that is required by the honesty rules, not a defect.
-3. No visual identity beyond a 64px bar and 48px logo — FIXED: full-bleed dark hero,
-   320px logo panel, pillar columns, corridor strip, numbered drawing-sheet sections.
-4. Forms pretend to send, then delete input — FIXED (cycle 2, item 4).
-5. Generic content, same noun list, zero concrete method — FIXED in part: Record
-   Builder and Brief Checker give concrete method; job starters give concrete
-   conversation types. Residual: no real shop, process data, or photography exists
-   yet — that cannot be fixed without real, permissioned material.
-6. Corridor buried — FIXED in part: corridor is now a dedicated Home section with
-   its own schematic, and Vasai East is in the hero spec column. It remains
-   section 04 on Home, after the record and pillar sections, by design.
-7. P0–P4 as five identical stacked cards — FIXED: each label is now a record sheet
-   with Scope / Source-method / Checker / Date / Limitations / Recheck fields.
-8. One layout primitive, one card, one column — FIXED: hero grid, pillar row,
-   record sheets, corridor strip, dark/white alternating sections, details FAQ.
-9. Never verified in a browser — PARTIALLY FIXED: static checks above are real;
-   interactive, visual, cross-browser, and Lighthouse checks remain NOT TESTED
-   (see below). No live-browser result is claimed in this report.
-10. Metadata/hosting posture advertised "staging", not the venture — FIXED in part:
-    titles/descriptions now lead with the venture taglines and carry "(Preview,
-    PLANNED)"; robots/meta remain noindex because this is a preview, not production.
+## Copy / ban-list checks (built HTML)
 
-## Checklist results (Track G A–M)
+- Verbatim lines preserved: "Discover manufacturers by what they can make.",
+  "Most industrial discovery fails at the same point: a shop says it 'does
+  CNC' — and nobody can tell what that covers.", "The most expensive mistake
+  in sourcing is not a bad price. It is a conversation that starts with a
+  drawing, before anyone has checked whether the shop works in that material,
+  at that tolerance, at all.", "You approve every field. Or it does not go up."
+  (each present; the approval sentence appears on Home steps, Manufacturers
+  twice, and Trust via the onboarding link text — all in approved contexts).
+- Tagline hierarchy used as specified; geography in the one form everywhere
+  (14 rendered occurrences across pages, all the same sentence); footer line
+  "Building a capability record for Vasai East first." on every page.
+- Pricing: "No price has been announced yet." appears on Manufacturers only.
+  "Free Basic" / "Paid Professional": **0 occurrences** in built HTML.
+- No `<form>` element anywhere (forms are div + button): PASS.
+- "in general terms" after trimming: Manufacturers 1 (form intro), Buyers 2
+  (form intro + the tool's single point-of-action do-not-send note), Contact 1
+  (form intro), Trust 1 (inside the "never claimed" negation — meaningful,
+  kept). Home/About/Privacy/Terms/404: 0. This follows D13's rule in spirit:
+  the phrase survives only where it does instruction work.
+- Ban-list spot checks: no "unlock / seamless / end-to-end / one-stop /
+  world-class / curated / trusted partner / game-changing / delve / moreover /
+  furthermore / leverage / tapestry / vibrant / robust / Order Room / Buyer
+  Discovery Network / starting node / Mumbai industrial belt" in built HTML.
+  "vetted" occurs only inside the Trust "never claimed" negation; "verified"
+  only inside negations and the P1/P2 definitions. "supplier-declared" and
+  "transaction-evidenced" occur only as the P0/P4 label names themselves.
+- "Do not send drawings" occurs once, at the Brief Checker point of action.
+- PLANNED pills inside body sections: 0. Status lives in the header strip,
+  footer, and the Home "What exists today" box only.
 
-### A — Responsive: mobile, tablet, laptop, large desktop
-- PASS (static): CSS breakpoints at 1080px and 760px; hero grid, pillar row,
-  record rows, tool grids, and footer grids collapse to single column; tables
-  fall back to labelled blocks under 760px.
-- NOT TESTED (visual): actual rendering at 320px, 768px, 1024px, and large desktop
-  in a real browser, and 200% zoom reflow. Requires a live-browser check.
+## Tools / forms checks (code + built HTML)
 
-### B — Navigation, CTAs and links
-- PASS (static): header nav links to all 6 content pages on every page; footer
-  links to all pages plus Privacy/Terms drafts; 306 internal references checked, 0 missing.
-- PASS: CTAs are the true actions only — "Express interest in a founding profile"
-  and "Talk to us about a sourcing need". No "Get matched now" or equivalent.
-- NOT TESTED (visual): link focus and tap-target behaviour in a real browser.
+- Record Builder ONLY on Manufacturers; Brief Checker ONLY on Buyers; Home
+  shows the static sample record and links to both: PASS.
+- Both tools: empty defaults, Clear truly empties (all state reset to ""),
+  conditional notes (fine/precision tolerance, mould vs mould-base, quantity,
+  certificate, missing envelope), copy + print, prefill-into-form via the
+  `uh:prefill` event, `aria-live="polite"` regions with 400 ms debounce
+  (present in built HTML on both tool pages): PASS in code; live-region
+  announcement with a real screen reader NOT TESTED.
+- Preview forms: div-based (no native submission), validation, per-field
+  `aria-describedby` + `aria-invalid`, `required`/`aria-required`, error
+  summary with focus, success with focus and NO personal-data echo, unticked
+  consent, phone/WhatsApp optional field, noscript note stating the form does
+  not work without JS and sends nothing: PASS in code; keyboard/screen-reader
+  end-to-end walk NOT TESTED.
+- Sample record identical on Home and Trust (shared component), headed
+  "ILLUSTRATIVE EXAMPLE — NOT A REAL MANUFACTURER", business "Example Tool
+  Room, Vasai East (illustrative example)": PASS (4 rendered occurrences
+  across the two pages: heading + business on each).
+- Trust: PROPOSED METHODOLOGY banner, display rules 1–5, ladder strip +
+  comparison table, worked P0→P4 trace, definitions in accordions (P2-ID /
+  P2-DOC split, P1 relevance rule, P3 exclusions, P4 ranked evidence),
+  recheck proposals in a separate box only, "what is never claimed",
+  correction/removal gate, who-checks block: PASS.
+- Onboarding: 6 stages condensed on Manufacturers, full 13-field list,
+  per-field approval, re-approval after edits, unapproved fields omitted,
+  correction/removal gate, maintenance rules, document handling, hard
+  exclusions: PASS.
 
-### C — Forms: validation, error/success, spam, consent, data minimisation
-- PASS (static): PlaceholderForm has client-side validation (name required, email
-  pattern, consent required), error list with `role="alert"`, success message with
-  `role="status"` that now keeps the entered text visible, Edit and Start again
-  buttons, separate unticked consent checkbox, and a `<noscript>` note.
-- PASS: no network calls in source; submit states no data has been sent.
-- PASS: no confidential drawings, GST documents, identity documents, or financial
-  information are requested anywhere on the site.
-- NOT APPLICABLE at preview: spam protection (no data is sent; must be added with
-  any future live backend).
-- NOT TESTED (interactive): submitting the form, Record Builder, and Brief Checker
-  in a real browser, including error/success/edit states. Requires a live-browser check.
+## Images (inventory, measured)
 
-### D — Keyboard, focus, semantic HTML, screen-reader labels
-- PASS (static): skip link to `#main` on every page; semantic `header`, `nav`
-  (`aria-label="Main navigation"`), `main`, `footer`, `section` landmarks; one `<h1>`
-  per page; form labels linked by `for`/`id`; status/evidence labels are real text,
-  not colour alone; FAQ uses native `<details>`/`<summary>` (keyboard-operable
-  without JavaScript).
-- PASS (static): visible focus — 3px Copper outline with 3px offset on links,
-  buttons, inputs, selects, textareas, and summaries. Copper on Ivory (4.42:1)
-  passes the 3:1 non-text threshold for a focus indicator.
-- NOT TESTED (interactive): keyboard-only walkthrough and screen-reader pass in a
-  real browser.
+23 files in `public/img/` (952 KB total on disk; only one image loads per page).
+Each page loads exactly one content image (verified in built HTML), plus the
+logo. All images carry width/height (no CLS gap), descriptive page-specific
+alt (never duplicating the caption), lazy below the fold except the single
+LCP figure per hero page (fetchPriority high). Captions appear only where an
+image could plausibly be mistaken for a real facility/member (Home CNC,
+Manufacturers workbench, Trust micrometer). Logo: `uh-monogram-160.png`
+(9,195 B) everywhere; transparent variant `uh-transparent-160.png` (7,031 B)
+once on About at 160px on a light background, with no variant-explanation
+caption. No SVG logo (prohibited auto-trace).
 
-### E — Contrast, brand, visual discipline
-- PASS (computed): CSS text colours used are Graphite on Ivory/white, Steel on
-  Ivory/white, Ivory on Deep/Graphite, Light Copper only on Deep (5.54:1), and
-  White on Copper (4.99:1, copper pillar column only).
-- PASS: forbidden pairings — Copper on Ivory 4.42:1, Light Copper on Ivory 2.86:1,
-  #6F7A83 on white 4.39:1 / on ivory 3.89:1 — do not appear as text pairings.
-  One cycle-1 failure (graphite-on-copper links, 3.18:1) was found and fixed.
-- PASS: copper is an accent only; no blue corporate default, neon, gradient-as-design,
-  3D logo, gears, hexagons, globes, or generic AI visuals. Logo is the supplied
-  asset only, via optimised derivatives; no SVG redraw or auto-trace.
+Deviation from D11, documented: corridor-evening is shipped at 800/1200 only,
+not 800/1200/1600. At 1600w the busy dusk scene cannot fit the ≤100 KB budget
+at any acceptable quality (111 KB at q48, 100.2 KB at q40). Its layout width
+is at most ~720 px (55vw column), so 1200w (89.9 KB) is already 1.6× the
+display size. All other images ship at 800/1200/1600.
 
-### F — Motion, animation, content availability
-- PASS (static): no JavaScript animation; only hover underlines. Content is fully
-  present in the static HTML, so it is visible without JavaScript.
-  `prefers-reduced-motion` disables all transitions/animations in CSS.
-- NOT TESTED (visual): reduced-motion behaviour in a real browser.
+## SEO / schema inventory
 
-### G — Images, logo, favicon, fonts
-- PASS (static): logo derivatives are 160px (9 KB, header) and 320px (57 KB, hero);
-  the ~1 MB originals are not in the repo. Favicon is a 64px placeholder, stated
-  as such in README and here — NOT a final favicon.
-- FAIL / OPEN (redesign update): transparent variant now exists
-  (`uh-transparent-320.png`, light backgrounds only, About page) and the
-  favicon is linked via metadata, but still OPEN: no SVG, reverse/dark
-  variant, wordmark lockup, or favicon tested at 16/32/48 px. Dark sections
-  use a white logo panel or wordmark-only text, never a CSS filter/inversion fix.
-- OPEN: font licences not confirmed at the official source (secondary sources only,
-  SIL OFL stated, not legal clearance). No permissioned photography is used — the
-  site uses type, rules, and the logo only, so no fake-factory imagery is present.
+- Per-page title + description (all ≤ ~160 chars for descriptions), per-page
+  OG + Twitter, self-canonical on preview URLs, metadataBase = preview URL,
+  robots noindex on every route + `Disallow: /` in robots.txt, preview
+  sitemap (8 URLs, never submitted): PASS.
+- Schema in built HTML: Organization + WebSite (Home only, NO SearchAction),
+  WebPage per page, BreadcrumbList on every subpage: PASS. NO FAQPage, NO
+  LocalBusiness, NO ratings, NO Product/price, NO directory ItemList, NO
+  areaServed beyond Vasai East, NO og:image (see LAUNCH-READINESS.md).
+- 404: own metadata ("Page not found — Udyog House", noindex), links to
+  Home/Manufacturers/Buyers/Contact: PASS.
 
-### H — SEO, metadata, page structure
-- PASS (static): unique per-page titles/descriptions, single `<h1>` per page,
-  semantic headings, Open Graph title/description in layout, `robots.txt`
-  (Disallow all, preview), per-page `robots: { index: false, follow: false }`,
-  `public/sitemap.xml` listing the Pages preview URLs only (NOT a production
-  sitemap for udyoghouse.com, which is not connected).
-- NOT TESTED: search-engine rendering, Open Graph card rendering, canonical
-  behaviour on a production domain (no production domain is connected).
+## Contrast decisions (code-level)
 
-### I — Completeness: no broken, placeholder, or empty content
-- PASS (static): 0 missing internal references; no lorem ipsum; no empty sections.
-- OPEN (by design, stated on the site): founder introduction is a placeholder
-  until approved; no manufacturer profile, directory, or search exists — these
-  are labelled PLANNED, not faked. Favicon is a placeholder, stated as such.
+- Deleted tokens: light-copper, copper-on-ivory text usage, #6F7A83 (never
+  present as a token; never used as text). Remaining text pairs: Graphite on
+  Ivory 14.04:1, Ivory on Deep 15.81:1, Steel (#5a6772) on Ivory 5.15:1, White
+  on Copper 4.99:1 (copper buttons only). Mist (#a8b0b7) is used only on deep
+  backgrounds (Trust ladder eyebrow); the corridor SVG's note text uses Steel
+  on white. No body copy sits on copper anywhere. No text sits over a
+  photo without a solid panel: hero text is on solid ivory panels, eyebrow
+  pills are opaque Deep/Ivory. Automated contrast tooling was NOT run; the
+  check is token-level + the rendered-background reasoning above.
+- Two-ring focus (white outline + graphite shadow) is in CSS for all
+  interactive elements; visibility on every background is by construction
+  (at least one ring contrasts on ivory, deep, and copper) — keyboard walk
+  NOT TESTED.
 
-### J — Performance
-- PASS (measured, build only): First Load JS 103–109 kB per route; static export,
-  no analytics, no heavy WebGL, no animation libraries; logo derivatives are
-  9 KB / 57 KB, not the ~1 MB originals.
-- NOT TESTED: Lighthouse / Core Web Vitals in a real browser (LCP, INP, CLS).
-  Targets only, from Track F: LCP ≤2.5s, INP ≤200ms, CLS ≤0.1. No score is claimed.
+## What was NOT tested (honest list)
 
-### K — Security and privacy review
-- PASS (static): no secrets in tracked files; `.env.example` is placeholders only;
-  no network calls; no personal data, drawings, GST, identity, or financial data
-  requested; Privacy/Terms carry a visible "requires qualified legal review" notice
-  and make no compliance claim.
-- NOT TESTED: dependency audit (`npm audit` was not run as a gate in this rebuild;
-  dependencies are the previous allowlist only: next, react, react-dom, TypeScript/types).
+- Live-browser screenshots (desktop or phone), interactive tool behaviour in
+  a real browser (copy/print/prefill/clear), keyboard-only walk of all routes
+  + 404, screen readers (NVDA/VoiceOver), Lighthouse scores, axe scan,
+  320 px full-page rendering, real-phone/touch, 200% zoom, cross-browser FAQ
+  chevron rendering. No headless screenshot check was run either — nothing
+  in this report claims a visual check.
+- The coordinator's prior 320 px evidence was viewport-top only and does not
+  transfer to this rebuild; this rebuild's mobile behaviour is code-level
+  only (breakpoints 1080/760/480, static header below 760px, buttons
+  max-width 100% + wrap, footer links 44px).
+- Live text fetch of the deployed Pages site is a separate step after
+  deployment (see deployment verification below).
 
-### L — Cross-browser
-- NOT TESTED: Chromium plus at least one other engine, in a real browser.
-  A generic subagent cannot operate the live browser; the parent can run this
-  check after the build. No cross-browser result is claimed.
+## Deployment verification (to be completed after gh-pages publish)
 
-### M — Claims audit against truthfulness rules (brief §1, directive §4)
-- PASS (static): all pages labelled PLANNED, none Live, none In pilot; no invented
-  counts, members, traffic, enquiries, testimonials, logos, partnerships,
-  transactions, certifications, rankings, or revenue; no guaranteed leads/orders/
-  matches/quality/delivery/price; no blanket "verified" claim; P0–P4 are
-  definitions only, with scope/source/method/checker/date/limitations/recheck;
-  supplier-declared labelling is explicit in the Record Builder; no pay-to-rank,
-  pay-to-verify, or opaque scores; no confidential drawings requested.
-- OPEN (not a defect in this preview): Gate 0, trademark/MCA clearance, Facebook/
-  Threads handles, font licences, and the deposit-test displacement decision are
-  all still unresolved — see Held below. None is claimed as cleared anywhere.
-
-## Fix pass — live-browser findings, 3 Nov 2026 (desktop check 19:11–19:13 IST)
-
-Source of the three defects: the parent's live-browser desktop (~1919 px)
-check. No redesign, no copy-claim change, no production/domain/DNS/paid/
-external-contact change. All three fixes are in the main branch and on Pages.
-
-1. **Workbench image-band eyebrow contrast — FIXED in code, not visually
-   re-photographed.** The old band gradient stayed transparent until 40% down,
-   so "The check, in practice" sat in pale grey (#A8B0B7) over the bright
-   cloth/hands area. Fix (`app/globals.css`): gradient now darkens from 20%
-   (0.55 at 60%, 0.92 at the bottom) AND the band eyebrow itself is Ivory on
-   a deep pill (`rgba(20,24,28,0.72)`, inline-block, padded) — Ivory on Deep
-   is 15.81:1, and the pill guarantees readability whatever the photo behind
-   it is. Verified in the built Pages CSS (pill + gradient strings present).
-   Honest limit: the band sits below the fold, and headless screenshots do
-   not scroll, so the band was not visually re-photographed in this pass;
-   the fix is a CSS/contrast-mechanism verification, not a screenshot of
-   that band. The caption and pull text in the same band were already
-   readable in the desktop check.
-2. **Buyers dynamic heading case — FIXED and rendered.** `BriefChecker`
-   lowercased the whole process name, producing "For a cnc machining job…".
-   Fix (`components/BriefChecker.tsx`): the heading now uses the select-list
-   values as written, and a `lowerKeepAcronyms` helper keeps CNC/VMC/EN/GST
-   uppercase in the mid-sentence bullet. Rendered output confirmed in the
-   local 320 px run: "For a CNC machining job in Stainless steel, at
-   Precision (±0.02–0.05 mm)" and bullet "work in stainless steel for CNC
-   machining".
-3. **Sticky-header overlap — FIXED in code.** `html { scroll-padding-top:
-   140px }` plus `scroll-margin-top: 140px` on `section[id]` and
-   `h1/h2/h3[id]` (header + status strip are ~110 px tall). Verified in
-   the built Pages CSS. Anchor-jump behaviour in a real browser is NOT
-   re-tested in this pass (no live-browser operation available to this
-   agent); it is a standard CSS mechanism, not a measured interaction.
-
-**Builds for this pass:** `npm run build` PASS (11 static pages, First Load
-JS 103–110 kB/route, unchanged); `npm run build:pages` PASS; Pages `out/`
-link check: 342 prefixed internal references, 0 missing, 0 unprefixed
-`/img`/`/logo`/`/favicon` references; exactly 1 `<h1>` on the homepage.
-Pages status reached "built" (see commit note below).
-
-**320 px check — NEW EVIDENCE, with its limit stated.** Local Chromium
-headless-shell screenshots at a true 320 px viewport, served from the Pages
-build under its basePath (an earlier root-served attempt produced unstyled
-output and was discarded, not reported as a pass): homepage and buyers H1s
-fit and wrap with no horizontal overflow, the header wraps to three usable
-rows, CTAs stack, and the spec strip wraps. This is a styled 320 px
-viewport-top check only — content below the fold was not photographed, and
-it does not replace a real-phone check (touch, real-device rendering) or
-the 200% zoom check, which remain NOT TESTED.
-
-## Remaining bugs / risks / approvals
-
-- Interactive, cross-browser, Lighthouse, 200% zoom, reduced-motion, and
-  screen-reader checks are NOT TESTED (live-browser limitation, stated honestly).
-  320 px viewport-top rendering is now observed (see fix pass above); a
-  real-phone check is still open.
-- `npm audit` not run as a gate.
-- Favicon is a placeholder; final logo system (SVG/transparent/reverse/wordmark/
-  16/32/48px favicon) is not done and must not be invented.
-- Font licences not confirmed at the official source.
-- No permissioned photography, no approved founder intro, no concrete "today's
-  actual process" beyond the record/brief tools — all still missing for public copy.
-- The Pages preview is a preview channel only. It does not authorise production,
-  udyoghouse.com, DNS, paid services, or public announcement.
-
-## Held — do not do without separate decisions/documents
-
-Production deployment, domain/DNS connection (udyoghouse.com is founder-stated only,
-not verified), any paid service, any public announcement, contacting any
-manufacturer/buyer/partner, any legal compliance / trademark (IP India) / MCA
-company clearance claim, Gate 0 written B. Vitthal clearance, or claiming the
-deposit-test displacement is decided. This preview build runs alongside the
-deposit test and does not displace or clear it.
+- [ ] `npm run build:pages` clean, main stays basePath-free.
+- [ ] Pages status "built" on gh-pages.
+- [ ] Live text fetch: homepage, buyers, trust-evidence.
+- [ ] `.nojekyll` present in the published tree.

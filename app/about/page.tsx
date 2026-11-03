@@ -1,64 +1,91 @@
 import type { Metadata } from "next";
-import SiteImage from "../../components/SiteImage";
+import Link from "next/link";
+import SiteImage, { imgSet, FIGURE_SIZES } from "../../components/SiteImage";
 import Reveal from "../../components/Reveal";
+import { Breadcrumbs, JsonLd, webPageSchema, breadcrumbSchema } from "../../components/Chrome";
+import { GEO_ONE_FORM, IMAGERY_NOTE, PREVIEW } from "../../lib/site";
 
 export const metadata: Metadata = {
-  title: "About — Udyog House (Preview, PLANNED)",
+  title: "About — Udyog House | Capability record for Vasai East first",
   description:
-    "Udyog House is a founder-led, early-stage project beginning in Maharashtra. This preview page separates long-term vision from what exists today.",
+    "Udyog House is building a capability record for Vasai East first: who it is for, where it starts, and how it grows. Preview — planned, not live.",
   robots: { index: false, follow: false },
+  alternates: { canonical: `${PREVIEW}/about/` },
+  openGraph: {
+    title: "About — Udyog House",
+    description: "Udyog House is building a capability record for Vasai East first: who it is for, where it starts, and how it grows.",
+    url: `${PREVIEW}/about/`,
+    siteName: "Udyog House",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "About — Udyog House",
+    description: "Udyog House is building a capability record for Vasai East first: who it is for, where it starts, and how it grows.",
+  },
 };
-
-const CAPTION = "AI-generated editorial illustration — not a Udyog House facility or member.";
 
 export default function About() {
   return (
     <>
-      <section className="hero hero-anim" aria-labelledby="a-h1">
-        <div className="hero-media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <SiteImage src="/img/pillar-abstract-1600.webp" srcSet="/img/pillar-abstract-800.webp 800w, /img/pillar-abstract-1200.webp 1200w, /img/pillar-abstract-1600.webp 1600w" sizes="100vw" alt="" fetchPriority="high" />
-        </div>
-        <div className="wrap hero-inner">
-          <p className="eyebrow">About — Planned</p>
-          <h1 id="a-h1">Founder-led. Early-stage. Maharashtra first.</h1>
-          <p className="lede">Vision is separated from today, plainly, on this page. Nothing below is presented as already built.</p>
-          <p className="mono" style={{ color: "var(--grey)" }}>{CAPTION} Abstract pillar image is a visual echo of the monogram, not the logo itself.</p>
+      <JsonLd data={webPageSchema("/about/", "About — Udyog House", "Udyog House is building a capability record for Vasai East first: who it is for, where it starts, and how it grows.")} />
+      <JsonLd data={breadcrumbSchema([{ label: "About", path: "/about/" }])} />
+      <Breadcrumbs items={[{ label: "About" }]} />
+
+      <section className="hero-panel hero-anim" aria-labelledby="a-h1">
+        <div className="wrap">
+          <p><span className="pill-opaque">About — Preview</span></p>
+          <h1 id="a-h1">A record before a network.</h1>
+          <p className="lede">
+            Udyog House is building a capability record for tool rooms, mould makers,
+            and precision job-work — starting in one corridor, and only growing where
+            the record has actually been built.
+          </p>
+          <p>{GEO_ONE_FORM} Vasai East, Palghar district, Maharashtra.</p>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="a-purpose">
+      <section className="section" aria-labelledby="a-who">
         <div className="wrap ed-grid">
           <div className="span-7">
-            <span className="section-no">01</span>
-            <p className="eyebrow">Purpose</p>
-            <h2 id="a-purpose">Make industrial discovery structured, transparent, and accessible</h2>
-            <p>
-              Udyog House is building India&apos;s industrial discovery and sourcing network, beginning in
-              Maharashtra. Its purpose is to make industrial discovery and sourcing more structured,
-              transparent, and accessible — starting with structured capability profiles for tool rooms,
-              mould makers and precision machining businesses.
-            </p>
-            <figure className="figure">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <SiteImage src="/img/cnc-hero-1200.webp" srcSet="/img/cnc-hero-800.webp 800w, /img/cnc-hero-1200.webp 1200w" sizes="(max-width: 1080px) 100vw, 55vw" alt="Machined part in the foreground with a blurred machine background" loading="lazy" />
-              <figcaption><strong>Built in one corridor first.</strong> {CAPTION}</figcaption>
-            </figure>
+            <Reveal>
+              <p className="eyebrow">Who it is for</p>
+              <h2 id="a-who">Two audiences, one record between them</h2>
+              <p>
+                For manufacturers, the record is a way to be discovered for what a shop
+                can actually make — process, machine, material and grade, size,
+                tolerance — in words the owner has approved, with the evidence and
+                its limits shown beside each field. For buyers, the same record is
+                a way to ask better questions before sharing a drawing, and to judge
+                a claim by the check behind it rather than by the adjective in front
+                of it.
+              </p>
+              <p>
+                The record comes first because everything else — discovery, comparison,
+                conversation — depends on it being readable and honest. A network built
+                on vague categories would only reproduce the problem it claims to solve.
+              </p>
+              <h3>Principles, as sentences</h3>
+              <p>The site states what it knows and what it does not, in plain language, and it does not fill gaps with invented counts, members, testimonials, logos, partnerships, or revenue. Nothing here guarantees enquiries, orders, quality, delivery, or price. Information is published only with the owner&apos;s approval for that field, and a correction and removal route must be live before any profile is ever published.</p>
+              <p>
+                <Link href="/manufacturers">For manufacturers — build a draft record</Link><br />
+                <Link href="/buyers">For buyers — check a brief</Link>
+              </p>
+            </Reveal>
           </div>
           <div className="span-5">
-            <h3>Principles</h3>
-            <ul>
-              <li>Exact, plain-spoken, rooted, builder-minded, fair.</li>
-              <li>Owner-approved information, with evidence and limits stated.</li>
-              <li>No invented counts, members, testimonials, logos, partnerships, or revenue.</li>
-              <li>No guarantee of enquiries, orders, quality, delivery, or price.</li>
-              <li>Stage stated once, confidently: building, not yet established.</li>
-            </ul>
-            <p className="pull" style={{ marginTop: "1.5rem" }}>Ambition, <em>without pretending</em> the work is already done.</p>
-            <figure className="figure figure-logo" style={{ marginTop: "1.5rem" }}>
-              <SiteImage src="/logo/uh-transparent-320.png" alt="Udyog House monogram, transparent variant, on a light background" width={160} height={160} loading="lazy" />
-              <figcaption><strong>Transparent variant, on a light background only.</strong> This variant is used here because the background is light. It is never used on dark backgrounds, where the dark pillars would disappear.</figcaption>
-            </figure>
+            <Reveal>
+              <figure className="figure">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <SiteImage src="/img/corridor-evening-1200.webp" srcSet={imgSet("corridor-evening", [800, 1200])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Workshops along an industrial corridor in the evening, shutters and small units, no signage visible" loading="lazy" />
+              </figure>
+              <p className="small secondary">{IMAGERY_NOTE}</p>
+              <figure className="figure figure-logo">
+                {/* Transparent variant, used once, on a light background only, at 160px. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <SiteImage src="/logo/uh-transparent-160.png" alt="Udyog House monogram" width="160" height="160" loading="lazy" />
+              </figure>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -66,36 +93,42 @@ export default function About() {
       <section className="section section-white" aria-labelledby="a-roadmap">
         <div className="wrap">
           <Reveal>
-            <span className="section-no">02</span>
-            <p className="eyebrow">Long-term vision — planned, not live</p>
-            <h2 id="a-roadmap">Four phases. None of them live yet.</h2>
+            <p className="eyebrow">How it grows — planned, not live</p>
+            <h2 id="a-roadmap">Four phases, in order, none of them live yet</h2>
+            <p>Each phase depends on the one before it being real. No phase is skipped by announcement.</p>
           </Reveal>
-          <div className="pillar-row">
-            <Reveal delay={0} className="pillar-col"><p className="mono">Phase 1 — Planned</p><h3>Manufacturer Network</h3><p>Real, owner-approved capability profiles.</p></Reveal>
-            <Reveal delay={100} className="pillar-col"><p className="mono">Phase 2 — Planned</p><h3>Buyer Discovery Network</h3><p>Discover and filter by processes, machines, materials, dimensions, tolerances and evidence.</p></Reveal>
-            <Reveal delay={200} className="pillar-col copper-col"><p className="mono">Phase 3 — Planned</p><h3>RFQ, Matching &amp; Order Room</h3><p>Buyer requirements, supplier invitations, quotations, comparisons, introductions and order milestones.</p></Reveal>
-            <Reveal delay={300} className="pillar-col"><p className="mono">Phase 4 — Planned</p><h3>National Industrial Infrastructure</h3><p>Expanded clusters, capability intelligence, reputation, integrations and workflows.</p></Reveal>
-          </div>
-          <p>None of these phases is live on this preview site. Future clusters are only for when the network is genuinely built there.</p>
+          <ol className="step-list">
+            <li><span className="step-num" aria-hidden="true">1</span><div><h3>Phase 1 — Capability records</h3><p>Real, owner-approved capability records for tool rooms, mould makers, and precision job-work in Vasai East first.</p></div></li>
+            <li><span className="step-num" aria-hidden="true">2</span><div><h3>Phase 2 — Discovery by capability</h3><p>Finding shops by process, machine, material, size, tolerance, and evidence — only once real records exist to search.</p></div></li>
+            <li><span className="step-num" aria-hidden="true">3</span><div><h3>Phase 3 — Conversations, quotations, orders</h3><p>Structured conversations from a record, then quotations, comparison, and order milestones — only once discovery is real.</p></div></li>
+            <li><span className="step-num" aria-hidden="true">4</span><div><h3>Phase 4 — Wider corridors</h3><p>More clusters, only where the record has genuinely been built there. No cluster is claimed in advance.</p></div></li>
+          </ol>
         </div>
       </section>
 
       <section className="section" aria-labelledby="a-founder">
-        <div className="wrap ed-grid">
-          <div className="span-6">
-            <span className="section-no">03</span>
-            <p className="eyebrow">Founder introduction</p>
+        <div className="wrap wrap-narrow">
+          <Reveal>
+            <p className="eyebrow">Founder introduction — to be written by the founder</p>
             <h2 id="a-founder">Founder introduction</h2>
-            <p>No founder biography, photograph, or personal claim is published on this preview site yet.</p>
-          </div>
-          <div className="span-6">
-            <h3>What this site is not</h3>
             <p>
-              Udyog House, as described here, is not a generic directory, an industrial consultancy, a
-              manufacturer or machine shop, a certification agency, a broker claiming guaranteed
-              outcomes, a generic software startup, or an established nationwide marketplace.
+              This section is intentionally short: the founder has not yet written it,
+              and nothing is invented to fill it. The intent behind this project is
+              simple — that a small workshop should be found for what it can actually
+              make, and that a buyer should be able to tell, before sharing a drawing,
+              whether a shop works in that material, at that tolerance, at all. The
+              record is the way to make both of those things checkable, rather than
+              a matter of who shouts loudest or who happens to be known already.
+              Starting in one corridor, and doing that properly, matters more than
+              claiming a network that does not exist yet.
             </p>
-          </div>
+            <p className="small secondary">No name, background, photograph, or personal claim is published in this section until the founder writes it.</p>
+            <p className="btn-row">
+              <Link className="btn" href="/manufacturers">For manufacturers</Link>
+              <Link className="btn btn-outline" href="/buyers">For buyers</Link>
+              <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+            </p>
+          </Reveal>
         </div>
       </section>
     </>

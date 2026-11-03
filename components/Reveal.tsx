@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-/** Scroll reveal: adds .reveal-in when the element enters view.
- *  Content is fully visible without JS (server render has no .reveal class
- *  hiding it permanently — the class is only added client-side). If
- *  IntersectionObserver is unavailable, content stays visible. */
-export default function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+/** Scroll reveal, no delays: adds .reveal-in when the element enters view.
+ *  Content is fully visible without JS (server render carries no hiding
+ *  class — it is only added client-side). If IntersectionObserver is
+ *  unavailable, content stays visible. prefers-reduced-motion forces
+ *  visible + no motion via CSS. */
+export default function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -21,9 +22,8 @@ export default function Reveal({ children, delay = 0, className = "" }: { childr
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-  // No hiding class in server HTML: without JS, content stays fully visible.
   return (
-    <div ref={ref} className={`${mounted ? `reveal ${inView ? "reveal-in" : ""}` : ""} ${className}`} style={{ ["--reveal-delay" as string]: `${delay}ms` }}>
+    <div ref={ref} className={`${mounted ? `reveal ${inView ? "reveal-in" : ""}` : ""} ${className}`}>
       {children}
     </div>
   );
