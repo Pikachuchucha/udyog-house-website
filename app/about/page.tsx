@@ -3,7 +3,7 @@ import Link from "next/link";
 import SiteImage, { imgSet, FIGURE_SIZES } from "../../components/SiteImage";
 import Reveal from "../../components/Reveal";
 import { Breadcrumbs, JsonLd, webPageSchema, breadcrumbSchema } from "../../components/Chrome";
-import { GEO_ONE_FORM, IMAGERY_NOTE, PREVIEW } from "../../lib/site";
+import { GEO_ONE_FORM, PREVIEW } from "../../lib/site";
 
 export const metadata: Metadata = {
   title: "About — Udyog House | Capability record for Vasai East first",
@@ -34,7 +34,6 @@ export default function About() {
 
       <section className="hero-panel hero-anim" aria-labelledby="a-h1">
         <div className="wrap">
-          <p><span className="pill-opaque">About — Preview</span></p>
           <h1 id="a-h1">A record before a network.</h1>
           <p className="lede">
             Udyog House is building a capability record for tool rooms, mould makers,
@@ -66,7 +65,7 @@ export default function About() {
                 on vague categories would only reproduce the problem it claims to solve.
               </p>
               <h3>Principles, as sentences</h3>
-              <p>The site states what it knows and what it does not, in plain language, and it does not fill gaps with invented counts, members, testimonials, logos, partnerships, or revenue. Nothing here guarantees enquiries, orders, quality, delivery, or price. Information is published only with the owner&apos;s approval for that field, and a correction and removal route must be live before any profile is ever published.</p>
+              <p>The site states what it knows and what it does not, in plain language, and it does not fill gaps with invented counts, members, testimonials, logos, partnerships, or revenue. Nothing here guarantees enquiries, orders, quality, delivery, or price. Information is published only with the owner&apos;s approval for that field.</p>
               <p>
                 <Link href="/manufacturers">For manufacturers — build a draft record</Link><br />
                 <Link href="/buyers">For buyers — check a brief</Link>
@@ -78,42 +77,93 @@ export default function About() {
               <figure className="figure">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <SiteImage src="/img/corridor-evening-1200.webp" srcSet={imgSet("corridor-evening", [800, 1200])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Workshops along an industrial corridor in the evening, shutters and small units, no signage visible" loading="lazy" />
+                <figcaption>Illustrative corridor evening — not a photograph of Udyog House facilities or members.</figcaption>
               </figure>
-              <p className="small secondary">{IMAGERY_NOTE}</p>
+              <h3>The mark</h3>
+              <p>The mark is the Udyog House monogram: upright pillars joined by a single crossbar.</p>
               <figure className="figure figure-logo">
                 {/* Transparent variant, used once, on a light background only, at 160px. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <SiteImage src="/logo/uh-transparent-160.png" alt="Udyog House monogram" width="160" height="160" loading="lazy" />
+                <figcaption>Udyog House monogram.</figcaption>
               </figure>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="a-roadmap">
+      <section className="section" aria-labelledby="a-corridor">
+        <div className="wrap ed-grid">
+          <div className="span-7">
+            <Reveal>
+              <p className="eyebrow">Where it starts</p>
+              <h2 id="a-corridor">Vasai East first, then only where the record is built</h2>
+              <p>
+                The record starts in Vasai East, Palghar district, Maharashtra, and
+                grows only where it has genuinely been built — Waliv, Sativali, and
+                Gokhivare next, when built. No other cluster is claimed in advance.
+              </p>
+            </Reveal>
+          </div>
+          <div className="span-5">
+            <Reveal>
+              <div className="corridor-drawing">
+                <svg viewBox="0 0 520 220" role="img" aria-label="Schematic corridor drawing: Vasai East first, then Waliv, Sativali, and Gokhivare, not to scale">
+                  <defs>
+                    <pattern id="grid-about" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e7e2d6" strokeWidth="1" />
+                    </pattern>
+                  </defs>
+                  <rect width="520" height="220" fill="url(#grid-about)" />
+                  <line x1="40" y1="120" x2="480" y2="120" stroke="#1e2328" strokeWidth="2" />
+                  <circle cx="80" cy="120" r="14" fill="#1e2328" />
+                  <circle cx="220" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
+                  <circle cx="330" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
+                  <circle cx="440" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
+                  <text x="80" y="160" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1e2328">Vasai East</text>
+                  <text x="80" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">starting here</text>
+                  <text x="220" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Waliv</text>
+                  <text x="330" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Sativali</text>
+                  <text x="440" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Gokhivare</text>
+                  <text x="220" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
+                  <text x="330" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
+                  <text x="440" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
+                  <line x1="480" y1="30" x2="480" y2="60" stroke="#1e2328" strokeWidth="2" />
+                  <polygon points="480,18 474,32 486,32" fill="#1e2328" />
+                  <text x="480" y="76" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1e2328">N</text>
+                  <text x="40" y="205" fontSize="11" letterSpacing="2" fill="#5a6772">NOT TO SCALE — SCHEMATIC ONLY, NOT A MAP OF MEMBERS</text>
+                </svg>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="phases" aria-labelledby="a-roadmap">
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">How it grows — planned, not live</p>
             <h2 id="a-roadmap">Four phases, in order, none of them live yet</h2>
             <p>Each phase depends on the one before it being real. No phase is skipped by announcement.</p>
           </Reveal>
-          <ol className="step-list">
-            <li><span className="step-num" aria-hidden="true">1</span><div><h3>Phase 1 — Capability records</h3><p>Real, owner-approved capability records for tool rooms, mould makers, and precision job-work in Vasai East first.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">2</span><div><h3>Phase 2 — Discovery by capability</h3><p>Finding shops by process, machine, material, size, tolerance, and evidence — only once real records exist to search.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">3</span><div><h3>Phase 3 — Conversations, quotations, orders</h3><p>Structured conversations from a record, then quotations, comparison, and order milestones — only once discovery is real.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">4</span><div><h3>Phase 4 — Wider corridors</h3><p>More clusters, only where the record has genuinely been built there. No cluster is claimed in advance.</p></div></li>
+          <ol className="ruled-list">
+            <li><h3>Phase 1 of 4 — Capability records</h3><p>Real, owner-approved capability records for tool rooms, mould makers, and precision job-work in Vasai East first.</p></li>
+            <li><h3>Phase 2 of 4 — Discovery by capability</h3><p>Finding shops by process, machine, material, size, tolerance, and evidence — only once real records exist to search.</p></li>
+            <li><h3>Phase 3 of 4 — Conversations, quotations, orders</h3><p>Structured conversations from a record, then quotations, comparison, and order milestones — only once discovery is real.</p></li>
+            <li><h3>Phase 4 of 4 — Wider corridors</h3><p>More clusters, only where the record has genuinely been built there. No cluster is claimed in advance.</p></li>
           </ol>
+          <Reveal>
+            <p>Phase 3 raises an open decision: whether quotations run through Udyog House or direct between buyer and shop is not decided. Nothing in Phase 3 assumes an answer.</p>
+          </Reveal>
         </div>
       </section>
 
       <section className="section" aria-labelledby="a-founder">
         <div className="wrap wrap-narrow">
           <Reveal>
-            <p className="eyebrow">Founder introduction — to be written by the founder</p>
-            <h2 id="a-founder">Founder introduction</h2>
+            <h2 id="a-founder">Why this record, why this corridor</h2>
             <p>
-              This section is intentionally short: the founder has not yet written it,
-              and nothing is invented to fill it. The intent behind this project is
+              The intent behind this project is
               simple — that a small workshop should be found for what it can actually
               make, and that a buyer should be able to tell, before sharing a drawing,
               whether a shop works in that material, at that tolerance, at all. The
@@ -122,11 +172,13 @@ export default function About() {
               Starting in one corridor, and doing that properly, matters more than
               claiming a network that does not exist yet.
             </p>
-            <p className="small secondary">No name, background, photograph, or personal claim is published in this section until the founder writes it.</p>
-            <p className="btn-row">
-              <Link className="btn" href="/manufacturers">For manufacturers</Link>
-              <Link className="btn btn-outline" href="/buyers">For buyers</Link>
-              <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+            <p className="small secondary">Written by the founder — to come.</p>
+            <p>
+              <Link href="/manufacturers">For manufacturers</Link>
+              {" · "}
+              <Link href="/buyers">For buyers</Link>
+              {" · "}
+              <Link href="/contact">Contact</Link>
             </p>
           </Reveal>
         </div>

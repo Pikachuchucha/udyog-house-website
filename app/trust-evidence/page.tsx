@@ -72,7 +72,6 @@ export default function TrustEvidence() {
       <section className="hero-panel hero-anim" aria-labelledby="t-h1">
         <div className="wrap hero-grid">
           <div>
-            <p><span className="pill-opaque">Trust &amp; Evidence — Proposed method</span></p>
             <h1 id="t-h1">A label without its record is not used here.</h1>
             <p className="lede">
               Evidence labels are useful only when the reader can see exactly what
@@ -85,16 +84,25 @@ export default function TrustEvidence() {
               <Link className="btn btn-outline" href="/buyers">Check a brief</Link>
             </p>
           </div>
-          <figure className="figure">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <SiteImage src="/img/inspection-micrometer-1600.webp" srcSet={imgSet("inspection-micrometer", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1600" height="1067" alt="A micrometer measuring a machined part, close detail" loading="eager" fetchPriority="high" />
-            <figcaption>Illustrative measurement detail — not a Udyog House check, facility, or member job. No inspection has occurred for this site.</figcaption>
-          </figure>
+          <div className="ladder-strip" aria-label="Evidence ladder at a glance">
+            <p className="eyebrow">The ladder, at a glance</p>
+            <ol>
+              <li><strong>P0</strong> — Supplier-declared: the shop says so.</li>
+              <li><strong>P1</strong> — Document received: a named document arrived and was logged.</li>
+              <li><strong>P2-ID</strong> — Identity cross-checked: who, matched to a source.</li>
+              <li><strong>P2-DOC</strong> — Document cross-checked: named fields matched to a source.</li>
+              <li><strong>P3</strong> — Observed capability: a named machine witnessed, measured as stated.</li>
+              <li><strong>P4</strong> — Transaction-evidenced: one specific past transaction, by stated evidence.</li>
+            </ol>
+            <p className="small secondary">Full definitions, with limits, follow below. No label is applied to anyone here.</p>
+          </div>
         </div>
       </section>
 
-      <div className="banner-proposed" role="note" aria-label="Proposed methodology banner">
-        <p><strong>Proposed methodology — definitions only.</strong> No label is applied to any manufacturer. No check has been performed on any real manufacturer. No record, profile, or evidence file is published. Recheck intervals and checker roles marked proposed are proposals, not decisions. Udyog House is not an accredited inspection or certification body, and no label is a certification, an accreditation, an inspection certificate, or a quality guarantee.</p>
+      <div className="wrap">
+        <div className="banner-proposed" role="note" aria-label="Proposed methodology banner">
+          <p><strong>Proposed methodology — definitions only.</strong> No label is applied to any manufacturer. No check has been performed on any real manufacturer. No record, profile, or evidence file is published. Recheck intervals and checker roles marked proposed are proposals, not decisions. Udyog House is not an accredited inspection or certification body, and no label is a certification, an accreditation, an inspection certificate, or a quality guarantee.</p>
+        </div>
       </div>
 
       <section className="section section-deep" aria-labelledby="t-ladder">
@@ -125,19 +133,25 @@ export default function TrustEvidence() {
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Binding display rules</p>
-            <h2 id="t-rules">Five rules every label must obey, before it is ever shown</h2>
+            <h2 id="t-rules">Five rules every label must obey</h2>
           </Reveal>
-          <ol className="step-list">
-            <li><span className="step-num" aria-hidden="true">1</span><div><h3>One field, never a business</h3><p>Every label belongs to one named field. A label is never a badge for a profile, a business, or a person, and the highest label on one field says nothing about any other field.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">2</span><div><h3>No label without its record</h3><p>No label is displayed unless scope, what was checked, method, checker (role and relationship to the supplier), source, date, and limitations are all filled in. A missing field means no label.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">3</span><div><h3>The supplier is never its own checker</h3><p>Above P0, the checker is never the supplier itself. The checker&apos;s role and relationship to the supplier are stated beside the label.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">4</span><div><h3>Edits and disputes downgrade, never hide</h3><p>An owner edit to a labelled field drops that field to P0 until it is re-checked. A disputed field&apos;s label is suspended as “under review” (proposed default, to be confirmed before first publication) — never silently left standing.</p></div></li>
-            <li><span className="step-num" aria-hidden="true">5</span><div><h3>Payment never changes a label</h3><p>Payment, if ever introduced, will never upgrade an evidence label, improve search position, or add any trust badge.</p></div></li>
-          </ol>
+          <table>
+            <caption>Five binding display rules, beside the ladder above</caption>
+            <thead>
+              <tr><th scope="col">Rule</th><th scope="col">What it requires</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="Rule">Rule 1 of 5 — One field, never a business</td><td data-label="What it requires">Every label belongs to one named field. A label is never a badge for a profile, a business, or a person, and the highest label on one field says nothing about any other field.</td></tr>
+              <tr><td data-label="Rule">Rule 2 of 5 — No label without its record</td><td data-label="What it requires">No label is displayed unless scope, what was checked, method, checker (role and relationship to the supplier), source, date, and limitations are all filled in. A missing field means no label.</td></tr>
+              <tr><td data-label="Rule">Rule 3 of 5 — The supplier is never its own checker</td><td data-label="What it requires">Above P0, the checker is never the supplier itself. The checker&apos;s role and relationship to the supplier are stated beside the label.</td></tr>
+              <tr><td data-label="Rule">Rule 4 of 5 — Edits and disputes downgrade, never hide</td><td data-label="What it requires">An owner edit to a labelled field drops that field to P0 until it is re-checked. A disputed field&apos;s label is suspended as “under review” (proposed default, to be confirmed before first publication) — never silently left standing.</td></tr>
+              <tr><td data-label="Rule">Rule 5 of 5 — Payment never changes a label</td><td data-label="What it requires">Payment, if ever introduced, will never upgrade an evidence label, improve search position, or add any trust badge.</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="t-worked">
+      <section className="section" aria-labelledby="t-worked">
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Worked example — the same record as Home</p>
@@ -146,6 +160,11 @@ export default function TrustEvidence() {
           </Reveal>
           <SampleRecord />
           <SampleTrace />
+          <figure className="figure">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <SiteImage src="/img/inspection-micrometer-1600.webp" srcSet={imgSet("inspection-micrometer", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1600" height="1067" alt="A micrometer measuring a machined part, close detail" loading="lazy" />
+            <figcaption>Illustrative measurement detail — not a Udyog House check, facility, or member job. No inspection has occurred for this site.</figcaption>
+          </figure>
           <p className="small secondary">This record is illustrative only. It describes no real business, and no field in it has been checked.</p>
         </div>
       </section>
@@ -158,7 +177,7 @@ export default function TrustEvidence() {
             <p>Open each level for its meaning, what was checked, and its limits. P2 is shown split, because identity and documents are two different checks and must never share one label.</p>
           </Reveal>
           {DEFINITIONS.map((d) => (
-            <details key={d.code}>
+            <details key={d.code} open={d.code === "P0" || d.code === "P3" || d.code === "P4"}>
               <summary>{d.code} — {d.title}</summary>
               {d.body.map((para) => (<p key={para}>{para}</p>))}
             </details>
@@ -169,7 +188,7 @@ export default function TrustEvidence() {
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="t-never">
+      <section className="section" aria-labelledby="t-never">
         <div className="wrap wrap-narrow">
           <Reveal>
             <p className="eyebrow">What is never claimed</p>
@@ -188,10 +207,12 @@ export default function TrustEvidence() {
           <h3>Correction and removal — a gate, not an afterthought</h3>
           <p>A correction and removal route for published manufacturer information must be live before any profile is ever published. That route is not live here, because no profile is published here. Its design and response window are still to be staffed and confirmed. The full joining method, including owner approval per field, is on <Link href="/manufacturers">For Manufacturers</Link>.</p>
           <p>{IMAGERY_NOTE}</p>
-          <p className="btn-row">
-            <Link className="btn" href="/manufacturers">Build a draft record</Link>
-            <Link className="btn btn-outline" href="/buyers">Check a brief</Link>
-            <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+          <p>
+            <Link href="/manufacturers">Build a draft record</Link>
+            {" · "}
+            <Link href="/buyers">Check a brief</Link>
+            {" · "}
+            <Link href="/contact">Contact</Link>
           </p>
         </div>
       </section>

@@ -42,6 +42,61 @@ export const GRADES: Record<string, string[]> = {
   "Brass / copper alloy": ["Brass", "Copper alloy", "Grade not yet specified"],
   "Engineering plastic": ["Grade not yet specified"],
 };
+/* Short process names for generated sentences (Brief Checker): the full
+   taxonomy stays in the dropdowns, but a sentence reads "For a CNC milling
+   job…", never "For a CNC milling (including vertical machining centre
+   (VMC)) job…". */
+export const SHORT_PROCESSES: Record<string, string> = {
+  "CNC milling (including vertical machining centre (VMC))": "CNC milling",
+  "CNC turning": "CNC turning",
+  "EDM — wire-cut": "EDM wire-cut",
+  "EDM — sinker": "EDM sinker",
+  Grinding: "Grinding",
+  "Mould making": "Mould making",
+  "Mould-base machining": "Mould-base machining",
+  "Tool-room work": "Tool-room work",
+};
+export function shortProcess(p: string): string {
+  return SHORT_PROCESSES[p] ?? p;
+}
+export function joinList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+export function articleFor(word: string): string {
+  return /^[AEIOU]/i.test(word) ? "an" : "a";
+}
+
+/* Process↔machine coherence warnings (never blocks): the machine is a
+   single choice, so a listed machine is the only machine. Warn, do not
+   error, on pairs that cannot work. Shared by both tools. */
+export function coherenceWarnings(processes: string[], machineType: string): string[] {
+  const out: string[] = [];
+  if (!machineType) return out;
+  const isVMC = machineType.startsWith("Vertical machining centre");
+  const isLathe = machineType.startsWith("CNC lathe");
+  const isSurfaceGrinder = machineType === "Surface grinder";
+  const hasEDM = processes.some((p) => p.startsWith("EDM"));
+  const hasMilling = processes.includes("CNC milling (including vertical machining centre (VMC))");
+  if (hasEDM && isVMC) {
+    out.push("Check this pairing: EDM work cannot be done on a vertical machining centre (VMC) alone — an EDM machine is needed for that process.");
+  }
+  if (processes.includes("Mould making") && isSurfaceGrinder) {
+    out.push("Check this pairing: mould making on a surface grinder alone is not a complete capability — milling and EDM capacity would also be needed.");
+  }
+  if (processes.includes("Mould-base machining") && isSurfaceGrinder) {
+    out.push("Check this pairing: mould-base machining on a surface grinder alone is not a complete capability — milling capacity would also be needed.");
+  }
+  if (hasMilling && isLathe) {
+    out.push("Check this pairing: CNC milling cannot be done on a CNC lathe alone — a milling machine is needed for that process.");
+  }
+  if (processes.includes("CNC turning") && isVMC) {
+    out.push("Check this pairing: CNC turning cannot be done on a vertical machining centre (VMC) alone — a lathe or turning centre is needed for that process.");
+  }
+  return out;
+}
+
 export const CONDITIONS = [
   "As supplied",
   "Annealed",

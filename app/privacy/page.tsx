@@ -39,31 +39,25 @@ export default function Privacy() {
           <figure className="figure">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <SiteImage src="/img/pillar-abstract-1200.webp" srcSet={imgSet("pillar-abstract", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Abstract graphite pillars joined by a copper bar, an echo of the Udyog House monogram" loading="lazy" />
+            <figcaption>Abstract pillar motif — an echo of the monogram, not a facility or member.</figcaption>
           </figure>
-          <h2>What this preview site collects</h2>
+          <h2>Data flow, as a record</h2>
+          <p>Where information goes on this preview site, row by row. The short answer is: nowhere.</p>
+          <div className="record-sheet" aria-label="Preview data-flow record">
+            <div className="record-sheet-head"><strong>Data flow — preview</strong><span>Nothing sent</span></div>
+            <dl>
+              <div className="record-row"><dt>Tools</dt><dd>Run only in your browser. Nothing you enter is sent, stored, or collected.</dd></div>
+              <div className="record-row"><dt>Preview forms</dt><dd>Drafts only. Nothing is sent or stored, and no reply is promised.</dd></div>
+              <div className="record-row"><dt>Analytics and third parties</dt><dd>None run on this preview site.</dd></div>
+              <div className="record-row"><dt>A live site would need</dt><dd>With qualified legal review: what each form asks for and why; what must not be sent; how consent is recorded and withdrawn; how information is used, stored, and protected; retention periods and response windows for requests; and how to ask for correction or removal. None of those decisions is stated here as a fact, because none has been made yet.</dd></div>
+              <div className="record-row"><dt>Correction and removal</dt><dd>A correction and removal route for published manufacturer information must be live before any profile is ever published. No profile is published here, so no such route is live yet.</dd></div>
+            </dl>
+          </div>
           <p>
-            On this preview site, forms are previews and send no data, and the tools run
-            only in your browser. No information entered on this site is collected or
-            stored by it, and no analytics or third-party service runs here.
+            Data minimisation: forms ask for minimal information only. No unnecessary
+            personal data is requested, and no automatic publication follows any draft.
           </p>
-          <h2>What a live site would need to state, before launch</h2>
-          <p>
-            Before any live launch, this page must state, with qualified legal review:
-            exactly what each form asks for and why; what must not be sent; how consent
-            is recorded and withdrawn; how information is used, stored, and protected;
-            retention periods and response windows for requests; and how to ask for
-            correction or removal. None of those decisions is stated here as a fact,
-            because none has been made yet.
-          </p>
-          <h2>Data minimisation</h2>
-          <p>
-            Forms ask for minimal information only. No unnecessary personal data is
-            requested, and no automatic publication follows any draft. A correction and
-            removal route for published manufacturer information must be live before
-            any profile is ever published; no profile is published here, so no such
-            route is live yet.
-          </p>
-          <p><Link href="/">Home</Link> · <Link href="/contact">Contact / Join</Link></p>
+          <p><Link href="/">Home</Link> · <Link href="/contact">Contact</Link></p>
         </div>
       </section>
     </>

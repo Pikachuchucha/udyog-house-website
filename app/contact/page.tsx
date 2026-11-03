@@ -7,13 +7,13 @@ import { Breadcrumbs, JsonLd, webPageSchema, breadcrumbSchema } from "../../comp
 import { PREVIEW } from "../../lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact / Join — Udyog House | Preview contact",
+  title: "Contact — Udyog House | Preview contact",
   description:
     "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft. Preview form — sends nothing yet.",
   robots: { index: false, follow: false },
   alternates: { canonical: `${PREVIEW}/contact/` },
   openGraph: {
-    title: "Contact / Join — Udyog House",
+    title: "Contact — Udyog House",
     description: "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.",
     url: `${PREVIEW}/contact/`,
     siteName: "Udyog House",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Contact / Join — Udyog House",
+    title: "Contact — Udyog House",
     description: "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.",
   },
 };
@@ -29,13 +29,12 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <JsonLd data={webPageSchema("/contact/", "Contact / Join — Udyog House", "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.")} />
-      <JsonLd data={breadcrumbSchema([{ label: "Contact / Join", path: "/contact/" }])} />
-      <Breadcrumbs items={[{ label: "Contact / Join" }]} />
+      <JsonLd data={webPageSchema("/contact/", "Contact — Udyog House", "No public email or phone yet. Use the tools to assess the idea, or leave a preview draft.")} />
+      <JsonLd data={breadcrumbSchema([{ label: "Contact", path: "/contact/" }])} />
+      <Breadcrumbs items={[{ label: "Contact" }]} />
 
       <section className="hero-panel hero-anim" aria-labelledby="c-h1">
         <div className="wrap">
-          <p><span className="pill-opaque">Contact / Join — Preview</span></p>
           <h1 id="c-h1">No inbox yet. Start with the tools.</h1>
           <p className="lede">
             There is no public email address, phone number, or reply window published
@@ -59,9 +58,10 @@ export default function Contact() {
                 window — is a launch decision, and it will be published as one when
                 it exists, rather than implied by a form that goes nowhere.
               </p>
-              <p className="btn-row">
-                <Link className="btn" href="/manufacturers">For manufacturers — build a draft record</Link>
-                <Link className="btn btn-outline" href="/buyers">For buyers — check a brief</Link>
+              <p>
+                <Link href="/manufacturers">For manufacturers — build a draft record</Link>
+                <br />
+                <Link href="/buyers">For buyers — check a brief</Link>
               </p>
               <h3>If you still want to leave a note</h3>
               <p>The preview form below takes a draft only. It sends nothing, stores nothing, and promises no reply — because there is no backend to reply from yet. Describe your interest briefly.</p>
@@ -72,6 +72,7 @@ export default function Contact() {
               <figure className="figure">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <SiteImage src="/img/material-bars-1200.webp" srcSet={imgSet("material-bars", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Bars of steel, aluminium, and copper racked in a workshop store" loading="lazy" />
+                <figcaption>Illustrative material store — not a Udyog House facility or member stock.</figcaption>
               </figure>
             </Reveal>
           </div>
@@ -85,9 +86,10 @@ export default function Contact() {
             <h2 id="c-form">General contact (preview)</h2>
           </Reveal>
           <PreviewForm variant="general" title="General contact (preview)" idPrefix="gen" />
-          <p className="btn-row">
-            <Link className="btn btn-outline" href="/">Home</Link>
-            <Link className="btn btn-outline" href="/trust-evidence">Trust &amp; Evidence</Link>
+          <p>
+            <Link href="/">Home</Link>
+            {" · "}
+            <Link href="/trust-evidence">Trust &amp; Evidence</Link>
           </p>
         </div>
       </section>

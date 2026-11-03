@@ -1,13 +1,17 @@
-/* Udyog House — "The Record" (full rebuild, 2026-11-03).
+/* Udyog House — "The Record" (full rebuild, 2026-11-03; fix pass 2026-11-03).
    Tokens are locked. Contrast rules enforced in code:
    - Graphite on Ivory 14.04:1, Ivory on Deep 15.81:1, Steel on Ivory 5.15:1,
      White on Copper 4.99:1 (copper buttons only, never body copy on copper).
    - DELETED tokens from the previous system: copper-on-ivory text,
      light-copper-on-ivory text, #6F7A83. They must not be reintroduced
      for normal text. Mist (#a8b0b7) is for dark backgrounds ONLY.
+   - GUARD: never set --steel text on a --neutral background (4.49:1,
+     fails 4.5:1 for normal text). --neutral is for borders and figure
+     backing only, never as a background behind steel text. No rendered
+     text pair uses steel-on-neutral; every rendered pair is ≥4.5:1.
    - Copper is used for exactly three things: monogram crossbar (in the
      logo image itself), evidence check marks, and the single primary
-     action per page. Nowhere else. */
+     action per page. Nav underline and status-strip border are graphite. */
 :root {
   --graphite: #1e2328;
   --deep: #14181c;
@@ -47,9 +51,10 @@ textarea:focus-visible, summary:focus-visible, [tabindex="-1"]:focus-visible {
 /* Eyebrows are Sans small caps bold — mono is reserved for measurements,
    dates, drawing numbers and record fields only. */
 .eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); margin: 0 0 0.5rem; }
-h1, h2 { font-family: var(--font-display), Archivo, sans-serif; line-height: 1.08; }
-h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); margin: 0.6rem 0 1.2rem; letter-spacing: -0.03em; font-weight: 700; overflow-wrap: break-word; }
-h2 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin: 0 0 1rem; letter-spacing: -0.02em; }
+/* Archivo is reserved for H1s, the wordmark, and record-sheet headings.
+   H2s and step numbers are Plex Sans 600. */
+h1 { font-family: var(--font-display), Archivo, sans-serif; line-height: 1.08; font-size: clamp(2.2rem, 6vw, 4.2rem); margin: 0.6rem 0 1.2rem; letter-spacing: -0.03em; font-weight: 700; overflow-wrap: break-word; }
+h2 { font-family: var(--font-body), "IBM Plex Sans", system-ui, sans-serif; line-height: 1.15; font-weight: 600; font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin: 0 0 1rem; letter-spacing: -0.02em; }
 h3 { font-size: 1.25rem; margin: 0 0 0.5rem; line-height: 1.3; }
 h4 { font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
 p { max-width: 70ch; }
@@ -58,7 +63,10 @@ p { max-width: 70ch; }
 .small { font-size: 0.9rem; }
 
 /* ---- Header / footer ---- */
-.site-header { background: var(--ivory); border-bottom: 2px solid var(--graphite); position: sticky; top: 0; z-index: 20; }
+/* Static header by decision (fix pass): position:sticky is dropped on all
+   widths, eliminating the 1080–1180px anchor-obscuring bug class.
+   scroll-margin below is kept as a harmless default, not relied on. */
+.site-header { background: var(--ivory); border-bottom: 2px solid var(--graphite); }
 .header-inner { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 0.7rem clamp(1.25rem, 4vw, 3rem); max-width: var(--max); margin: 0 auto; }
 .logo-link { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; min-height: 48px; color: var(--graphite); }
 .logo-panel { background: var(--white); display: inline-flex; align-items: center; padding: 4px; border: 1px solid var(--neutral); }
@@ -66,10 +74,10 @@ p { max-width: 70ch; }
 .wordmark small { display: block; font-family: var(--font-body), sans-serif; font-weight: 500; font-size: 0.8rem; color: var(--steel); letter-spacing: 0; }
 .main-nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 0.1rem; }
 .main-nav a { padding: 0.75rem 0.7rem; min-height: 44px; display: inline-flex; align-items: center; font-weight: 500; text-decoration: none; position: relative; }
-.main-nav a::after { content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.45rem; height: 2px; background: var(--copper); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
+.main-nav a::after { content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.45rem; height: 2px; background: var(--graphite); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
 .main-nav a:hover::after, .main-nav a:focus-visible::after, .main-nav a[aria-current="page"]::after { transform: scaleX(1); }
 .main-nav a[aria-current="page"] { font-weight: 700; }
-.status-strip { background: var(--deep); color: var(--ivory); padding: 0.55rem clamp(1.25rem, 4vw, 3rem); font-size: 0.85rem; border-top: 3px solid var(--copper); }
+.status-strip { background: var(--deep); color: var(--ivory); padding: 0.55rem clamp(1.25rem, 4vw, 3rem); font-size: 0.85rem; border-top: 3px solid var(--graphite); }
 .status-strip strong { letter-spacing: 0.04em; text-transform: uppercase; }
 .site-footer { border-top: 3px solid var(--graphite); padding: 3rem 0 2rem; }
 .site-footer a { min-height: 44px; display: inline-flex; align-items: center; padding: 0.25rem 0; }
@@ -100,20 +108,27 @@ p { max-width: 70ch; }
 /* ---- Record sheet (the brand's native visual system) ---- */
 .record-sheet { border: 2px solid var(--graphite); background: var(--white); color: var(--graphite); margin: 1.5rem 0; }
 .record-sheet-head { background: var(--graphite); color: var(--ivory); padding: 0.9rem 1.25rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.record-sheet-head strong { font-family: var(--font-mono), monospace; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.85rem; }
+.record-sheet-head strong { font-family: var(--font-display), Archivo, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.85rem; }
 .record-row { display: grid; grid-template-columns: 220px 1fr; border-top: 1px solid var(--neutral); }
 .record-row dt { font-family: var(--font-mono), monospace; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.9rem 1.25rem; background: var(--ivory); }
 .record-row dd { margin: 0; padding: 0.9rem 1.25rem; }
 .record-row dd.muted { color: var(--steel); }
 .check-mark { color: var(--copper); font-weight: 700; }
-.copper-rule { height: 6px; background: var(--copper); transform-origin: left center; }
-.copper-rule.draw { animation: copperDraw 1.1s var(--ease) 0.2s both; }
-@keyframes copperDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* The decorative Home copper rule was deleted in the fix pass: it marked
+   no check moment, so it was trim, not evidence. No .copper-rule remains. */
 
 /* ---- Ruled lists, steps, tables (replacing card grids) ---- */
 .step-list { list-style: none; margin: 1.5rem 0; padding: 0; border-top: 2px solid var(--graphite); }
 .step-list li { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--neutral); }
-.step-num { font-family: var(--font-display), Archivo, sans-serif; font-weight: 700; font-size: 1.5rem; }
+.step-num { font-family: var(--font-body), "IBM Plex Sans", system-ui, sans-serif; font-weight: 600; font-size: 1.5rem; }
+/* Trust hero ladder strip (diagram first, no photo as hero). */
+.ladder-strip { border: 2px solid var(--graphite); background: var(--white); color: var(--graphite); padding: 1.25rem 1.5rem; }
+.ladder-strip ol { list-style: none; margin: 1rem 0 0; padding: 0; }
+.ladder-strip li { padding: 0.6rem 0; border-bottom: 1px solid var(--neutral); }
+.ladder-strip li:last-child { border-bottom: 0; }
+/* Copy/print failure fallbacks (visible, never silent). */
+.print-fallback { border: 2px solid var(--graphite); background: var(--white); padding: 1.25rem; margin: 1rem 0; }
+.print-fallback pre { white-space: pre-wrap; font: inherit; margin: 0; }
 .ruled-list { list-style: none; margin: 1rem 0; padding: 0; }
 .ruled-list li { padding: 0.8rem 0; border-bottom: 1px solid var(--neutral); }
 table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; background: var(--white); color: var(--graphite); }
@@ -186,7 +201,6 @@ details[open] summary::after { transform: rotate(180deg); }
   .span-7, .span-5, .span-6, .span-4, .span-8 { grid-column: span 12; }
 }
 @media (max-width: 760px) {
-  .site-header { position: static; }
   html { scroll-padding-top: 16px; }
   section[id], h1[id], h2[id], h3[id] { scroll-margin-top: 16px; }
   .two-col, .footer-grid, .ed-grid { grid-template-columns: 1fr; }
@@ -209,7 +223,6 @@ details[open] summary::after { transform: rotate(180deg); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; visibility: visible; transform: none; }
-  .copper-rule.draw { animation: none; transform: scaleX(1); }
 }
 @media print {
   .site-header, .site-footer, .btn-row, .crumbs, .skip-link { display: none !important; }

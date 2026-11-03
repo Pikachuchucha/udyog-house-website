@@ -22,6 +22,10 @@ export function SampleRecord() {
         <div className="record-row"><dt>Inspection</dt><dd>{SAMPLE.inspection}</dd></div>
         <div className="record-row"><dt>Evidence label</dt><dd>{SAMPLE.evidence}</dd></div>
       </dl>
+      <p className="small secondary" style={{ padding: "0 1.25rem 1rem", margin: 0 }}>
+        Certificate availability alone does not earn P1 — receipt and logging do.
+        Commercial facts (lead time, payment, delivery) are not part of this draft yet.
+      </p>
     </div>
   );
 }
@@ -45,6 +49,11 @@ export function SampleTrace() {
           <td data-label="Level">P1 — Document received</td>
           <td data-label="What it would add">A named document is received and logged — for example, an inspection report for a comparable bore, with its own date.</td>
           <td data-label="Limit">Receipt is not authenticity, currency, or capability. The document must relate to this field; an unrelated document adds nothing here.</td>
+        </tr>
+        <tr>
+          <td data-label="Level">P2-ID — Identity cross-checked</td>
+          <td data-label="What it would add">Nothing for this field: identity checking is not applicable to this field — identity only, proves nothing about capability.</td>
+          <td data-label="Limit">P2-ID answers “who is this?” and nothing else. It adds no capability evidence to this field, and must never be read as support for it.</td>
         </tr>
         <tr>
           <td data-label="Level">P2-DOC — Document cross-checked</td>

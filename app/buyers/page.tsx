@@ -48,8 +48,7 @@ export default function Buyers() {
       <section className="hero-panel hero-anim" aria-labelledby="b-h1">
         <div className="wrap hero-grid">
           <div>
-            <p><span className="pill-opaque">For buyers — Preview</span></p>
-            <h1 id="b-h1">Know who can make it before you send the drawing.</h1>
+            <h1 id="b-h1">Check the brief before you send the drawing.</h1>
             <p className="lede">
               The most expensive mistake in sourcing is not a bad price. It is a
               conversation that starts with a drawing, before anyone has checked
@@ -65,10 +64,21 @@ export default function Buyers() {
               <Link className="btn btn-outline" href="/trust-evidence">How evidence labels work</Link>
             </p>
           </div>
-          <figure className="figure">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <SiteImage src="/img/drawing-and-part-1600.webp" srcSet={imgSet("drawing-and-part", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1600" height="1067" alt="An engineering drawing beside a finished machined part, with dimensions marked" loading="eager" fetchPriority="high" />
-          </figure>
+          <div className="record-sheet" aria-label="Question sheet preview">
+            <div className="record-sheet-head">
+              <strong>Question sheet — preview</strong>
+              <span>Not a match</span>
+            </div>
+            <div style={{ padding: "1rem 1.25rem" }}>
+              <p style={{ marginTop: 0 }}>For a brief, the checker asks:</p>
+              <ul>
+                <li>Do you regularly work in this material for this process — or would this be a first?</li>
+                <li>What tolerance have you actually held on a comparable job, and what record shows it?</li>
+                <li>What machine and travel would this job need, and does it fit?</li>
+              </ul>
+              <p className="small secondary">Try the checker below for your own brief. It shows questions, not a supplier.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -89,6 +99,11 @@ export default function Buyers() {
             <p className="eyebrow">A short guide — not a new service</p>
             <h2 id="b-guide">How to brief a tool room or mould maker before sharing a drawing</h2>
             <p>Work through these in order. Each one prevents a different kind of wasted conversation.</p>
+            <figure className="figure">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <SiteImage src="/img/drawing-and-part-1600.webp" srcSet={imgSet("drawing-and-part", [800, 1200, 1600])} sizes={FIGURE_SIZES} width="1600" height="1067" alt="An engineering drawing beside a finished machined part, with dimensions marked" loading="lazy" />
+              <figcaption>Illustrative drawing and part — not a real job or drawing.</figcaption>
+            </figure>
           </Reveal>
           <ol className="step-list">
             <li>
@@ -123,7 +138,7 @@ export default function Buyers() {
               <span className="step-num" aria-hidden="true">5</span>
               <div>
                 <h3>Evidence to request</h3>
-                <p>Ask for the evidence behind the specific field, not a general assurance: a document received (P1), fields cross-checked (P2), capability observed on a named machine (P3), or a past transaction evidenced (P4). Each level has limits — read them on <Link href="/trust-evidence">Trust &amp; Evidence</Link> before you treat any of them as a guarantee.</p>
+                <p>Ask for the evidence behind the specific field, not a general assurance. What each label means — and what it does not prove — is on <Link href="/trust-evidence">Trust &amp; Evidence</Link>.</p>
               </div>
             </li>
           </ol>
@@ -135,7 +150,7 @@ export default function Buyers() {
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="b-glossary">
+      <section className="section" aria-labelledby="b-glossary">
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Plain prose, no jargon assumed</p>
@@ -162,9 +177,9 @@ export default function Buyers() {
           </Reveal>
           <details><summary>How do I find a tool room that can hold my tolerance?</summary><p>Start from the tolerance with its feature, size, finish, and instrument — then ask what the shop has actually held on comparable work, and what record shows it. A declared claim alone is the weakest evidence, especially at fine tolerances.</p></details>
           <details><summary>What should I ask before sending a drawing?</summary><p>Process, machine and travel, material grade and condition, tolerance band, quantity band, and the evidence you want to see for that specific field. The checker above turns those answers into a question sheet you can copy and print.</p></details>
-          <details><summary>What does an evidence label actually guarantee?</summary><p>Nothing about the future. Each label describes one past check on one field, with its limits: P1 is receipt, P2 is matching, P3 is one witnessed job, P4 is one past transaction. No label is a quality guarantee, a rating, or a promise of delivery.</p></details>
+          <details><summary>What does an evidence label actually guarantee?</summary><p>Nothing about the future. Each label describes one past check on one field, with its limits. The full definitions are on <Link href="/trust-evidence">Trust &amp; Evidence</Link>.</p></details>
           <details><summary>Can Udyog House recommend a shop for my job?</summary><p>Not on this preview site, and not as a general claim anywhere: no shop is listed, ranked, or recommended here. The honest step today is a better brief — and, when records exist, a record you can read for yourself.</p></details>
-          <details><summary>Where does this start?</summary><p>{GEO_ONE_FORM} Vasai East, Palghar district, Maharashtra. No other cluster is claimed until it is genuinely built there.</p></details>
+          <details><summary>Where does this start?</summary><p>Vasai East first — see the <a href="#b-guide">guide</a> above. No other cluster is claimed until it is genuinely built there.</p></details>
         </div>
       </section>
 
@@ -172,13 +187,14 @@ export default function Buyers() {
         <div className="wrap wrap-narrow">
           <Reveal>
             <p className="eyebrow">Preview form — secondary to the tool</p>
-            <h2 id="b-form">Talk through a sourcing need</h2>
+            <h2 id="b-form">Draft sourcing note (preview — sends nothing)</h2>
             <p>Describe the need. The checker above is the primary way to assess this idea today; this form is a preview only and sends nothing.</p>
           </Reveal>
-          <PreviewForm variant="buyer" title="Talk through a sourcing need (preview)" idPrefix="buy" />
-          <p className="btn-row">
-            <Link className="btn btn-outline" href="/trust-evidence">Read the evidence method</Link>
-            <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+          <PreviewForm variant="buyer" title="Draft sourcing note (preview — sends nothing)" idPrefix="buy" />
+          <p>
+            <Link href="/trust-evidence">Read the evidence method</Link>
+            {" · "}
+            <Link href="/contact">Contact</Link>
           </p>
         </div>
       </section>

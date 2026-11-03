@@ -10,7 +10,7 @@ import { GEO_ONE_FORM, OWNER_APPROVAL, PREVIEW } from "../../lib/site";
 export const metadata: Metadata = {
   title: "For Manufacturers — Udyog House | Vasai East tool rooms, mould makers",
   description:
-    "Build a draft capability record for your tool room or mould shop in Vasai East. Owner-approved fields, stated evidence. Preview — no profile published yet.",
+    "Build a draft capability record for your tool room or mould shop in Vasai East. Preview — no profile published yet.",
   robots: { index: false, follow: false },
   alternates: { canonical: `${PREVIEW}/manufacturers/` },
   openGraph: {
@@ -35,7 +35,7 @@ const FIELDS_13 = [
   "Machines and equipment",
   "Materials",
   "Component / product categories",
-  "Size (dimension) and capacity bands",
+  "Size and capacity bands",
   "Tolerance bands",
   "Technical capabilities, including limits and what the shop does not do",
   "Supporting documents, where appropriate",
@@ -47,7 +47,7 @@ const STAGES = [
   { n: "Stage 1", title: "Introduction", body: "You agree to be considered, and name an authorised representative. No profile is created without that agreement, and no profile is ever scraped from the web or copied from a directory. A draft you decline or withdraw is deleted." },
   { n: "Stage 2", title: "Information collection", body: "The 13 fields below are collected briefly at first. Everything starts at P0, supplier-declared. You may withhold any field. Confidential drawings, GST, identity, financial, customer-list, pricing, and employee personal data are never collected through a public form." },
   { n: "Stage 3", title: "Documentation and review", body: "Information is reviewed for consistency, completeness, and relevance to the field it supports. Labels are assigned per field, never to the business as a whole. The reviewer is never the supplier, and is not an accredited inspector. Outcomes are: approve, approve with narrowing, hold, or reject with a reason. You see the reviewed draft — wording, labels, limits, and dates — before Stage 4." },
-  { n: "Stage 4", title: "Manufacturer approval", body: `${OWNER_APPROVAL} Approval is recorded per field: approver name and role, date, and version. Approval is revocable, and it is not a warranty, an endorsement, or a transfer of ownership. Fields you refuse or partly approve are omitted entirely — never shown as “pending” placeholders.` },
+  { n: "Stage 4", title: "Manufacturer approval", body: `${OWNER_APPROVAL} Approval is recorded per field: approver name and role, date, and version. Approval is revocable, and it is not a warranty, an endorsement, or a transfer of ownership. Fields you refuse or partly approve are omitted entirely — never shown as “pending” placeholders. An edit by Udyog House to an approved field also requires fresh per-field approval before that field goes live again.` },
   { n: "Stage 5", title: "Publication", body: "Only Stage-4-approved fields go live, each with its label, scope, method, checker, source, date, and limits shown beside it. No profile badge, score, ranking, or blanket claim appears. Full documents, GST, identity, financial information, drawings, customer names without consent, prices, and withheld fields are never published." },
   { n: "Stage 6", title: "Maintenance", body: "You may update, narrow, or withdraw your record at any time. Any edit to a labelled field drops that field to P0 until it is re-checked. A correction and removal route must be live before any publication, and stays live afterwards." },
 ];
@@ -62,7 +62,6 @@ export default function Manufacturers() {
       <section className="hero-panel hero-anim" aria-labelledby="m-h1">
         <div className="wrap hero-grid">
           <div>
-            <p><span className="pill-opaque">For manufacturers — Preview</span></p>
             <h1 id="m-h1">Be discovered for what you can make.</h1>
             <p className="lede">
               Not for a generic category. For a process, a machine, a material and
@@ -93,27 +92,18 @@ export default function Manufacturers() {
             <p className="eyebrow">One question, answered three ways</p>
             <h2 id="m-three">What do I give, what do you do with it, what do I get back?</h2>
           </Reveal>
-          <ol className="step-list">
+          <ol className="ruled-list">
             <li>
-              <span className="step-num" aria-hidden="true">1</span>
-              <div>
-                <h3>What you give</h3>
-                <p>Statements about your own shop, in brief: processes, machines and travel, materials and grades, sizes, tolerances, and what you do not do. No drawings, no GST or identity documents, no financial information, no customer lists, no pricing — not through any public form on this site, and not as part of a draft record.</p>
-              </div>
+              <h3>What you give</h3>
+              <p>Statements about your own shop, in brief: processes, machines and travel, materials and grades, sizes, tolerances, and what you do not do. No drawings, no GST or identity documents, no financial information, no customer lists, no pricing — not through any public form on this site, and not as part of a draft record.</p>
             </li>
             <li>
-              <span className="step-num" aria-hidden="true">2</span>
-              <div>
-                <h3>What is done with it</h3>
-                <p>Under the proposed method, your statements are reviewed field by field, labelled with their evidence and limits, and shown back to you as a draft. Nothing is published, ranked, or scored from a draft. Payment, if ever introduced, will never upgrade an evidence label, improve search position, or add any trust badge.</p>
-              </div>
+              <h3>What is done with it</h3>
+              <p>Under the proposed method, your statements are reviewed field by field, labelled with their evidence and limits, and shown back to you as a draft. Nothing is published, ranked, or scored from a draft. Payment, if ever introduced, will never upgrade an evidence label, improve search position, or add any trust badge.</p>
             </li>
             <li>
-              <span className="step-num" aria-hidden="true">3</span>
-              <div>
-                <h3>What you get back</h3>
-                <p>A record a buyer can actually read — and the right to approve, narrow, or withdraw every field of it. {OWNER_APPROVAL} A record you have not approved does not exist in public, and a field you withdraw disappears rather than lingering as a placeholder.</p>
-              </div>
+              <h3>What you get back</h3>
+              <p>A record a buyer can actually read — and the right to approve, narrow, or withdraw every field of it. {OWNER_APPROVAL} A record you have not approved does not exist in public, and a field you withdraw disappears rather than lingering as a placeholder.</p>
             </li>
           </ol>
           <Reveal>
@@ -148,24 +138,28 @@ export default function Manufacturers() {
             <h2 id="m-onboard">How a manufacturer would join, in six stages</h2>
             <p>Every stage below is labelled PROPOSED METHODOLOGY. No stage has been operated with a real manufacturer, and no part of it is a promise about timing, cost, or outcome.</p>
           </Reveal>
-          <ol className="step-list">
-            {STAGES.map((s) => (
-              <li key={s.title}>
-                <span className="step-num" aria-hidden="true">{s.n.replace("Stage ", "")}</span>
-                <div>
-                  <h3>{s.n} — {s.title} <span className="small secondary">(proposed)</span></h3>
-                  <p>{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <table>
+            <caption>Six proposed stages, in order</caption>
+            <thead>
+              <tr><th scope="col">Stage</th><th scope="col">What happens</th><th scope="col">Status</th></tr>
+            </thead>
+            <tbody>
+              {STAGES.map((s, i) => (
+                <tr key={s.title}>
+                  <td data-label="Stage">{s.n} of 6 — {s.title}</td>
+                  <td data-label="What happens">{s.body}</td>
+                  <td data-label="Status">Proposed</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           <Reveal>
             <h3>The 13 fields collected at Stage 2</h3>
             <ol>
               {FIELDS_13.map((f) => (<li key={f}>{f}</li>))}
             </ol>
             <h3>Document handling, in brief</h3>
-            <p>Documents are logged by type and date, access-restricted, never published in full, and redacted where needed. A document is deleted after its check unless you consent to retention, for a period still to be decided. Anything sent despite the warning — a confidential drawing, an identity document, financial information — is deleted on receipt, not stored or published, once that route is staffed.</p>
+            <p>Documents are logged by type and date, access-restricted, never published in full, and redacted where needed. A document is deleted after its check unless you consent to retention, for a period still to be decided. Anything sent despite the warning — a confidential drawing, an identity document, financial information — is deleted on receipt, not stored or published. Staffing that deletion route is still to be confirmed before any publication.</p>
             <h3>Commercial facts a record must eventually carry</h3>
             <p>Even a perfect capability record does not answer a buyer&apos;s commercial questions. Before any record is treated as complete, it must eventually carry: load and lead time, batch and repeat drift, inspection, rework, and scrap cost and who bears them, acceptance criteria, material sourcing (who supplies it), payment terms and milestones, and delivery or pickup. None of these is collected or published today.</p>
             <h3>Price</h3>
@@ -179,13 +173,14 @@ export default function Manufacturers() {
         <div className="wrap wrap-narrow">
           <Reveal>
             <p className="eyebrow">Preview form — secondary to the tool</p>
-            <h2 id="m-form">Express interest in a founding profile</h2>
+            <h2 id="m-form">Manufacturer interest (preview)</h2>
             <p>Describe what your business makes. The tool above is the primary way to assess this idea today; this form is a preview only and sends nothing.</p>
           </Reveal>
-          <PreviewForm variant="manufacturer" title="Founding manufacturer interest (preview)" idPrefix="mfr" />
-          <p className="btn-row">
-            <Link className="btn btn-outline" href="/trust-evidence">Read the evidence method</Link>
-            <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+          <PreviewForm variant="manufacturer" title="Draft interest (preview — sends nothing)" idPrefix="mfr" />
+          <p>
+            <Link href="/trust-evidence">Read the evidence method</Link>
+            {" · "}
+            <Link href="/contact">Contact</Link>
           </p>
         </div>
       </section>

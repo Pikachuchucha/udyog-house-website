@@ -207,3 +207,178 @@ display size. All other images ship at 800/1200/1600.
   inspection-micrometer srcset, and the ILLUSTRATIVE EXAMPLE sample record.
   A fresh live text fetch of trust-evidence should be re-run later once the
   fetch cache refreshes; it is NOT claimed as verified above.
+
+## Fix pass — consolidated (Critique Cycles 1–3), 3 November 2026
+
+All 30 fixes from the consolidated fix-pass brief implemented, except where
+noted below. No redesign, no story/tagline change, no invented
+members/prices/results. Decisions the brief required to be stated:
+
+- Home H1 STAYS "Discover manufacturers by what they can make." Cycle 2's
+  Home-H1 change is NOT adopted: the founder-directive hierarchy governs,
+  and the "What exists today" box directly under the hero already carries
+  the preview correction. Only the Buyers H1 changed (to "Check the brief
+  before you send the drawing.").
+- RecordBuilder completion counts ALL 14 fields (process, service type,
+  machine, travel, material, grade, condition, certificate, size, quantity,
+  tolerance, feature, finish, inspection) — the fraction was kept and fixed,
+  not dropped.
+- Header is STATIC on all widths (position:sticky dropped entirely). The
+  128px scroll-margin is kept as a harmless default, not relied on. This
+  eliminates the 1080–1180px anchor-obscuring bug class rather than
+  re-measuring it.
+- The decorative Home copper rule was DELETED (it marked no check moment).
+  Copper check-marks now render in both tool outputs, on the check-status
+  lines ("no check has been performed / claimed here").
+- The P-levels rule was applied as: Buyers guide step 5 and FAQ are now
+  one-line pointers to Trust & Evidence; both tools keep one-line-per-level
+  evidence lists (P1, P2-ID, P2-DOC, P3, P4), which is the "one line each"
+  reading that keeps the tools usable. Trust keeps the full definitions.
+- "Founding profile" / "Join" were RENAMED, not defined: no founding
+  benefit exists to define. "Contact / Join" → "Contact" everywhere on
+  site; Manufacturers form → "Draft interest (preview — sends nothing)"
+  under the heading "Manufacturer interest (preview)"; Buyers form →
+  "Draft sourcing note (preview — sends nothing)".
+- Form copy/print copies the MESSAGE draft only, on an explicit click —
+  never name/email/phone, and the success box still displays no personal
+  data. Copy-failure fallback textareas show the draft only after a failed
+  copy click.
+
+### Fix-pass build output (evidence, `npm run build`, basePath-free)
+
+```
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      492 B         107 kB
+├ ○ /_not-found                            123 B         103 kB
+├ ○ /about                                 492 B         107 kB
+├ ○ /buyers                              5.86 kB         115 kB
+├ ○ /contact                             179 B         110 kB
+├ ○ /manufacturers                       6.04 kB         115 kB
+├ ○ /privacy                               163 B         106 kB
+├ ○ /terms                                 163 B         106 kB
+└ ○ /trust-evidence                        492 B         107 kB
++ First Load JS shared by all             103 kB
+```
+
+### JS-budget waiver (formal, Manufacturers + Buyers only)
+
+The ≤110 KB gz First Load JS target is FORMALLY WAIVED for the two tool
+routes (Manufacturers 115 KB, Buyers 115 KB on Next's table). Reason: the
+shared React/Next runtime is ~106 KB (103 KB shared by all routes on the
+table) and the tool page chunks are ~6 KB; the excess is runtime, not tool
+code. Lazy-loading the tools to chase the target was rejected because it
+would risk the no-JS honest state (tools must degrade to an honest
+non-interactive state, and the no-JS path must never fake submission).
+The budget is NOT claimed as met anywhere, for any route. All other routes
+are at or under 110 KB (Contact exactly 110 KB). CSS remains 4.3 KB gz.
+
+### Fix-pass checks (built HTML, scripts stripped for visible-text counts)
+
+- PASS: `npm run build` clean (types + lint); 1 `<h1>` per page on all 10
+  built HTML files (9 routes + 404 duplicate from trailingSlash).
+- PASS: Link check, 264 internal hrefs + same-page anchors: NONE missing.
+- PASS: "Free Basic / Paid Professional" = 0; native `<form` = 0;
+  "Contact / Join" = 0; "founding" = 0; "copper-rule" = 0 in markup.
+- PASS: Price sentence "No price has been announced yet" = Manufacturers
+  only, once (visible text); Home door and Terms occurrences deleted.
+- PASS: GEO sentence exactly once per page on Home, About, Buyers,
+  Manufacturers (visible text; raw-HTML counts double because the RSC
+  flight payload repeats visible strings — that is payload duplication,
+  not visible repetition).
+- PASS: P2-ID + P2-DOC present in RecordBuilder output; P2-ID row present
+  in SampleTrace ("not applicable to this field — identity only, proves
+  nothing about capability"); Home "traced through every evidence level"
+  sentence now true, kept as-is.
+- PASS: Checkbox multi-select in both tools (12 checkboxes per tool:
+  8 processes + 4 service types; 27 checkboxes site-wide including the
+  3 form consent boxes); draft record / question sheet list all chosen
+  processes (joinList); coherence warnings ("Check this pairing") ship
+  in the tool chunks for EDM+VMC, mould(-base)+surface-grinder-only,
+  milling+lathe-only, turning+VMC-only.
+- PASS: BriefChecker has machine-type + travel inputs (bc-machine,
+  bc-travel); every checker field drives ≥1 question/note (service type,
+  condition, size, feature, finish, inspection, machine/travel notes
+  added; same drivers added to RecordBuilder notes).
+- PASS: BriefChecker uses short process names in generated sentences
+  (briefLine built from shortNames + articleFor; mapping ships in chunk).
+- PASS: Prefill appends with separator + status line (never overwrites);
+  prefill carries the draft record / question sheet only, never the
+  diagnostic notes list (recordOnly / sheetPrefill split).
+- PASS: Copy/print failure feedback in both tools and all three preview
+  forms ("Copy did not work — select the text below" + textarea;
+  blocked-print fallback block + browser-print button).
+- PASS: Preview forms: email optional (label + validation), message
+  required, consent line "This draft stays in my browser.", unticked
+  consent, no personal-data echo on success, divs + buttons only.
+- PASS: Hero pills deleted on Home, Manufacturers, Buyers, Trust, About,
+  Contact; kept only Privacy/Terms ("Draft only") and 404 ("Page not
+  found", adds info).
+- PASS: section-white ONLY on the 2 tool sections + 3 form sections.
+- PASS: Real `<figcaption>` on all 8 content figures (Home CNC,
+  Manufacturers workbench, Buyers drawing-and-part, Trust micrometer,
+  About corridor-evening, Contact material-bars, Privacy pillar-abstract,
+  Terms macro-mould) plus the About logo figure; footer imagery note kept.
+- PASS: Heroes differentiated — SampleRecord inside the Home hero panel;
+  Trust hero is the ladder strip (no photo; micrometer is a section
+  figure in the worked example); Buyers hero is a question-sheet preview
+  (drawing figure is a section figure in the guide); workbench photo hero
+  stays Manufacturers only; Privacy is a data-flow record, Terms is
+  ruled clauses (Clause 1–5).
+- PASS: Step lists differentiated — Manufacturers stages are a ruled table
+  with a "Proposed" column ("Stage N of 6"); Buyers guide keeps numbered
+  steps with the drawing figure; Trust rules are a ladder-adjacent table
+  ("Rule N of 5"); About phases carry "Phase N of 4" in the H3, no discs.
+  `.step-num` spans remain ONLY on Home 3-step + Buyers 5-step.
+- PASS: Copper off nav underline (graphite) and status-strip top border
+  (graphite); graphite `.btn` secondaries at section ends demoted to
+  text links (hero outline secondaries and tool/form buttons kept);
+  Home copper rule deleted.
+- PASS: Trust banner wrapped in `.wrap`; P0, P3, P4 definitions open by
+  default; P1, P2-ID, P2-DOC closed.
+- PASS: 404 canonical absent (both 404.html and 404/index.html).
+- PASS: No `position:sticky` in built CSS or inline HTML.
+- PASS: H2 / step numbers in Plex Sans 600 (source); Archivo only for
+  H1s, wordmark, record-sheet headings.
+- PASS: Sample annotation present on Home + Trust ("Certificate
+  availability alone does not earn P1 — receipt and logging do.
+  Commercial facts (lead time, payment, delivery) are not part of this
+  draft yet.").
+- PASS: Home corridor claim softened to "the corridor where the record
+  starts"; "dense cluster" absent; no estate-concentration fact added
+  on About (checked).
+- PASS: Full "Size (dimension) band" exactly once per page/tool
+  (Home + Trust sample rows, Buyers checker select, Manufacturers
+  builder select); "Size band" / "Size and capacity bands" thereafter.
+- PASS: Steel-on-neutral text pair guarded in CSS tokens (comment guard:
+  --neutral is borders/figure backing only, never behind steel text);
+  no rendered text pair uses it; all rendered pairs ≥4.5:1 (Graphite on
+  Ivory 14.04:1, Ivory on Deep 15.81:1, Steel on Ivory 5.15:1, White on
+  Copper 4.99:1).
+- PASS: Manufacturers deletion wording unconditional + staffing caveat
+  separate; explicit Udyog House-edit re-approval sentence in Stage 4;
+  Manufacturers meta description 115 chars (<155); Home eyebrow
+  "Starting place" glanced, kept (plain English, not the banned
+  "starting node").
+- PASS: Repetition trim: 5 status-duplicate never/ever sentences cut
+  (Home step-3 correction-route clause, About principles clause, Privacy
+  minimisation clause, Trust rules-H2 phrase, Home FAQ preview-form
+  tail). Substantive methodology "never" statements (binding rules,
+  firewalls, never-claimed list) retained deliberately — they are rules,
+  not status signalling.
+- NOT TESTED (unchanged from rebuild): live-browser screenshots,
+  interactive tool behaviour in a real browser (copy/print/prefill/
+  multi-select/coherence warnings), keyboard-only walk, screen readers,
+  Lighthouse/axe, 320 px full-page rendering, real-phone/touch, 200%
+  zoom, cross-browser chevron. No headless screenshot check was run.
+- NOT DONE (held, unchanged): production, udyoghouse.com/DNS, paid
+  service, public announcement, external contact, legal/trademark/
+  company clearance, Gate 0, deposit-test displacement, Pass 3
+  replacement, directory/search/RFQ/Order Room, form-receipt claim,
+  backend, third-party form service. Cost ₹0. Preview NOINDEX retained.
+
+### og:image (open launch item, restated — not faked)
+
+No og:image in preview, by the audit's fallback: a dedicated 1200×630
+image must use the exact logo PNG, not a redraw, and none was made. This
+is recorded as an open launch item in LAUNCH-READINESS.md, not silently
+passed. Link shares will show no image until that launch task is done.

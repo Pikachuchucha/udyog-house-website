@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { copyText, printText } from "./toolUtils";
 
 type Variant = "manufacturer" | "buyer" | "general";
 
 /* D6: NOT a native submittable form. A div with a button, JS-handled draft
    preview only. With JS off the button does nothing and no data can enter
    a URL — the noscript note says exactly that. Success never echoes
-   personal data back. Consent starts unticked. */
+   personal data back (copy/print below copy the message draft only, on an
+   explicit click). Consent starts unticked. Email is optional in preview:
+   name + message suffice for a draft. Prefill APPENDS below typed text —
+   it never overwrites it. */
 export default function PreviewForm({ variant, title, idPrefix }: {
   variant: Variant; title: string; idPrefix: string;
 }) {
@@ -19,15 +23,30 @@ export default function PreviewForm({ variant, title, idPrefix }: {
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<{ field: string; message: string }[]>([]);
   const [done, setDone] = useState(false);
-  const [prefilled, setPrefilled] = useState(false);
+  const [prefillNote, setPrefillNote] = useState<"placed" | "appended" | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  const [printFailed, setPrintFailed] = useState(false);
   const errorRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  const messageRef = useRef("");
   const p = idPrefix;
+  messageRef.current = message;
 
   useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail as { message?: string };
-      if (detail?.message) { setMessage(detail.message); setPrefilled(true); setDone(false); }
+      if (!detail?.message) return;
+      const current = messageRef.current;
+      if (current.trim()) {
+        if (current.includes(detail.message)) return;
+        setMessage(`${current}\n\n---\nTool draft appended below — your typed text above is kept:\n${detail.message}`);
+        setPrefillNote("appended");
+      } else {
+        setMessage(detail.message);
+        setPrefillNote("placed");
+      }
+      setDone(false);
     };
     window.addEventListener("uh:prefill", handler);
     return () => window.removeEventListener("uh:prefill", handler);
@@ -47,12 +66,13 @@ export default function PreviewForm({ variant, title, idPrefix }: {
   function onPreview() {
     const next: { field: string; message: string }[] = [];
     if (!name.trim()) next.push({ field: "name", message: "Please enter your name." });
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      next.push({ field: "email", message: "Please enter a valid email address." });
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      next.push({ field: "email", message: "Please enter a valid email address, or leave it blank." });
     }
     if (phone.trim() && phone.replace(/[\d+\- ]/g, "").length > 0) {
       next.push({ field: "phone", message: "Please enter a phone or WhatsApp number using digits, spaces, + and - only." });
     }
+    if (!message.trim()) next.push({ field: "message", message: "Please enter a short message." });
     if (!consent) next.push({ field: "consent", message: "Please tick the consent box to continue." });
     setErrors(next);
     if (next.length === 0) setDone(true);
@@ -60,7 +80,8 @@ export default function PreviewForm({ variant, title, idPrefix }: {
 
   function resetAll() {
     setName(""); setBusiness(""); setEmail(""); setPhone(""); setMessage("");
-    setConsent(false); setErrors([]); setDone(false); setPrefilled(false);
+    setConsent(false); setErrors([]); setDone(false); setPrefillNote(null);
+    setCopied(false); setCopyFailed(false); setPrintFailed(false);
   }
 
   const messageLabel = variant === "buyer"
@@ -74,7 +95,8 @@ export default function PreviewForm({ variant, title, idPrefix }: {
       <h3>{title}</h3>
       <p><strong>Preview form — sends nothing yet.</strong> Describe your need in general terms only.</p>
       <noscript><p>Without JavaScript this form does not work and sends nothing. No information can be submitted from this page.</p></noscript>
-      {prefilled && !done && <p role="status">Your tool draft has been placed in the message field below. You can edit it before previewing.</p>}
+      {prefillNote === "placed" && !done && <p role="status">Your tool draft has been placed in the message field below. You can edit it before previewing.</p>}
+      {prefillNote === "appended" && !done && <p role="status">Your tool draft was appended below your typed text — nothing was overwritten. You can edit it before previewing.</p>}
       {errors.length > 0 && (
         <div className="error-summary" ref={errorRef} tabIndex={-1} role="alert" aria-labelledby={`${p}-error-heading`}>
           <h4 id={`${p}-error-heading`} style={{ marginTop: 0 }}>Please fix the following</h4>
@@ -90,9 +112,27 @@ export default function PreviewForm({ variant, title, idPrefix }: {
           <p><strong>Preview only — no data has been sent, and no network request was made.</strong></p>
           <p>Nothing you entered was collected or stored. When a live form backend exists, this form will send your message and show a sent confirmation with a reply window instead. Until then, nothing leaves this page.</p>
           <p className="btn-row">
+            <button className="btn" type="button" onClick={() => copyText(message, setCopied, setCopyFailed)}>Copy message draft</button>
+            <button className="btn btn-outline" type="button" onClick={() => { if (!printText("Form message draft", message)) setPrintFailed(true); else setPrintFailed(false); }}>Print message draft</button>
             <button className="btn btn-outline" type="button" onClick={() => setDone(false)}>Edit your draft</button>
             <button className="btn btn-outline" type="button" onClick={resetAll}>Start again</button>
           </p>
+          {copied && <p role="status">Message draft copied to your clipboard.</p>}
+          {copyFailed && (
+            <div>
+              <p role="alert">Copy did not work — select the text below.</p>
+              <textarea readOnly value={message} aria-label="Message draft text to copy manually" rows={8} />
+            </div>
+          )}
+          {printFailed && (
+            <div className="print-fallback">
+              <p role="alert">The print popup was blocked. Use your browser print on the text below instead.</p>
+              <pre>{message}</pre>
+              <p className="btn-row">
+                <button className="btn btn-outline" type="button" onClick={() => window.print()}>Print this page</button>
+              </p>
+            </div>
+          )}
         </div>
       ) : (
         <>
@@ -109,9 +149,9 @@ export default function PreviewForm({ variant, title, idPrefix }: {
             </div>
           )}
           <div>
-            <label htmlFor={`${p}-email`}>Email address *</label>
+            <label htmlFor={`${p}-email`}>Email address (optional)</label>
             <input id={`${p}-email`} type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)}
-              required aria-required="true" aria-invalid={!!fieldError("email")} aria-describedby={describedBy("email")} />
+              aria-invalid={!!fieldError("email")} aria-describedby={describedBy("email")} />
             {fieldError("email") && <p id={`${p}-email-error`} className="field-error">{fieldError("email")}</p>}
           </div>
           <div>
@@ -121,9 +161,10 @@ export default function PreviewForm({ variant, title, idPrefix }: {
             {fieldError("phone") && <p id={`${p}-phone-error`} className="field-error">{fieldError("phone")}</p>}
           </div>
           <div>
-            <label htmlFor={`${p}-message`}>{messageLabel}</label>
+            <label htmlFor={`${p}-message`}>{messageLabel} *</label>
             <textarea id={`${p}-message`} value={message} onChange={(e) => setMessage(e.target.value)}
-              aria-describedby={`${p}-message-hint`} />
+              required aria-required="true" aria-invalid={!!fieldError("message")} aria-describedby={describedBy("message", `${p}-message-hint`)} />
+            {fieldError("message") && <p id={`${p}-message-error`} className="field-error">{fieldError("message")}</p>}
             <p id={`${p}-message-hint`} className="small secondary">
               Do not include confidential drawings, specifications, GST documents,
               identity documents, financial information, customer lists, pricing, or employee personal data.
@@ -133,8 +174,7 @@ export default function PreviewForm({ variant, title, idPrefix }: {
             <input id={`${p}-consent`} type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)}
               aria-required="true" aria-invalid={!!fieldError("consent")} aria-describedby={describedBy("consent")} />
             <label htmlFor={`${p}-consent`} style={{ marginTop: 0 }}>
-              I understand this is a preview form, that no data will be sent, and that I should not
-              include confidential information. *
+              This draft stays in my browser. *
             </label>
           </div>
           {fieldError("consent") && <p id={`${p}-consent-error`} className="field-error">{fieldError("consent")}</p>}

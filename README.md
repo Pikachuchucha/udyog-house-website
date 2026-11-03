@@ -168,9 +168,10 @@ logo, which is prohibited. The old 320px logo files were deleted.
   ✓); largest image 90 KB (target ≤100 KB ✓); eager images ≤150 KB desktop /
   ≤100 KB mobile — hero figures are the only eager images and are ≤90 KB ✓;
   zero third-party requests ✓. First Load JS per Next's table: 107 KB (Home,
-  About, Trust), 109 KB (Contact), 113 KB (Buyers), 114 KB (Manufacturers)
-  against a ≤110 KB target — the two tool pages miss marginally, driven by the
-  103 KB shared React/Next runtime; see QA-REPORT.md for the honest gz sums.
+  About, Trust), 110 KB (Contact), 115 KB (Buyers), 115 KB (Manufacturers)
+  against a ≤110 KB target — the two tool pages are formally WAIVED (shared
+  React/Next runtime ~106 KB; lazy-loading would risk the no-JS honest
+  state); see QA-REPORT.md fix-pass section. The budget is not claimed met.
 
 ## Development
 

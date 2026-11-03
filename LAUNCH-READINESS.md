@@ -77,8 +77,15 @@ needs approval or a decision, and what is incomplete.
   interactive/cross-browser/Lighthouse QA, npm audit review, live-browser
   screenshots, keyboard/screen-reader testing, 320 px full-page check,
   real-phone testing (see QA-REPORT.md "What was NOT tested").
-- First Load JS on tool pages: 113–114 KB vs the 110 KB target (marginal miss,
-  shared-runtime driven; see QA-REPORT.md).
+- First Load JS on tool pages: 115 KB vs the ≤110 KB target — FORMALLY
+  WAIVED for Manufacturers/Buyers (see QA-REPORT.md fix-pass section):
+  shared React/Next runtime ~106 KB, tool page chunks ~6 KB; lazy-loading
+  the tools to chase the target would risk the no-JS honest state. The
+  budget is NOT claimed as met. All other routes are at or under 110 KB.
+- No og:image in preview (see above) — open launch item, restated in the
+  fix pass; no image was faked and the logo was not redrawn.
+- No new open items were created by the fix pass (all 30 fixes implemented;
+  see QA-REPORT.md fix-pass section).
 - Corridor-evening image ships at 800/1200 only (1600w cannot fit the 100 KB
   budget at acceptable quality; see QA-REPORT.md).
 - No og:image in preview (see above).

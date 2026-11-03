@@ -40,29 +40,32 @@ export default function Home() {
       <JsonLd data={webPageSchema("/", "Udyog House — Discover. Trust. Source.", "Discover manufacturers by what they can make. A capability record for tool rooms and mould makers in Vasai East.")} />
 
       <section className="hero-panel hero-anim" aria-labelledby="home-h1">
-        <div className="wrap">
-          <p><span className="pill-opaque">Preview — Planned, not live</span></p>
-          <p className="lede" style={{ fontWeight: 700 }}>Discover. Trust. Source.</p>
-          <h1 id="home-h1">Discover manufacturers by what they can make.</h1>
-          <p className="lede">
-            Most industrial discovery fails at the same point: a shop says it
-            &ldquo;does CNC&rdquo; — and nobody can tell what that covers.
-          </p>
-          <p>
-            Computer Numerical Control (CNC) is a category, not a capability. A useful
-            record says more: the process, the machine and its travel, the material
-            and its grade, the size, the tolerance and how it is measured — and the
-            evidence behind each one, with its limits attached.
-          </p>
-          <p>
-            That record is what Udyog House is building, owner by owner, in one
-            corridor first. {GEO_ONE_FORM}
-          </p>
-          <p className="hero-cta btn-row">
-            <Link className="btn btn-copper" href="/manufacturers">Build a draft record</Link>
-            <Link className="btn btn-outline" href="/buyers">Check a brief</Link>
-          </p>
-          <div className="copper-rule draw" aria-hidden="true" />
+        <div className="wrap ed-grid">
+          <div className="span-7">
+            <p className="lede" style={{ fontWeight: 700 }}>Discover. Trust. Source.</p>
+            <h1 id="home-h1">Discover manufacturers by what they can make.</h1>
+            <p className="lede">
+              Most industrial discovery fails at the same point: a shop says it
+              &ldquo;does CNC&rdquo; — and nobody can tell what that covers.
+            </p>
+            <p>
+              Computer Numerical Control (CNC) is a category, not a capability. A useful
+              record says more: the process, the machine and its travel, the material
+              and its grade, the size, the tolerance and how it is measured — and the
+              evidence behind each one, with its limits attached.
+            </p>
+            <p>
+              That record is what Udyog House is building, owner by owner, in one
+              corridor first.
+            </p>
+            <p className="hero-cta btn-row">
+              <Link className="btn btn-copper" href="/manufacturers">Build a draft record</Link>
+              <Link className="btn btn-outline" href="/buyers">Check a brief</Link>
+            </p>
+          </div>
+          <div className="span-5">
+            <SampleRecord />
+          </div>
         </div>
       </section>
 
@@ -83,19 +86,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="record-heading">
+      <section className="section" aria-labelledby="record-heading">
         <div className="wrap ed-grid">
           <div className="span-7">
             <Reveal>
               <p className="eyebrow">The record, first</p>
               <h2 id="record-heading">A capability record you can actually read</h2>
               <p>
-                This is the shape of the record: ruled rows, one field per row,
-                each field carrying its own evidence and its own limits. Read the
-                annotations beside it — they say what each row is for, and what
-                it cannot prove on its own.
+                The record in the hero panel above is the shape of the record: ruled
+                rows, one field per row, each field carrying its own evidence and
+                its own limits. Read the annotations beside it — they say what each
+                row is for, and what it cannot prove on its own.
               </p>
-              <SampleRecord />
               <p>
                 The same field from this record — CNC milling in stainless steel at
                 ±0.02–0.05 mm — is traced through every evidence level on{" "}
@@ -148,23 +150,22 @@ export default function Home() {
               <span className="step-num" aria-hidden="true">3</span>
               <div>
                 <h3>Approve, then publish</h3>
-                <p>{`You approve every field. Or it does not go up.`} Approval is recorded per field, and a correction and removal route must be live before any profile is ever published. Neither exists yet, because no profile exists yet.</p>
+                <p>{`You approve every field. Or it does not go up.`} Approval is recorded per field. Nothing is approved or published yet, because no profile exists yet.</p>
               </div>
             </li>
           </ol>
         </div>
       </section>
 
-      <section className="section section-white" aria-labelledby="corridor-heading">
+      <section className="section" aria-labelledby="corridor-heading">
         <div className="wrap ed-grid">
           <div className="span-7">
             <Reveal>
               <p className="eyebrow">Starting place</p>
               <h2 id="corridor-heading">One corridor first. Not everywhere, all at once.</h2>
               <p>
-                Vasai East, in Palghar district, Maharashtra, is where the record starts:
-                a dense cluster of tool rooms and mould shops that a buyer can actually
-                visit, and a seller can actually deliver to. {GEO_ONE_FORM} No other
+                Vasai East, in Palghar district, Maharashtra, is the corridor where
+                the record starts. {GEO_ONE_FORM} No other
                 cluster is claimed until it is genuinely built there — including
                 Bhosari, Pimpri-Chinchwad, and Chakan, which are named here only as
                 a future direction, not a present claim.
@@ -173,6 +174,10 @@ export default function Home() {
                 Job-work here means work on a customer&apos;s order or material. It is
                 a commercial arrangement, not a process: the process is still CNC
                 milling, turning, grinding, or mould making, and the record says which.
+              </p>
+              <p>
+                How this grows, phase by phase, is on{" "}
+                <Link href="/about#phases">About</Link>.
               </p>
             </Reveal>
           </div>
@@ -214,13 +219,13 @@ export default function Home() {
             <div className="two-col">
               <section className="door" aria-labelledby="m-door">
                 <h3 id="m-door">For manufacturers</h3>
-                <p>Build a draft record for what your shop can actually make, and see what it still needs before anyone should rely on it. No price has been announced yet, and no enquiry is guaranteed.</p>
-                <p className="btn-row"><Link className="btn" href="/manufacturers">Build a draft record</Link></p>
+                <p>Build a draft record for what your shop can actually make, and see what it still needs before anyone should rely on it. No enquiry is guaranteed.</p>
+                <p><Link href="/manufacturers">Build a draft record</Link></p>
               </section>
               <section className="door" aria-labelledby="b-door">
                 <h3 id="b-door">For buyers</h3>
                 <p>Check a brief before sharing a drawing: the questions to ask, and the evidence to request, for the job you describe. No shop, price, or lead time is shown, because none exists here yet.</p>
-                <p className="btn-row"><Link className="btn" href="/buyers">Check a brief</Link></p>
+                <p><Link href="/buyers">Check a brief</Link></p>
               </section>
             </div>
           </Reveal>
@@ -235,12 +240,13 @@ export default function Home() {
           </Reveal>
           <details><summary>What is a capability record?</summary><p>A structured statement of what a shop can make: process, machine and travel, material and grade, size, tolerance with its feature and finish, inspection method — and the evidence behind each field, with its limits. One field, one label, no blanket claim.</p></details>
           <details><summary>How is this different from a directory?</summary><p>A directory lists names and categories. A record answers the question a directory cannot: what this shop can actually make, at what tolerance, in what material, on what evidence. No directory exists here yet, and none is claimed.</p></details>
-          <details><summary>Why start in Vasai East?</summary><p>Because a record is only as good as its checks, and checks need a place: shops that can be visited, work that can be witnessed, and deliveries that can be made. {GEO_ONE_FORM}</p></details>
+          <details><summary>Why start in Vasai East?</summary><p>Because a record is only as good as its checks, and checks need a place: shops that can be visited, work that can be witnessed, and deliveries that can be made. See the <a href="#corridor-heading">corridor section</a> above.</p></details>
           <details><summary>Can I search for a shop on this site today?</summary><p>Not yet. There is no shop to search for here. What you can do today is build a draft record or check a brief, in your browser, and judge whether the record itself is worth your time.</p></details>
-          <details><summary>What should I do before sharing a drawing?</summary><p>Check the brief first: process, material and grade, tolerance band, quantity band, and the evidence you want to see. Share drawings only through a direct, agreed channel once a shop and a scope are clear — never through a preview form.</p></details>
-          <p className="btn-row">
-            <Link className="btn" href="/manufacturers">Build a draft record</Link>
-            <Link className="btn btn-outline" href="/contact">Contact / Join</Link>
+          <details><summary>What should I do before sharing a drawing?</summary><p>Check the brief first: process, material and grade, tolerance band, quantity band, and the evidence you want to see. Share drawings only through a direct, agreed channel once a shop and a scope are clear.</p></details>
+          <p>
+            <Link href="/manufacturers">Build a draft record</Link>
+            {" · "}
+            <Link href="/contact">Contact</Link>
           </p>
         </div>
       </section>
