@@ -191,9 +191,19 @@ display size. All other images ship at 800/1200/1600.
 - Live text fetch of the deployed Pages site is a separate step after
   deployment (see deployment verification below).
 
-## Deployment verification (to be completed after gh-pages publish)
+## Deployment verification (completed 3 Nov 2026, ~14:27–14:28 UTC)
 
-- [ ] `npm run build:pages` clean, main stays basePath-free.
-- [ ] Pages status "built" on gh-pages.
-- [ ] Live text fetch: homepage, buyers, trust-evidence.
-- [ ] `.nojekyll` present in the published tree.
+- [x] `npm run build:pages` clean, main stays basePath-free (main 6d24f06).
+- [x] Pages status "built" on gh-pages (commit b936c02, via GitHub API, error null).
+- [x] `.nojekyll` present in the published tree.
+- [x] Live text fetch, fresh (<1 min old crawls): homepage — new hero, sample
+  record, corridor, doors, FAQ all present; buyers — new hero, Brief Checker
+  empty state, guide, glossary, FAQ, preview form all present.
+- [~] Live text fetch, trust-evidence: the fetch service returned a STALE
+  cached crawl (14:07 UTC, old site) on two attempts, while homepage and
+  buyers fetched fresh at 14:28 UTC from the same deploy. The new Trust page
+  on the deployed branch was verified instead via git: `git show
+  origin/gh-pages:trust-evidence/index.html` contains P2-ID, the
+  inspection-micrometer srcset, and the ILLUSTRATIVE EXAMPLE sample record.
+  A fresh live text fetch of trust-evidence should be re-run later once the
+  fetch cache refreshes; it is NOT claimed as verified above.
