@@ -58,10 +58,9 @@ export default function Contact() {
                 window — is a launch decision, and it will be published as one when
                 it exists, rather than implied by a form that goes nowhere.
               </p>
-              <p>
-                <Link href="/manufacturers">For manufacturers — build a draft record</Link>
-                <br />
-                <Link href="/buyers">For buyers — check a brief</Link>
+              <p className="btn-row">
+                <Link className="btn btn-outline" href="/manufacturers">For manufacturers — build a draft record</Link>
+                <Link className="btn btn-outline" href="/buyers">For buyers — check a brief</Link>
               </p>
               <h3>If you still want to leave a note</h3>
               <p>The preview form below takes a draft only. It sends nothing, stores nothing, and promises no reply — because there is no backend to reply from yet. Describe your interest briefly.</p>

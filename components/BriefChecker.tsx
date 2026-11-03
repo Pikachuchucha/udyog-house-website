@@ -241,14 +241,17 @@ export default function BriefChecker() {
         )}
         <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check is claimed here — the list below is what to request, not what has been done.</p>
         <h4>Evidence to request — and what each level does not prove</h4>
-        <ul>
-          <li><strong>P0 Supplier-declared:</strong> the shop&apos;s own words. A starting point; not a check.</li>
-          <li><strong>P1 Document received:</strong> a document was received and logged. Receipt is not authenticity, currency, or capability.</li>
-          <li><strong>P2-ID Identity cross-checked:</strong> identity / authorised representative only. Proves nothing about capability.</li>
-          <li><strong>P2-DOC Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
-          <li><strong>P3 Observed capability:</strong> a named machine witnessed producing comparable work, measured as stated. Point in time only.</li>
-          <li><strong>P4 Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Counterparty-confirmed is strongest; supplier-held documents are weakest. Not a rating or a future guarantee.</li>
-        </ul>
+        <details>
+          <summary>What the evidence levels mean</summary>
+          <ul>
+            <li><strong>P0 Supplier-declared:</strong> the shop&apos;s own words. A starting point; not a check.</li>
+            <li><strong>P1 Document received:</strong> a document was received and logged. Receipt is not authenticity, currency, or capability.</li>
+            <li><strong>P2-ID Identity cross-checked:</strong> identity / authorised representative only. Proves nothing about capability.</li>
+            <li><strong>P2-DOC Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
+            <li><strong>P3 Observed capability:</strong> a named machine witnessed producing comparable work, measured as stated. Point in time only.</li>
+            <li><strong>P4 Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Counterparty-confirmed is strongest; supplier-held documents are weakest. Not a rating or a future guarantee.</li>
+          </ul>
+        </details>
         {noteList.length > 0 && (
           <ul>{noteList.map((n) => (<li key={n}>{n}</li>))}</ul>
         )}

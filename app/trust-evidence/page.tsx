@@ -9,12 +9,12 @@ import { IMAGERY_NOTE, PREVIEW } from "../../lib/site";
 export const metadata: Metadata = {
   title: "Trust & Evidence — Udyog House | Evidence labels P0 to P4, proposed method",
   description:
-    "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what is never claimed. No label applied to any manufacturer.",
+    "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what each label does and does not do. No label applied to any manufacturer.",
   robots: { index: false, follow: false },
   alternates: { canonical: `${PREVIEW}/trust-evidence/` },
   openGraph: {
     title: "Trust & Evidence — Udyog House",
-    description: "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what is never claimed.",
+    description: "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what each label does and does not do.",
     url: `${PREVIEW}/trust-evidence/`,
     siteName: "Udyog House",
     type: "website",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Trust & Evidence — Udyog House",
-    description: "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what is never claimed.",
+    description: "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what each label does and does not do.",
   },
 };
 
@@ -65,12 +65,12 @@ const DEFINITIONS: { code: string; title: string; body: string[] }[] = [
 export default function TrustEvidence() {
   return (
     <>
-      <JsonLd data={webPageSchema("/trust-evidence/", "Trust & Evidence — Udyog House", "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what is never claimed.")} />
+      <JsonLd data={webPageSchema("/trust-evidence/", "Trust & Evidence — Udyog House", "Proposed methodology only: what each evidence label P0 to P4 would mean, its limits, and what each label does and does not do.")} />
       <JsonLd data={breadcrumbSchema([{ label: "Trust & Evidence", path: "/trust-evidence/" }])} />
       <Breadcrumbs items={[{ label: "Trust & Evidence" }]} />
 
       <section className="hero-panel hero-anim" aria-labelledby="t-h1">
-        <div className="wrap hero-grid">
+        <div className="wrap">
           <div>
             <h1 id="t-h1">A label without its record is not used here.</h1>
             <p className="lede">
@@ -83,18 +83,6 @@ export default function TrustEvidence() {
               <Link className="btn btn-copper" href="/manufacturers">Build a draft record</Link>
               <Link className="btn btn-outline" href="/buyers">Check a brief</Link>
             </p>
-          </div>
-          <div className="ladder-strip" aria-label="Evidence ladder at a glance">
-            <p className="eyebrow">The ladder, at a glance</p>
-            <ol>
-              <li><strong>P0</strong> — Supplier-declared: the shop says so.</li>
-              <li><strong>P1</strong> — Document received: a named document arrived and was logged.</li>
-              <li><strong>P2-ID</strong> — Identity cross-checked: who, matched to a source.</li>
-              <li><strong>P2-DOC</strong> — Document cross-checked: named fields matched to a source.</li>
-              <li><strong>P3</strong> — Observed capability: a named machine witnessed, measured as stated.</li>
-              <li><strong>P4</strong> — Transaction-evidenced: one specific past transaction, by stated evidence.</li>
-            </ol>
-            <p className="small secondary">Full definitions, with limits, follow below. No label is applied to anyone here.</p>
           </div>
         </div>
       </section>
@@ -191,16 +179,16 @@ export default function TrustEvidence() {
       <section className="section" aria-labelledby="t-never">
         <div className="wrap wrap-narrow">
           <Reveal>
-            <p className="eyebrow">What is never claimed</p>
-            <h2 id="t-never">No blanket claim. No shortcut to trust.</h2>
+            <p className="eyebrow">What a label does not do</p>
+            <h2 id="t-never">Each label covers one field, and no more</h2>
           </Reveal>
           <ul>
-            <li>No blanket claim is made that a manufacturer is “verified”, certified, accredited, approved, or vetted in general terms — and none is planned. Such words appear only inside a specific field record, with scope, checker, date, and limits.</li>
-            <li>Udyog House is not an accredited inspection or certification body.</li>
-            <li>A factory visit, an identity document, or a registration document alone does not prove capability, quality, capacity, reliability, or delivery.</li>
-            <li>No pay-to-rank, pay-to-verify, or opaque trust score is offered or implied.</li>
-            <li>No ranking, testimonial, customer logo, partnership, transaction, or revenue claim is made on this site.</li>
-            <li>Expired or unrechecked labels must be downgraded or removed — silence is not an option, once labels exist. No label exists yet.</li>
+            <li>Each label covers one named field only. Words such as &ldquo;verified&rdquo;, certified, accredited, approved, or vetted, used in general terms about a business, are outside this method: such words appear only inside a specific field record, with scope, checker, date, and limits.</li>
+            <li>A label records a check on one field, with its scope, method, checker, date, and limits. It is not a certification, an accreditation, an inspection certificate, or a quality guarantee, and Udyog House is not an accredited inspection or certification body.</li>
+            <li>A factory visit, an identity document, or a registration document covers only what it shows — presence, identity, or registration. Capability, quality, capacity, reliability, and delivery each need their own stated check.</li>
+            <li>Ranking and trust scores sit outside this method: no pay-to-rank, pay-to-verify, or opaque trust score is offered or implied, and payment changes no label (see Rule 5).</li>
+            <li>This site publishes records and methods only: no ranking, testimonial, customer logo, partnership, transaction, or revenue claim is made here.</li>
+            <li>An expired or unrechecked label is downgraded or removed, so a stale label does not stand silently once labels exist. No label exists yet.</li>
           </ul>
           <h3>Who checks?</h3>
           <p>The checker for a field is named by role and relationship to the supplier, beside the label. The checker is never the supplier above P0, and is not an accredited inspector. The role and competence criteria for checkers are still to be defined before any check is performed — that definition is a launch item, not a preview claim.</p>

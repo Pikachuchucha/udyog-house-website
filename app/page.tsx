@@ -93,12 +93,6 @@ export default function Home() {
               <p className="eyebrow">The record, first</p>
               <h2 id="record-heading">A capability record you can actually read</h2>
               <p>
-                The record in the hero panel above is the shape of the record: ruled
-                rows, one field per row, each field carrying its own evidence and
-                its own limits. Read the annotations beside it — they say what each
-                row is for, and what it cannot prove on its own.
-              </p>
-              <p>
                 The same field from this record — CNC milling in stainless steel at
                 ±0.02–0.05 mm — is traced through every evidence level on{" "}
                 <Link href="/trust-evidence">Trust &amp; Evidence</Link>, with the
@@ -158,64 +152,36 @@ export default function Home() {
       </section>
 
       <section className="section" aria-labelledby="corridor-heading">
-        <div className="wrap ed-grid">
-          <div className="span-7">
-            <Reveal>
-              <p className="eyebrow">Starting place</p>
-              <h2 id="corridor-heading">One corridor first. Not everywhere, all at once.</h2>
-              <p>
-                Vasai East, in Palghar district, Maharashtra, is the corridor where
-                the record starts. {GEO_ONE_FORM} No other
-                cluster is claimed until it is genuinely built there — including
-                Bhosari, Pimpri-Chinchwad, and Chakan, which are named here only as
-                a future direction, not a present claim.
-              </p>
-              <p>
-                Job-work here means work on a customer&apos;s order or material. It is
-                a commercial arrangement, not a process: the process is still CNC
-                milling, turning, grinding, or mould making, and the record says which.
-              </p>
-              <p>
-                How this grows, phase by phase, is on{" "}
-                <Link href="/about#phases">About</Link>.
-              </p>
-            </Reveal>
-          </div>
-          <div className="span-5">
-            <Reveal>
-              <div className="corridor-drawing">
-                <svg viewBox="0 0 520 220" role="img" aria-label="Schematic corridor drawing: Vasai East first, then Waliv, Sativali, and Gokhivare, not to scale">
-                  <defs>
-                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e7e2d6" strokeWidth="1" />
-                    </pattern>
-                  </defs>
-                  <rect width="520" height="220" fill="url(#grid)" />
-                  <line x1="40" y1="120" x2="480" y2="120" stroke="#1e2328" strokeWidth="2" />
-                  <circle cx="80" cy="120" r="14" fill="#1e2328" />
-                  <circle cx="220" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
-                  <circle cx="330" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
-                  <circle cx="440" cy="120" r="10" fill="#f4f1ea" stroke="#1e2328" strokeWidth="2" />
-                  <text x="80" y="160" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1e2328">Vasai East</text>
-                  <text x="80" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">starting here</text>
-                  <text x="220" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Waliv</text>
-                  <text x="330" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Sativali</text>
-                  <text x="440" y="160" textAnchor="middle" fontSize="13" fill="#1e2328">Gokhivare</text>
-                  <text x="220" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
-                  <text x="330" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
-                  <text x="440" y="178" textAnchor="middle" fontSize="11" fill="#5a6772">next, when built</text>
-                  <line x1="480" y1="30" x2="480" y2="60" stroke="#1e2328" strokeWidth="2" />
-                  <polygon points="480,18 474,32 486,32" fill="#1e2328" />
-                  <text x="480" y="76" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1e2328">N</text>
-                  <text x="40" y="205" fontSize="11" letterSpacing="2" fill="#5a6772">NOT TO SCALE — SCHEMATIC ONLY, NOT A MAP OF MEMBERS</text>
-                </svg>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-        <div className="wrap" style={{ marginTop: "2rem" }}>
+        <div className="wrap">
           <Reveal>
-            <h2 id="doors-heading" style={{ fontSize: "1.6rem" }}>Start where you stand</h2>
+            <p className="eyebrow">Starting place</p>
+            <h2 id="corridor-heading">One corridor first. Not everywhere, all at once.</h2>
+            <p>
+              Vasai East, in Palghar district, Maharashtra, is the corridor where
+              the record starts. {GEO_ONE_FORM} No other
+              cluster is claimed until it is genuinely built there — including
+              Bhosari, Pimpri-Chinchwad, and Chakan, which are named here only as
+              a future direction, not a present claim.
+            </p>
+            <p>
+              Job-work here means work on a customer&apos;s order or material. It is
+              a commercial arrangement, not a process: the process is still CNC
+              milling, turning, grinding, or mould making, and the record says which.
+            </p>
+            <p>
+              The corridor schematic is on{" "}
+              <Link href="/about#a-corridor">About</Link>. How this grows, phase by
+              phase, is on{" "}
+              <Link href="/about#phases">About</Link>.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="doors-heading">
+        <div className="wrap">
+          <Reveal>
+            <h2 id="doors-heading">Start where you stand</h2>
             <div className="two-col">
               <section className="door" aria-labelledby="m-door">
                 <h3 id="m-door">For manufacturers</h3>
@@ -240,7 +206,7 @@ export default function Home() {
           </Reveal>
           <details><summary>What is a capability record?</summary><p>A structured statement of what a shop can make: process, machine and travel, material and grade, size, tolerance with its feature and finish, inspection method — and the evidence behind each field, with its limits. One field, one label, no blanket claim.</p></details>
           <details><summary>How is this different from a directory?</summary><p>A directory lists names and categories. A record answers the question a directory cannot: what this shop can actually make, at what tolerance, in what material, on what evidence. No directory exists here yet, and none is claimed.</p></details>
-          <details><summary>Why start in Vasai East?</summary><p>Because a record is only as good as its checks, and checks need a place: shops that can be visited, work that can be witnessed, and deliveries that can be made. See the <a href="#corridor-heading">corridor section</a> above.</p></details>
+          <details><summary>Why start narrow, in one corridor?</summary><p>Because a record is only as good as its checks, and checks need a place: shops that can be visited, work that can be witnessed, and deliveries that can be made. So the record starts in one corridor and earns the next one. {GEO_ONE_FORM} See the <a href="#corridor-heading">corridor section</a> above.</p></details>
           <details><summary>Can I search for a shop on this site today?</summary><p>Not yet. There is no shop to search for here. What you can do today is build a draft record or check a brief, in your browser, and judge whether the record itself is worth your time.</p></details>
           <details><summary>What should I do before sharing a drawing?</summary><p>Check the brief first: process, material and grade, tolerance band, quantity band, and the evidence you want to see. Share drawings only through a direct, agreed channel once a shop and a scope are clear.</p></details>
           <p>

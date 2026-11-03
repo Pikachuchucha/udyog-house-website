@@ -79,14 +79,6 @@ export default function About() {
                 <SiteImage src="/img/corridor-evening-1200.webp" srcSet={imgSet("corridor-evening", [800, 1200])} sizes={FIGURE_SIZES} width="1200" height="800" alt="Workshops along an industrial corridor in the evening, shutters and small units, no signage visible" loading="lazy" />
                 <figcaption>Illustrative corridor evening — not a photograph of Udyog House facilities or members.</figcaption>
               </figure>
-              <h3>The mark</h3>
-              <p>The mark is the Udyog House monogram: upright pillars joined by a single crossbar.</p>
-              <figure className="figure figure-logo">
-                {/* Transparent variant, used once, on a light background only, at 160px. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <SiteImage src="/logo/uh-transparent-160.png" alt="Udyog House monogram" width="160" height="160" loading="lazy" />
-                <figcaption>Udyog House monogram.</figcaption>
-              </figure>
             </Reveal>
           </div>
         </div>
@@ -102,6 +94,11 @@ export default function About() {
                 The record starts in Vasai East, Palghar district, Maharashtra, and
                 grows only where it has genuinely been built — Waliv, Sativali, and
                 Gokhivare next, when built. No other cluster is claimed in advance.
+              </p>
+              <p>
+                The record starts narrow because checks need a place: shops that can
+                be visited, work that can be witnessed, and deliveries that can be
+                made — so one corridor is earned before the next.
               </p>
             </Reveal>
           </div>

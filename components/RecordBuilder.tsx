@@ -143,6 +143,16 @@ export default function RecordBuilder() {
   }
 
   const noteList = notes();
+  /* Grouping for display only: "missing" notes name a field or detail the
+     draft still lacks; everything else is a question to ask before relying
+     on the draft. Nothing is dropped: the fallback group is "ask", and the
+     copy/print sheet below still carries every note, ungrouped. */
+  const noteGroup = (n: string): "missing" | "ask" =>
+    /still missing|not yet specified|not yet stated|not specified|not yet decided|also needs|must state the full specification|cannot be compared until/i.test(n)
+      ? "missing"
+      : "ask";
+  const missingNotes = noteList.filter((n) => noteGroup(n) === "missing");
+  const askNotes = noteList.filter((n) => noteGroup(n) === "ask");
   /* Prefill carries ONLY the draft record, never the diagnostic notes list. */
   const recordOnly = [
     "Capability record — draft (local only, P0 supplier-declared)",
@@ -241,17 +251,31 @@ export default function RecordBuilder() {
         <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check has been performed on this draft — every field is P0, supplier-declared.</p>
 
         <h3>What this record still needs before anyone should rely on it</h3>
-        <ul>
-          <li><strong>P1 — Document received:</strong> a named document, received and logged. Receipt alone is not verification.</li>
-          <li><strong>P2-ID — Identity cross-checked:</strong> identity or authorised representative only, matched to a named source. Proves nothing about capability.</li>
-          <li><strong>P2-DOC — Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
-          <li><strong>P3 — Observed capability:</strong> a named machine witnessed producing comparable work, measured by a stated method to a stated tolerance. Point in time only.</li>
-          <li><strong>P4 — Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Never a rating or a future guarantee.</li>
-        </ul>
-        {noteList.length > 0 && (
+        <details>
+          <summary>What the evidence levels mean</summary>
           <ul>
-            {noteList.map((n) => (<li key={n}>{n}</li>))}
+            <li><strong>P1 — Document received:</strong> a named document, received and logged. Receipt alone is not verification.</li>
+            <li><strong>P2-ID — Identity cross-checked:</strong> identity or authorised representative only, matched to a named source. Proves nothing about capability.</li>
+            <li><strong>P2-DOC — Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
+            <li><strong>P3 — Observed capability:</strong> a named machine witnessed producing comparable work, measured by a stated method to a stated tolerance. Point in time only.</li>
+            <li><strong>P4 — Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Never a rating or a future guarantee.</li>
           </ul>
+        </details>
+        {missingNotes.length > 0 && (
+          <>
+            <h4>Missing from this draft</h4>
+            <ul>
+              {missingNotes.map((n) => (<li key={n}>{n}</li>))}
+            </ul>
+          </>
+        )}
+        {askNotes.length > 0 && (
+          <>
+            <h4>Ask before anyone relies on it</h4>
+            <ul>
+              {askNotes.map((n) => (<li key={n}>{n}</li>))}
+            </ul>
+          </>
         )}
         <div aria-live="polite" className="small secondary"><p>{live}</p></div>
         <p className="btn-row">

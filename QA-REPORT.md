@@ -385,3 +385,141 @@ No og:image in preview, by the audit's fallback: a dedicated 1200×630
 image must use the exact logo PNG, not a redraw, and none was made. This
 is recorded as an open launch item in LAUNCH-READINESS.md, not silently
 passed. Link shares will show no image until that launch task is done.
+
+## Fix pass — Cycle 4 (9 must-fix items + 1 optional), 3 November 2026
+
+Source review: `~/workspace/udyog-house-website-discovery/final-reviews/cycle-4-final-creative-director-review.md`.
+All 9 must-fix items implemented; the 1 optional item implemented (zero-risk).
+No brief, tagline-hierarchy, or held-item change. Home H1 unchanged
+("Discover manufacturers by what they can make."). Preview stays NOINDEX;
+cost ₹0; main stays basePath-free; Pages via `npm run build:pages` only.
+
+What changed, per item:
+
+1. PASS — Trust hero ladder-strip CUT (with its "The ladder, at a glance"
+   eyebrow). Hero is now full-width text. The deep summary table stays,
+   including its own "The ladder, at a glance" eyebrow and the "what it
+   does not prove" column — that occurrence legitimately remains, and is
+   the only one left in built Trust HTML.
+2. PASS — Home circular "record, first" prose CUT (the paragraph beginning
+   "The record in the hero panel above is the shape of the record").
+   "How to read" annotations and the CNC figure + caption kept. Heading
+   order re-verified on built Home HTML (H1, then H2s with H3s nested,
+   no skipped levels).
+3. PASS — Corridor schematic REMOVED from Home (SVG count 0 in built Home
+   HTML), KEPT on About only (SVG count 1). Home corridor section keeps
+   the GEO sentence verbatim and now links to About's corridor section
+   (`/about#a-corridor`, the existing heading id) plus the phases link.
+   No new corridor fact added on either page.
+4. PASS — Buyers static "Question sheet — preview / Not a match" box CUT
+   from the hero (count 0 in built Buyers HTML). Hero is full-width text
+   (H1 "Check the brief before you send the drawing." + lede + CTAs).
+   The drawing-and-part figure stays in its guide-section position with
+   its caption.
+5. PASS — Placeless Vasai rationale REFRAMED, not invented. Home FAQ now
+   asks "Why start narrow, in one corridor?" — answer: checks need a
+   place (visited shops, witnessed work, deliverable work), so the record
+   starts in one corridor and earns the next one; GEO sentence unchanged.
+   About corridor section mirrors the reframe with the same rationale
+   sentence. No new Vasai East factual claim added anywhere.
+6. PASS — Trust negation voice retitled: section now "What a label does
+   not do" (eyebrow) / "Each label covers one field, and no more" (H2).
+   4 of its 6 bullets converted to positive scope statements (field-only
+   scope; label-as-record, not certification; visit/document covers only
+   what it shows; ranking/trust scores outside the method); the other 2
+   kept as scope statements. The 5 binding rules table is VERBATIM
+   (its "never"s are rules, not voice). "never" count on the Trust page
+   source file, case-insensitive: 20 before → 15 after. Remaining
+   occurrences are the rules table, the definitions, the limits-column
+   intro, the checker paragraph, and the `t-never` anchor id. Zero was
+   NOT chased, per instruction.
+7. PASS — Both tools: the evidence-level explainer list is now inside a
+   closed-by-default `<details>` (summary "What the evidence levels
+   mean") in RecordBuilder and BriefChecker; summaries confirmed in built
+   Manufacturers + Buyers HTML. RecordBuilder diagnostic notes are now
+   grouped under "Missing from this draft" (field/detail still lacking)
+   and "Ask before anyone relies on it" (everything else; fallback group,
+   so no note is ever dropped). Grouping is display-only: the copy/print
+   sheet still carries every note, ungrouped, and the debounced aria-live
+   polite announcement is untouched (same state, same effect).
+8. PASS — Home doors H2 scale break FIXED by giving the doors block its
+   own `<section>` with the standard H2 style. The inline
+   `font-size: 1.6rem` style is DELETED (count 0 in built Home HTML).
+   Heading order stays valid: corridor H2, then doors H2, then the two
+   door H3s — no skipped levels. (The demote-to-H3 alternative was not
+   used, because the doors block is a peer section, not a subsection of
+   the corridor section.)
+9. PASS — About "The mark" subsection CUT in full (heading, logo-talk
+   prose, transparent-logo figure). No dangling reference remains
+   (site-wide grep for the block: 0). The logo still appears in header +
+   footer on every page from the single `uh-monogram-160.png` asset.
+   The now-unused `public/logo/uh-transparent-160.png` file was also
+   deleted from the repo (0 references in built output). The
+   corridor-evening figure + caption carries the page visually.
+
+Optional (zero-risk, implemented): Contact page's two tool links are now
+outline buttons (`btn btn-outline` in a `btn-row`) instead of bare text
+links. No step-list or other restyle was done.
+
+### Cycle 4 fix-pass build output (evidence, `npm run build`, basePath-free)
+
+```
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      492 B         107 kB
+├ ○ /_not-found                            123 B         103 kB
+├ ○ /about                                 492 B         107 kB
+├ ○ /buyers                              5.89 kB         115 kB
+├ ○ /contact                               179 B         110 kB
+├ ○ /manufacturers                       6.18 kB         116 kB
+├ ○ /privacy                               163 B         106 kB
+├ ○ /terms                                 163 B         106 kB
+└ ○ /trust-evidence                        492 B         107 kB
++ First Load JS shared by all             103 kB
+```
+
+### JS-budget waiver (restated, unchanged)
+
+The ≤110 KB gz First Load JS target remains FORMALLY WAIVED for
+Manufacturers (116 KB) and Buyers (115 KB) only, for the same reason as
+before: the shared React/Next runtime is ~106 KB and the tool page
+chunks are ~6 KB. The tools were NOT lazy-loaded to chase the target,
+and the budget is NOT claimed as met. All other routes are at or under
+110 KB (Contact exactly 110 KB).
+
+### Cycle 4 fix-pass checks (built HTML)
+
+- PASS: `npm run build` clean (types + lint); exactly 1 `<h1>` per page
+  on all 10 built HTML files (9 routes + 404 duplicate from
+  trailingSlash), including 404.
+- PASS: Link check on built HTML: 387 internal refs, 0 missing
+  (8 external refs not checked — schema.org/w3.org/preview-origin only).
+- PASS: "Free Basic / Paid Professional" = 0; native `<form` = 0;
+  "founding" = 0; "Contact / Join" = 0; 404 canonical = 0.
+- PASS: Price sentence "No price has been announced yet" = Manufacturers
+  only, once in visible text (raw-HTML counts show it twice because the
+  RSC flight payload repeats it in `manufacturers/index.txt` — payload
+  duplication, not a second visible occurrence).
+- PASS: "The ladder, at a glance" remains ONLY as the deep-table eyebrow
+  on Trust (hero-strip copy deleted; `ladder-strip` class count 0 in
+  built Trust HTML). Home corridor SVG 0 / About corridor SVG 1.
+  Buyers static question-sheet preview box 0. About "The mark" 0.
+  Transparent-logo references 0. Home doors inline 1.6rem style 0.
+  P2-ID still present in RecordBuilder (Manufacturers built HTML).
+- PASS: Home H1 unchanged; tagline hierarchy unchanged; every page
+  still PLANNED, none Live/In pilot; forms still divs + buttons, send
+  nothing; preview NOINDEX on all 10 HTML files.
+- NOT TESTED (unchanged): live-browser screenshots, interactive tool
+  behaviour in a real browser (details open/close, grouped notes
+  rendering after field selection, copy/print with grouped notes),
+  keyboard-only walk, screen readers, Lighthouse/axe, 320 px full-page
+  rendering, real-phone/touch, 200% zoom, cross-browser. No headless
+  screenshot check was run. The grouped-notes rendering is therefore
+  verified at source level (classifier + rendering code) and via the
+  unchanged copy/print path, not by a browser run.
+- NOT DONE (held, unchanged): production, udyoghouse.com/DNS, paid
+  service, public announcement, external contact, legal/trademark/
+  company clearance, Gate 0, deposit-test displacement, Pass 3
+  replacement, directory/search/RFQ/Order Room, form-receipt claim,
+  backend, third-party form service. Cost ₹0. Preview NOINDEX retained.
+- No new open items created by this fix pass; LAUNCH-READINESS.md
+  therefore unchanged (og:image open item restated there, not faked).

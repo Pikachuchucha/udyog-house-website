@@ -46,7 +46,7 @@ export default function Buyers() {
       <Breadcrumbs items={[{ label: "For Buyers" }]} />
 
       <section className="hero-panel hero-anim" aria-labelledby="b-h1">
-        <div className="wrap hero-grid">
+        <div className="wrap">
           <div>
             <h1 id="b-h1">Check the brief before you send the drawing.</h1>
             <p className="lede">
@@ -63,21 +63,6 @@ export default function Buyers() {
               <a className="btn btn-copper" href="#brief-checker">Check a brief</a>
               <Link className="btn btn-outline" href="/trust-evidence">How evidence labels work</Link>
             </p>
-          </div>
-          <div className="record-sheet" aria-label="Question sheet preview">
-            <div className="record-sheet-head">
-              <strong>Question sheet — preview</strong>
-              <span>Not a match</span>
-            </div>
-            <div style={{ padding: "1rem 1.25rem" }}>
-              <p style={{ marginTop: 0 }}>For a brief, the checker asks:</p>
-              <ul>
-                <li>Do you regularly work in this material for this process — or would this be a first?</li>
-                <li>What tolerance have you actually held on a comparable job, and what record shows it?</li>
-                <li>What machine and travel would this job need, and does it fit?</li>
-              </ul>
-              <p className="small secondary">Try the checker below for your own brief. It shows questions, not a supplier.</p>
-            </div>
           </div>
         </div>
       </section>
