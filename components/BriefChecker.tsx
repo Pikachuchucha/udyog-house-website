@@ -6,6 +6,15 @@ const PROCESSES = ["Tool room work", "Mould making", "Mould-base manufacturing",
 const MATERIALS = ["Tool steel", "Mild steel / EN series", "Stainless steel", "Aluminium", "Brass / copper alloys", "Engineering plastics"];
 const TOLERANCES = ["General (±0.1 mm and looser)", "Precision (±0.02–0.05 mm)", "Fine (±0.01 mm or tighter)"];
 
+// Heading-case fix (live-browser check, 2026-11-03): plain toLowerCase()
+// turned "CNC machining" into "cnc machining" in the dynamic heading.
+// The heading now keeps the select-list values as written (title-like line),
+// and mid-sentence uses lowercase everything EXCEPT acronyms (CNC, VMC,
+// EN, GST), which are never lowercased.
+function lowerKeepAcronyms(s: string): string {
+  return s.toLowerCase().replace(/\b(cnc|vmc|en|gst)\b/g, (m) => m.toUpperCase());
+}
+
 export default function BriefChecker() {
   const [process, setProcess] = useState(PROCESSES[3]);
   const [material, setMaterial] = useState(MATERIALS[2]);
@@ -47,10 +56,10 @@ export default function BriefChecker() {
       </div>
 
       <div className="tool-output" aria-label="Questions and evidence for this brief">
-        <h3>For a {process.toLowerCase()} job in {material.toLowerCase()}, at {tolerance.toLowerCase()}</h3>
+        <h3>For a {process} job in {material}, at {tolerance}</h3>
         <h4>Ask first</h4>
         <ul>
-          <li>Do you regularly work in {material.toLowerCase()} for {process.toLowerCase()} — or would this be a first?</li>
+          <li>Do you regularly work in {lowerKeepAcronyms(material)} for {lowerKeepAcronyms(process)} — or would this be a first?</li>
           <li>What tolerance have you actually held on a comparable job, and what record shows it?</li>
           <li>What would stop this job from fitting your current capacity, in plain terms?</li>
         </ul>

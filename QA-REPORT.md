@@ -263,10 +263,62 @@ Fixes made and rebuilt:
   Threads handles, font licences, and the deposit-test displacement decision are
   all still unresolved — see Held below. None is claimed as cleared anywhere.
 
+## Fix pass — live-browser findings, 3 Nov 2026 (desktop check 19:11–19:13 IST)
+
+Source of the three defects: the parent's live-browser desktop (~1919 px)
+check. No redesign, no copy-claim change, no production/domain/DNS/paid/
+external-contact change. All three fixes are in the main branch and on Pages.
+
+1. **Workbench image-band eyebrow contrast — FIXED in code, not visually
+   re-photographed.** The old band gradient stayed transparent until 40% down,
+   so "The check, in practice" sat in pale grey (#A8B0B7) over the bright
+   cloth/hands area. Fix (`app/globals.css`): gradient now darkens from 20%
+   (0.55 at 60%, 0.92 at the bottom) AND the band eyebrow itself is Ivory on
+   a deep pill (`rgba(20,24,28,0.72)`, inline-block, padded) — Ivory on Deep
+   is 15.81:1, and the pill guarantees readability whatever the photo behind
+   it is. Verified in the built Pages CSS (pill + gradient strings present).
+   Honest limit: the band sits below the fold, and headless screenshots do
+   not scroll, so the band was not visually re-photographed in this pass;
+   the fix is a CSS/contrast-mechanism verification, not a screenshot of
+   that band. The caption and pull text in the same band were already
+   readable in the desktop check.
+2. **Buyers dynamic heading case — FIXED and rendered.** `BriefChecker`
+   lowercased the whole process name, producing "For a cnc machining job…".
+   Fix (`components/BriefChecker.tsx`): the heading now uses the select-list
+   values as written, and a `lowerKeepAcronyms` helper keeps CNC/VMC/EN/GST
+   uppercase in the mid-sentence bullet. Rendered output confirmed in the
+   local 320 px run: "For a CNC machining job in Stainless steel, at
+   Precision (±0.02–0.05 mm)" and bullet "work in stainless steel for CNC
+   machining".
+3. **Sticky-header overlap — FIXED in code.** `html { scroll-padding-top:
+   140px }` plus `scroll-margin-top: 140px` on `section[id]` and
+   `h1/h2/h3[id]` (header + status strip are ~110 px tall). Verified in
+   the built Pages CSS. Anchor-jump behaviour in a real browser is NOT
+   re-tested in this pass (no live-browser operation available to this
+   agent); it is a standard CSS mechanism, not a measured interaction.
+
+**Builds for this pass:** `npm run build` PASS (11 static pages, First Load
+JS 103–110 kB/route, unchanged); `npm run build:pages` PASS; Pages `out/`
+link check: 342 prefixed internal references, 0 missing, 0 unprefixed
+`/img`/`/logo`/`/favicon` references; exactly 1 `<h1>` on the homepage.
+Pages status reached "built" (see commit note below).
+
+**320 px check — NEW EVIDENCE, with its limit stated.** Local Chromium
+headless-shell screenshots at a true 320 px viewport, served from the Pages
+build under its basePath (an earlier root-served attempt produced unstyled
+output and was discarded, not reported as a pass): homepage and buyers H1s
+fit and wrap with no horizontal overflow, the header wraps to three usable
+rows, CTAs stack, and the spec strip wraps. This is a styled 320 px
+viewport-top check only — content below the fold was not photographed, and
+it does not replace a real-phone check (touch, real-device rendering) or
+the 200% zoom check, which remain NOT TESTED.
+
 ## Remaining bugs / risks / approvals
 
-- Interactive, cross-browser, Lighthouse, 320px/200% zoom, reduced-motion, and
+- Interactive, cross-browser, Lighthouse, 200% zoom, reduced-motion, and
   screen-reader checks are NOT TESTED (live-browser limitation, stated honestly).
+  320 px viewport-top rendering is now observed (see fix pass above); a
+  real-phone check is still open.
 - `npm audit` not run as a gate.
 - Favicon is a placeholder; final logo system (SVG/transparent/reverse/wordmark/
   16/32/48px favicon) is not done and must not be invented.
