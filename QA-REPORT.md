@@ -634,3 +634,12 @@ collects anything.
   deposit-test displacement, Pass 3 replacement, directory/search/RFQ/
   Order Room, form backend, third-party form service. Cost ₹0. Preview
   NOINDEX retained.
+
+## Copy-clarification fix: 13 profile fields vs 14 tool input fields (2026-11-03)
+
+- Issue: Manufacturers Stage 2 said "The 13 fields below are collected" while the Record Builder on the same page counts 14 draft input fields. The sets differ: the tool splits some profile fields (machines into machine and travel, materials into material, grade, condition and certification, tolerance into tolerance, feature and finish).
+- Fix, copy only: Stage 2 body now reads "The 13 profile fields below are collected briefly at first..." and adds "The draft tool above counts 14 input fields instead, because it splits some profile fields (for example machines into machine and travel, materials into material, grade, condition and certification, and tolerance into tolerance, feature and finish), so the two counts differ on purpose."
+- NOT changed: the 13-field list (FIELDS_13), the tool's count logic (still counts all 14, placeholders excluded), any other copy, and the header (static by deliberate decision in globals.css; no sticky header introduced).
+- Evidence: `npm run build` clean (Manufacturers 113 kB First Load JS, shared 103 kB); `npm run build:pages` output check: 345 prefixed internal href/src references, 0 missing, exactly 1 `<h1>` on every built HTML page, clarification string present in Pages `out/manufacturers/index.html`; em dash grep on the edited file, RecordBuilder, and globals.css returned 0 matches.
+- Deployment: main commit (see git log) and gh-pages rebuild; Pages status verified "built" and a fresh live text fetch of /manufacturers/ shows the clarified sentence (see parent verification).
+- Cost ₹0. Preview NOINDEX retained. No production/domain/DNS/paid/announcement/contact/legal/Gate 0 changes.
