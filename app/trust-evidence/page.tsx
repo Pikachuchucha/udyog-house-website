@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trust & Evidence — Udyog House (Staging, PLANNED)",
+  title: "Trust & Evidence — Udyog House (Preview, PLANNED)",
   description:
-    "P0 to P4 evidence labels as definitions only. No label is applied to any manufacturer on this staging site, and no blanket verification claim is made.",
+    "P0 to P4 evidence labels as definitions only. No label is applied to any manufacturer on this preview site, and no blanket verification claim is made.",
   robots: { index: false, follow: false },
 };
 
@@ -58,46 +58,74 @@ const labels = [
 export default function TrustEvidence() {
   return (
     <>
-      <p className="mono">TRUST &amp; EVIDENCE — PLANNED — DEFINITIONS ONLY</p>
-      <h1>Trust &amp; Evidence</h1>
-      <div className="copper-bar" aria-hidden="true" />
-      <div className="stage-box">
-        <p><strong>Definitions only. No P0 to P4 label is applied to any manufacturer on this staging site.</strong></p>
-        <p>No record, profile, or evidence file is published here. No blanket claim is made on this site.</p>
-      </div>
-      <p>
-        Evidence labels are useful only when the reader can see exactly what was checked, by whom,
-        when, and with what limits. A label without its full record is not used on this site.
-        Status is never shown by colour alone — every label is real text.
-      </p>
-      <h2>Evidence labels</h2>
-      {labels.map((label) => (
-        <section className="card" key={label.code} aria-labelledby={label.code}>
-          <h3>{label.code}</h3>
-          <p><strong>Scope:</strong> {label.scope}</p>
-          <p><strong>Source / method:</strong> {label.source}</p>
-          <p><strong>Checker:</strong> {label.checker}</p>
-          <p><strong>Date:</strong> {label.date}</p>
-          <p><strong>Limitations:</strong> {label.limits}</p>
-          <p><strong>Recheck / expiry:</strong> {label.recheck}</p>
-        </section>
-      ))}
-      <h2>What is never claimed</h2>
-      <ul>
-        <li>No blanket claim that a manufacturer is &quot;verified&quot;, certified, accredited, approved, or vetted in general terms.</li>
-        <li>Udyog House is not an accredited inspection or certification body.</li>
-        <li>A factory visit, a GST document, or an identity check alone does not prove capability, quality, capacity, reliability, or delivery.</li>
-        <li>No pay-to-rank, pay-to-verify, or opaque trust score is offered or implied.</li>
-        <li>No ranking, testimonial, customer logo, partnership, transaction, or revenue claim is made on this site.</li>
-        <li>Expired or unrechecked labels must be downgraded or removed — silence is not an option, once labels exist. No label exists yet.</li>
-      </ul>
-      <h2>Correction and removal — future gate</h2>
-      <p>
-        A correction and removal route for published manufacturer information must be live before
-        any profile is ever published. That route is not live on this staging site, because no
-        profile is published here. The disputed-fact default — &quot;under review&quot; or immediate
-        removal — is an open decision, not a staging claim.
-      </p>
+      <section className="section section-dark" aria-labelledby="t-h1">
+        <div className="wrap">
+          <p className="eyebrow">Trust &amp; Evidence — Planned — Definitions only</p>
+          <h1 id="t-h1">A label without its record is not used here.</h1>
+          <p className="lede">
+            Evidence labels are useful only when the reader can see exactly what
+            was checked, by whom, when, and with what limits. No P0 to P4 label
+            is applied to any manufacturer on this preview site. No record,
+            profile, or evidence file is published here.
+          </p>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="t-ladder">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="section-no">01</span>
+            <div>
+              <p className="eyebrow">The ladder — read the limits, not just the rung</p>
+              <h2 id="t-ladder">P0 to P4</h2>
+              <p>Status is never shown by colour alone — every label below is real text, with its full record fields.</p>
+            </div>
+          </div>
+          {labels.map((label, i) => (
+            <div className="record-sheet" key={label.code}>
+              <div className="record-sheet-head">
+                <strong>{label.code}</strong>
+                <span>Definitions only — no label applied</span>
+              </div>
+              <dl>
+                <div className="record-row"><dt>Scope</dt><dd>{label.scope}</dd></div>
+                <div className="record-row"><dt>Source / method</dt><dd>{label.source}</dd></div>
+                <div className="record-row"><dt>Checker</dt><dd>{label.checker}</dd></div>
+                <div className="record-row"><dt>Date</dt><dd>{label.date}</dd></div>
+                <div className="record-row"><dt>Limitations</dt><dd>{label.limits}</dd></div>
+                <div className="record-row"><dt>Recheck / expiry</dt><dd>{label.recheck}</dd></div>
+              </dl>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section-white" aria-labelledby="t-never">
+        <div className="wrap wrap-narrow">
+          <div className="section-head">
+            <span className="section-no">02</span>
+            <div>
+              <p className="eyebrow">What is never claimed</p>
+              <h2 id="t-never">No blanket claim. No shortcut to trust.</h2>
+            </div>
+          </div>
+          <ul>
+            <li>No blanket claim that a manufacturer is &quot;verified&quot;, certified, accredited, approved, or vetted in general terms.</li>
+            <li>Udyog House is not an accredited inspection or certification body.</li>
+            <li>A factory visit, a GST document, or an identity check alone does not prove capability, quality, capacity, reliability, or delivery.</li>
+            <li>No pay-to-rank, pay-to-verify, or opaque trust score is offered or implied.</li>
+            <li>No ranking, testimonial, customer logo, partnership, transaction, or revenue claim is made on this site.</li>
+            <li>Expired or unrechecked labels must be downgraded or removed — silence is not an option, once labels exist. No label exists yet.</li>
+          </ul>
+          <h3>Correction and removal — future gate</h3>
+          <p>
+            A correction and removal route for published manufacturer information must be live before
+            any profile is ever published. That route is not live on this preview site, because no
+            profile is published here. The disputed-fact default — &quot;under review&quot; or immediate
+            removal — is an open decision, not a preview claim.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

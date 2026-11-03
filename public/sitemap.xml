@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Preview sitemap only. Pages are noindex via robots.txt and per-page metadata.
+     This is NOT a production sitemap for udyoghouse.com, which is not connected. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/manufacturers/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/buyers/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/trust-evidence/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/about/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/contact/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/privacy/</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://pikachuchucha.github.io/udyog-house-website/terms/</loc><lastmod>2026-11-03</lastmod></url>
+</urlset>

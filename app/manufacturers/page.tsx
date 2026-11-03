@@ -1,65 +1,80 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PlaceholderForm from "../../components/PlaceholderForm";
+import RecordBuilder from "../../components/RecordBuilder";
 
 export const metadata: Metadata = {
-  title: "For Manufacturers — Udyog House (Staging, PLANNED)",
+  title: "For Manufacturers — Udyog House (Preview, PLANNED)",
   description:
-    "Udyog House is building structured capability profiles for tool rooms, mould makers and precision businesses. No profile is published yet on this staging site.",
+    "Be discovered for what you can make. A structured, owner-approved capability record for tool rooms, mould makers, and precision machining — in Vasai East first. Preview: no profile is published yet, no enquiry is guaranteed.",
   robots: { index: false, follow: false },
 };
 
 export default function Manufacturers() {
   return (
     <>
-      <p className="mono">FOR MANUFACTURERS — PLANNED</p>
-      <h1>Be discovered for what you can make.</h1>
-      <div className="copper-bar" aria-hidden="true" />
-      <div className="stage-box">
-        <p><strong>This is the direction we are building toward. No profile is published yet.</strong></p>
-        <p>Nothing on this page is a live listing, and nothing here guarantees an enquiry or an order.</p>
-      </div>
-      <h2>Why capability visibility matters</h2>
-      <p>
-        Buyers look for a specific capability, not a generic category. A structured profile aims to
-        state, in plain terms, what a business can make, with what processes and machines, in what
-        materials and size ranges, and with what evidence — so the right conversation can start
-        sooner, and the wrong one can be avoided earlier.
-      </p>
-      <h2>What a structured capability profile would contain</h2>
-      <p>As a proposed record only, not a live profile:</p>
-      <ul>
-        <li>Processes the business works with</li>
-        <li>Machines and equipment, in general terms</li>
-        <li>Materials worked with</li>
-        <li>Dimensions and tolerances, where relevant</li>
-        <li>Evidence label (P0 to P4) with scope, method, checker, date and limitations — see <a href="/trust-evidence">Trust &amp; Evidence</a></li>
-        <li>Owner approval for every published field</li>
-      </ul>
-      <h2>Owner control and approval</h2>
-      <p>
-        Information in a profile would be owner-controlled. Nothing would be published without the
-        owner&apos;s approval for that field, and a correction or removal route would need to be live
-        before any profile is ever published. That route is not live on this staging site, because
-        no profile is published here.
-      </p>
-      <h2>Basic and Professional — concept only</h2>
-      <p>
-        A Free Basic and Paid Professional profile concept may be explored in future. Pricing and
-        paid conversion are not validated, and no price is announced on this staging site. No paid
-        tier, checkout, or payment is offered here.
-      </p>
-      <h2>No guarantee</h2>
-      <p>
-        A profile, or an expression of interest, does not guarantee enquiries, orders, customers,
-        or revenue. That limit is stated here plainly, and it applies to every page on this site.
-      </p>
-      <h2>Consent and confidentiality</h2>
-      <p>
-        Forms on this staging site ask for minimal information only, require separate unticked
-        consent, and — as a staging placeholder — send no data at all. Do not send confidential
-        drawings, GST documents, identity documents, or financial information.
-      </p>
-      <PlaceholderForm variant="manufacturer" title="Express interest in a founding profile (staging)" />
+      <section className="section section-dark" aria-labelledby="m-h1">
+        <div className="wrap">
+          <p className="eyebrow">For manufacturers — Planned</p>
+          <h1 id="m-h1">Be discovered for what you can make.</h1>
+          <p className="lede">
+            Not for a generic category. For a process, a machine, a material, a
+            tolerance — stated in your own approved words, with the evidence
+            and its limits shown beside it.
+          </p>
+          <p><span className="pill">PLANNED</span> No profile is published yet. No enquiry or order is guaranteed.</p>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="m-record">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="section-no">01</span>
+            <div>
+              <p className="eyebrow">What a record contains</p>
+              <h2 id="m-record">The record, field by field</h2>
+              <p>Try the builder. It is the fastest way to see whether this record is worth your time — before you share anything with anyone.</p>
+            </div>
+          </div>
+          <RecordBuilder />
+        </div>
+      </section>
+
+      <section className="section section-white" aria-labelledby="m-approval">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="section-no">02</span>
+            <div>
+              <p className="eyebrow">Owner control, not a listing scraped from the web</p>
+              <h2 id="m-approval">You approve every field. Or it does not go up.</h2>
+            </div>
+          </div>
+          <div className="grid-three">
+            <div className="card"><p className="mono">01 — Declare</p><h3>Your words first</h3><p>Processes, machines, materials, dimensions, tolerances. Labelled P0 Supplier-declared until a check is stated.</p></div>
+            <div className="card"><p className="mono">02 — Check, with limits</p><h3>Evidence, not adjectives</h3><p>Document received, cross-checked, observed, or transaction-evidenced — each with scope, source, method, checker, date, and limits.</p></div>
+            <div className="card"><p className="mono">03 — Approve, then publish</p><h3>Correction and removal first</h3><p>A correction/removal route must be live before any profile is ever published. That route is not live here, because no profile is published here.</p></div>
+          </div>
+          <h3>Basic and Professional — concept only</h3>
+          <p>A Free Basic and Paid Professional profile concept may be explored in future. Pricing and paid conversion are not validated, and no price is announced on this preview site. No paid tier, checkout, or payment is offered here.</p>
+          <h3>No guarantee — stated plainly</h3>
+          <p>A profile, or an expression of interest, does not guarantee enquiries, orders, customers, or revenue. That limit applies to every page on this site.</p>
+          <p><Link href="/trust-evidence">Read the evidence ladder, with its limits →</Link></p>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="m-form">
+        <div className="wrap wrap-narrow">
+          <div className="section-head">
+            <span className="section-no">03</span>
+            <div>
+              <p className="eyebrow">Founding invitation — preview form, sends no data</p>
+              <h2 id="m-form">Express interest in a founding profile</h2>
+              <p>Describe what your business makes, in general terms. Do not send drawings, GST documents, identity documents, or financial information.</p>
+            </div>
+          </div>
+          <PlaceholderForm variant="manufacturer" title="Founding manufacturer interest (preview)" />
+        </div>
+      </section>
     </>
   );
 }

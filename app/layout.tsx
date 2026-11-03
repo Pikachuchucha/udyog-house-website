@@ -8,10 +8,15 @@ const body = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], 
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Udyog House — Capability, on record. (Staging, PLANNED)",
+  title: "Udyog House — Discover. Trust. Source. | Capability, on record.",
   description:
-    "Udyog House is building India's industrial discovery and sourcing network, beginning in Maharashtra. This staging site is PLANNED, not live, and is not a directory yet.",
+    "Udyog House is building India's industrial discovery and sourcing network, beginning in Maharashtra. Discover manufacturers by what they can make — starting with structured, owner-approved capability records in Vasai East. Staging preview: all services PLANNED, none live.",
   robots: { index: false, follow: false },
+  openGraph: {
+    title: "Udyog House — Discover. Trust. Source.",
+    description: "Capability, on record. Building India's industrial discovery and sourcing network, beginning in Maharashtra.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -20,11 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a className="skip-link" href="#main">Skip to main content</a>
         <header className="site-header">
-          <div className="header-inner wrap">
+          <div className="header-inner">
             <Link className="logo-link" href="/">
               <span className="logo-panel">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo/uh-monogram-160.png" alt="Udyog House monogram (staging)" width="48" height="48" />
+                <img src="/logo/uh-monogram-160.png" alt="Udyog House monogram" width="48" height="48" />
               </span>
               <span className="wordmark">
                 Udyog House
@@ -40,21 +45,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/contact">Contact</Link>
             </nav>
           </div>
-          <div className="status-banner">
+          <div className="status-strip">
             <div className="wrap">
-              <strong>Status: Planned</strong> — This staging site is not live, not in pilot, and is not a directory yet.
+              <strong>Preview — Planned, not live.</strong> No directory, search, match, or order system is live here.
             </div>
           </div>
         </header>
-        <main id="main">
-          <div className="wrap">{children}</div>
-        </main>
+        <main id="main">{children}</main>
         <footer className="site-footer">
           <div className="wrap footer-grid">
             <div>
               <h2>Udyog House</h2>
-              <p>Building India&apos;s industrial discovery and sourcing network, beginning in Maharashtra.</p>
-              <p className="dark-accent">Vision only: Discover. Trust. Source.</p>
+              <p>Discover. Trust. Source.</p>
+              <p>Capability, on record.</p>
+              <p>Building India&apos;s industrial discovery and sourcing network, beginning in Maharashtra — starting in Vasai East.</p>
             </div>
             <div>
               <h2>Pages</h2>
@@ -67,16 +71,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
             </div>
             <div>
-              <h2>Drafts</h2>
+              <h2>Drafts — legal review required</h2>
               <p>
                 <Link href="/privacy">Privacy (draft)</Link><br />
                 <Link href="/terms">Terms (draft)</Link>
               </p>
-              <p>Privacy and Terms on this staging site are drafts only. They require qualified legal review and make no compliance claim.</p>
+              <p>Privacy and Terms here are drafts only. They require qualified legal review and make no compliance claim.</p>
             </div>
           </div>
           <div className="wrap">
-            <p>Staging build only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site.</p>
+            <p>Preview only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site. Forms on this site send no data.</p>
           </div>
         </footer>
       </body>

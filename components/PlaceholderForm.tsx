@@ -32,11 +32,11 @@ export default function PlaceholderForm({ variant, title }: { variant: Variant; 
     <form onSubmit={onSubmit} noValidate aria-label={title}>
       <h2>{title}</h2>
       <p>
-        Staging form only. Do not send confidential drawings, GST documents, identity
+        Preview form only. Do not send confidential drawings, GST documents, identity
         documents, or financial information through this form.
       </p>
       <noscript>
-        <p>JavaScript is off: this staging form does not send data.</p>
+        <p>JavaScript is off: this preview form does not send data.</p>
       </noscript>
       {errors.length > 0 && (
         <div className="error" role="alert">
@@ -50,9 +50,20 @@ export default function PlaceholderForm({ variant, title }: { variant: Variant; 
       {submitted ? (
         <div className="success" role="status">
           <p>
-            <strong>Staging placeholder — no data has been sent, and no network request was made.</strong>
+            <strong>Preview only — no data has been sent, and no network request was made.</strong>
           </p>
-          <p>Your information was not collected or stored by this form.</p>
+          <p>Your information was not collected or stored by this form. It is shown below only so you can check what you entered, in this browser, on this page.</p>
+          <dl>
+            <div className="record-row"><dt>Name</dt><dd>{name}</dd></div>
+            {business && (<div className="record-row"><dt>Business</dt><dd>{business}</dd></div>)}
+            <div className="record-row"><dt>Email</dt><dd>{email}</dd></div>
+            {message && (<div className="record-row"><dt>Message</dt><dd>{message}</dd></div>)}
+          </dl>
+          <p>When a live form backend exists, this same form will send your message to Udyog House and show a sent confirmation instead. Until then, nothing leaves this page.</p>
+          <p>
+            <button className="btn btn-secondary" type="button" onClick={() => setSubmitted(false)}>Edit your draft</button>
+            <button className="btn btn-secondary" type="button" onClick={() => { setName(""); setBusiness(""); setEmail(""); setMessage(""); setConsent(false); setErrors([]); setSubmitted(false); }}>Start again</button>
+          </p>
         </div>
       ) : (
         <>
@@ -87,14 +98,14 @@ export default function PlaceholderForm({ variant, title }: { variant: Variant; 
               onChange={(e) => setConsent(e.target.checked)}
             />
             <label htmlFor={`${variant}-consent`} style={{ marginTop: 0 }}>
-              I understand this is a staging form, that no data will be sent, and that I should not
+              I understand this is a preview form, that no data will be sent, and that I should not
               include confidential information. *
             </label>
           </div>
 
-          <button className="btn" type="submit">Send (staging placeholder)</button>
+          <button className="btn" type="submit">Preview interest — nothing is sent</button>
           <p className="secondary">
-            * Required. No reply timeframe is promised on this staging site, because no form backend is live yet.
+            * Required. No reply timeframe is promised on this preview site, because no form backend is live yet.
           </p>
         </>
       )}
