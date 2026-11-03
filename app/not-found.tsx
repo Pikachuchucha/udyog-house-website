@@ -4,16 +4,27 @@ import Link from "next/link";
 /* No canonical on the 404, by decision: it points neither at Home nor at
    itself. The page is noindex and links to the real routes instead. */
 export const metadata: Metadata = {
-  title: "Page not found — Udyog House",
+  title: "Page not found - Udyog House",
   description: "That page does not exist on this preview site. Try Home, For Manufacturers, For Buyers, or Contact.",
   robots: { index: false, follow: false },
+  openGraph: {
+    title: "Page not found - Udyog House",
+    description: "That page does not exist on this preview site. Try Home, For Manufacturers, For Buyers, or Contact.",
+    siteName: "Udyog House",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Page not found - Udyog House",
+    description: "That page does not exist on this preview site. Try Home, For Manufacturers, For Buyers, or Contact.",
+  },
 };
 
 export default function NotFound() {
   return (
     <section className="section" aria-labelledby="nf-h1">
       <div className="wrap wrap-narrow">
-        <p><span className="pill-opaque">404 — Page not found</span></p>
+        <p><span className="pill-opaque">404: Page not found</span></p>
         <h1 id="nf-h1">That page does not exist on this preview site.</h1>
         <p>
           This preview site contains only Home, For Manufacturers, For Buyers, Trust &amp; Evidence,
@@ -28,6 +39,15 @@ export default function NotFound() {
           <Link href="/buyers">For Buyers</Link>
           {" · "}
           <Link href="/contact">Contact</Link>
+        </p>
+        <p>
+          <Link href="/trust-evidence">Trust &amp; Evidence</Link>
+          {" · "}
+          <Link href="/about">About</Link>
+          {" · "}
+          <Link href="/privacy">Privacy (draft)</Link>
+          {" · "}
+          <Link href="/terms">Terms (draft)</Link>
         </p>
       </div>
     </section>

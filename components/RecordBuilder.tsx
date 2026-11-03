@@ -6,7 +6,7 @@ import {
   QUANTITY_BANDS, TOLERANCE_BANDS, FEATURE_TYPES, FINISHES, INSPECTION_METHODS,
   MACHINE_TYPES, joinList, coherenceWarnings,
 } from "../lib/site";
-import { copyText, printText, prefillForm } from "./toolUtils";
+import { copyText, printText } from "./toolUtils";
 
 function Select({ id, label, value, onChange, options, hint }: {
   id: string; label: string; value: string; onChange: (v: string) => void;
@@ -71,11 +71,15 @@ export default function RecordBuilder() {
   const toggle = (list: string[], setList: (v: string[]) => void) => (v: string) =>
     setList(list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
   /* Completion counts ALL 14 fields, including travel, condition,
-     certificate, feature, finish, and inspection — never a partial count. */
+     certificate, feature, finish, and inspection. Never a partial count.
+     Placeholder selections ("not yet specified" and friends) do NOT count
+     as filled: choosing a placeholder is not stating a value. */
+  const PLACEHOLDERS = ["Grade not yet specified", "Condition not yet stated", "Feature not yet specified", "Not specified", "Not yet decided"];
+  const real = (v: string) => (v && !PLACEHOLDERS.includes(v) ? "x" : "");
   const filled = [
     processes.length ? "x" : "", serviceTypes.length ? "x" : "", machineType,
-    travel.trim(), material, grade, condition, cert, size, quantity,
-    tolerance, feature, finish, inspection,
+    travel.trim(), material, real(grade), real(condition), cert, size, quantity,
+    tolerance, real(feature), real(finish), real(inspection),
   ].filter(Boolean).length;
 
   function notes(): string[] {
@@ -84,10 +88,10 @@ export default function RecordBuilder() {
       out.push("Machine envelope still missing: machine type and travel are the first real filters in job-work. A record without them cannot be matched to a job.");
     }
     if (grade === "Grade not yet specified" || !grade) {
-      out.push("Grade still missing: nobody quotes a mould or a part in a generic material name. The grade is the quote — name it, or say it is not yet specified.");
+      out.push("Grade still missing: nobody quotes a mould or a part in a generic material name. The grade is the quote: name it, or say it is not yet specified.");
     }
     if (tolerance.startsWith("Fine")) {
-      out.push("Fine tolerance (±0.01 mm or tighter): declared words are the weakest evidence. Before anyone relies on this, ask what was actually measured, on what comparable job, and what record supports it. A caliper alone does not prove this band — use a micrometer, bore gauge, or coordinate measuring machine (CMM).");
+      out.push("Fine tolerance (±0.01 mm or tighter): declared words are the weakest evidence. Before anyone relies on this, ask what was actually measured, on what comparable job, and what record supports it. A caliper alone does not prove this band: use a micrometer, bore gauge, or coordinate measuring machine (CMM).");
     } else if (tolerance.startsWith("Precision")) {
       out.push("Precision tolerance (±0.02–0.05 mm): name the feature, the finish, and how it will be measured. A tolerance without a feature, a size, and an instrument cannot be checked.");
     }
@@ -107,36 +111,36 @@ export default function RecordBuilder() {
       out.push("For maintenance work, a complete record also needs: the scope and interval of the maintenance.");
     }
     if (serviceTypes.includes("New")) {
-      out.push("For new work, the record must state the full specification up front — grade, tolerance, finish, and inspection — before any drawing is shared.");
+      out.push("For new work, the record must state the full specification up front: grade, tolerance, finish, and inspection, before any drawing is shared.");
     }
     if (condition && condition !== "Condition not yet stated") {
-      out.push(`Material condition stated as ${condition.toLowerCase()} — a buyer should ask whether the condition is certified or only declared, and whether heat treatment is included in the quote.`);
+      out.push(`Material condition stated as ${condition.toLowerCase()}: a buyer should ask whether the condition is certified or only declared, and whether heat treatment is included in the quote.`);
     } else if (condition === "Condition not yet stated") {
-      out.push("Material condition not yet stated — a quote cannot be compared until the condition is named.");
+      out.push("Material condition not yet stated. A quote cannot be compared until the condition is named.");
     }
     if (size) {
-      out.push(`At size band ${size.toLowerCase()}, a buyer should ask what machine travel and fixturing this needs — a part that does not fit the envelope cannot be made on that machine.`);
+      out.push(`At size band ${size.toLowerCase()}, a buyer should ask what machine travel and fixturing this needs. A part that does not fit the envelope cannot be made on that machine.`);
     }
     if (feature && feature !== "Feature not yet specified") {
-      out.push(`Tolerance on ${feature.toLowerCase()} — a buyer should ask how that feature will be measured, and from what datum.`);
+      out.push(`Tolerance on ${feature.toLowerCase()}: a buyer should ask how that feature will be measured, and from what datum.`);
     } else if (feature === "Feature not yet specified") {
-      out.push("Feature not yet specified — a tolerance without a named feature cannot be checked.");
+      out.push("Feature not yet specified. A tolerance without a named feature cannot be checked.");
     }
     if (finish && finish !== "Not specified") {
-      out.push(`Finish ${finish} — a buyer should ask how the finish will be achieved and checked.`);
+      out.push(`Finish ${finish}: a buyer should ask how the finish will be achieved and checked.`);
     } else if (finish === "Not specified") {
-      out.push("Finish not specified — name the Ra, or state that finish is not critical, or quotes cannot be compared.");
+      out.push("Finish not specified. Name the Ra, or state that finish is not critical, or quotes cannot be compared.");
     }
     if (quantity === "Over 100 pieces" || quantity === "Repeat batches") {
-      out.push("For larger or repeat quantities, a complete record also needs: batch-to-batch drift, acceptance criteria, and inspection, rework, and scrap cost — who bears them, and how they are decided.");
+      out.push("For larger or repeat quantities, a complete record also needs: batch-to-batch drift, acceptance criteria, and inspection, rework, and scrap cost: who bears them, and how they are decided.");
     }
     if (cert === "No") {
-      out.push("No mill certificate: the grade claim stays at P0 (supplier-declared). A mill certificate, received and logged, would support P1 for that field — receipt alone is still not verification.");
+      out.push("No mill certificate: the grade claim stays at P0 (supplier-declared). A mill certificate, received and logged, would support P1 for that field. Receipt alone is still not verification.");
     }
     if (inspection === "Not yet decided") {
       out.push("Inspection method not yet decided: without a stated method and instrument, a tolerance claim cannot be checked at any level above P0.");
     } else if (inspection) {
-      out.push(`Inspection by ${inspection.toLowerCase()} — a buyer should ask for a sample inspection record for comparable work, and whether first-article inspection is included.`);
+      out.push(`Inspection by ${inspection.toLowerCase()}: a buyer should ask for a sample inspection record for comparable work, and whether first-article inspection is included.`);
     }
     out.push(...coherenceWarnings(processes, machineType));
     return out;
@@ -153,19 +157,18 @@ export default function RecordBuilder() {
       : "ask";
   const missingNotes = noteList.filter((n) => noteGroup(n) === "missing");
   const askNotes = noteList.filter((n) => noteGroup(n) === "ask");
-  /* Prefill carries ONLY the draft record, never the diagnostic notes list. */
   const recordOnly = [
-    "Capability record — draft (local only, P0 supplier-declared)",
-    `Business: ${business || "Not entered — draft only"}`,
+    "Capability record: draft (local only, P0 supplier-declared)",
+    `Business: ${business || "Not entered (draft only)"}`,
     `Process: ${processes.length ? joinList(processes) : "Not chosen"}`,
     `Service type: ${serviceTypes.length ? joinList(serviceTypes) : "Not chosen"}`,
-    `Machine: ${machineType || "Not chosen"}${travel ? ` — travel/envelope: ${travel}` : ""}`,
+    `Machine: ${machineType || "Not chosen"}${travel ? `, travel/envelope: ${travel}` : ""}`,
     `Material: ${material || "Not chosen"}${grade ? `, ${grade}` : ""}${condition ? `, ${condition}` : ""}${cert ? `, mill certificate available: ${cert}` : ""}`,
     `Size band: ${size || "Not chosen"}`,
     `Quantity band: ${quantity || "Not chosen"}`,
     `Tolerance: ${tolerance || "Not chosen"}${feature ? ` on ${feature}` : ""}${finish ? `, finish ${finish}` : ""}`,
     `Inspection: ${inspection || "Not chosen"}`,
-    "Evidence label: P0 — supplier-declared. Not checked, not observed, not transaction-evidenced.",
+    "Evidence label: P0: supplier-declared. Not checked, not observed, not transaction-evidenced.",
   ].join("\n");
   const recordText = [
     recordOnly,
@@ -193,12 +196,12 @@ export default function RecordBuilder() {
 
   return (
     <div className="tool" aria-label="Capability record builder">
-      <p className="eyebrow">Working tool — local only, no data sent</p>
+      <p className="eyebrow">Working tool: local only, no data sent</p>
       <h3>Build a draft record. See what it still needs.</h3>
       <p>
         Choose briefly, without drawings or confidential detail. This fills a blank record with <em>your</em> selections only.
         Nothing here is a published profile, a checked claim, or a shop on a list.
-        Every field below starts at P0 — supplier-declared — because that is all a
+        Every field below starts at P0 (supplier-declared) because that is all a
         selection on this page can ever be. Computer Numerical Control (CNC) and
         vertical machining centre (VMC) are spelled out where they first appear.
       </p>
@@ -210,7 +213,7 @@ export default function RecordBuilder() {
         </div>
         <MultiSelect idPrefix="rb-process" legend="Process (choose all that apply)" options={PROCESSES} values={processes} onToggle={toggle(processes, setProcesses)} />
         <MultiSelect idPrefix="rb-service" legend="Service type (choose all that apply)" options={SERVICE_TYPES} values={serviceTypes} onToggle={toggle(serviceTypes, setServiceTypes)}
-          hint="Tool-room work covers new work, repair, modification, and maintenance — say which." />
+          hint="Tool-room work covers new work, repair, modification, and maintenance. Say which." />
         <Select id="rb-machine" label="Machine type" value={machineType} onChange={setMachineType} options={MACHINE_TYPES} />
         <div>
           <label htmlFor="rb-travel">Machine travel / envelope</label>
@@ -231,34 +234,34 @@ export default function RecordBuilder() {
       <div className="tool-output">
         <div className="record-sheet" aria-label="Draft capability record">
           <div className="record-sheet-head">
-            <strong>Capability record — draft</strong>
+            <strong>Capability record: draft</strong>
             <span>Label: P0 Supplier-declared</span>
           </div>
           <dl>
-            <div className="record-row"><dt>Business</dt><dd className={business ? "" : "muted"}>{business || "Not entered — draft only"}</dd></div>
+            <div className="record-row"><dt>Business</dt><dd className={business ? "" : "muted"}>{business || "Not entered (draft only)"}</dd></div>
             <div className="record-row"><dt>Process</dt><dd className={processes.length ? "" : "muted"}>{processes.length ? joinList(processes) : "Not chosen"}</dd></div>
             <div className="record-row"><dt>Service type</dt><dd className={serviceTypes.length ? "" : "muted"}>{serviceTypes.length ? joinList(serviceTypes) : "Not chosen"}</dd></div>
-            <div className="record-row"><dt>Machine + travel</dt><dd className={machineType ? "" : "muted"}>{machineType ? `${machineType}${travel ? ` — ${travel}` : ""}` : "Not chosen"}</dd></div>
+            <div className="record-row"><dt>Machine + travel</dt><dd className={machineType ? "" : "muted"}>{machineType ? `${machineType}${travel ? `, ${travel}` : ""}` : "Not chosen"}</dd></div>
             <div className="record-row"><dt>Material</dt><dd className={material ? "" : "muted"}>{material ? `${material}${grade ? `, ${grade}` : ""}${condition ? `, ${condition}` : ""}${cert ? `, mill certificate: ${cert.toLowerCase()}` : ""}` : "Not chosen"}</dd></div>
             <div className="record-row"><dt>Size band</dt><dd className={size ? "" : "muted"}>{size || "Not chosen"}</dd></div>
             <div className="record-row"><dt>Quantity band</dt><dd className={quantity ? "" : "muted"}>{quantity || "Not chosen"}</dd></div>
             <div className="record-row"><dt>Tolerance + finish</dt><dd className={tolerance ? "" : "muted"}>{tolerance ? `${tolerance}${feature ? ` on ${feature}` : ""}${finish ? `, finish ${finish}` : ""}` : "Not chosen"}</dd></div>
             <div className="record-row"><dt>Inspection</dt><dd className={inspection ? "" : "muted"}>{inspection || "Not chosen"}</dd></div>
-            <div className="record-row"><dt>Evidence label</dt><dd>P0 Supplier-declared — your selection here. Not checked, not observed, not transaction-evidenced.</dd></div>
+            <div className="record-row"><dt>Evidence label</dt><dd>P0 Supplier-declared: your selection here. Not checked, not observed, not transaction-evidenced.</dd></div>
             <div className="record-row"><dt>Owner approval</dt><dd>Not recorded. Nothing is published from this tool.</dd></div>
           </dl>
         </div>
-        <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check has been performed on this draft — every field is P0, supplier-declared.</p>
+        <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check has been performed on this draft: every field is P0, supplier-declared.</p>
 
         <h3>What this record still needs before anyone should rely on it</h3>
         <details>
           <summary>What the evidence levels mean</summary>
           <ul>
-            <li><strong>P1 — Document received:</strong> a named document, received and logged. Receipt alone is not verification.</li>
-            <li><strong>P2-ID — Identity cross-checked:</strong> identity or authorised representative only, matched to a named source. Proves nothing about capability.</li>
-            <li><strong>P2-DOC — Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
-            <li><strong>P3 — Observed capability:</strong> a named machine witnessed producing comparable work, measured by a stated method to a stated tolerance. Point in time only.</li>
-            <li><strong>P4 — Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Never a rating or a future guarantee.</li>
+            <li><strong>P1: Document received:</strong> a named document, received and logged. Receipt alone is not verification.</li>
+            <li><strong>P2-ID: Identity cross-checked:</strong> identity or authorised representative only, matched to a named source. Proves nothing about capability.</li>
+            <li><strong>P2-DOC: Document cross-checked:</strong> named document fields matched to a named source. About documents, not capability.</li>
+            <li><strong>P3: Observed capability:</strong> a named machine witnessed producing comparable work, measured by a stated method to a stated tolerance. Point in time only.</li>
+            <li><strong>P4: Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Never a rating or a future guarantee.</li>
           </ul>
         </details>
         {missingNotes.length > 0 && (
@@ -281,13 +284,12 @@ export default function RecordBuilder() {
         <p className="btn-row">
           <button className="btn" type="button" onClick={() => copyText(recordText, setCopied, setCopyFailed)}>Copy draft record</button>
           <button className="btn btn-outline" type="button" onClick={() => { if (!printText("Draft capability record", recordText)) setPrintFailed(true); else setPrintFailed(false); }}>Print draft record</button>
-          <a className="btn btn-outline" href="#preview-form" onClick={() => prefillForm(recordOnly)}>Use this draft in the form below</a>
           <button className="btn btn-outline" type="button" onClick={clearAll}>Clear draft</button>
         </p>
         {copied && <p role="status">Draft record copied to your clipboard.</p>}
         {copyFailed && (
           <div>
-            <p role="alert">Copy did not work — select the text below.</p>
+            <p role="alert">Copy did not work. Select the text below.</p>
             <textarea readOnly value={recordText} aria-label="Draft record text to copy manually" rows={12} />
           </div>
         )}

@@ -523,3 +523,114 @@ and the budget is NOT claimed as met. All other routes are at or under
   backend, third-party form service. Cost ₹0. Preview NOINDEX retained.
 - No new open items created by this fix pass; LAUNCH-READINESS.md
   therefore unchanged (og:image open item restated there, not faked).
+
+## Refinement pass — founder requirements 2026-11-03 20:29 IST (hero, responsive, zero broken, em dash zero, contact, brand message)
+
+Deliberate change, reported prominently: **forms were CUT from Manufacturers,
+Buyers, and Contact in this pass.** A sends-nothing form next to real email
+routes would confuse; the tools (copy/print, local-only) plus mailto links
+are the functional routes. `components/PreviewForm.tsx` deleted; all
+"preview forms send no data" wording replaced; all tool prefill buttons and
+the `prefillForm` helper deleted. The launch item "Form backend decision
+required" now applies to any FUTURE form only; nothing on the site currently
+collects anything.
+
+- Hero (Home): eyebrow "Discover. Trust. Source."; H1 "A shop should be
+  found for what it can actually make."; supporting copy on vague "CNC"
+  listings; closing line "Capability, on record."; CTAs copper "Build a
+  draft record" to `/manufacturers#record-builder`, outline "Check a
+  brief" to `/buyers#brief-checker`; microline "Preview: no profiles, no
+  directory, no search yet." Record-as-hero kept (no photo added).
+- Manufacturers H1: "Say what your shop can make, in your own words."
+  (disclaimer demoted to microline). Contact H1: "Write to us. Start with
+  the tools if you want to judge the idea first."
+- Section rebuilds: Trust closing (3 bullets + verbatim D9 sentence "No
+  blanket 'verified' claim is made, and none is planned" + Who checks +
+  Correction); About principles as 3 lines, corridor prose 2 sentences,
+  phases shortened with Phase 3 open decision folded in, founder message
+  replacing the "Written by the founder — to come" placeholder ("We are
+  new, but we did not arrive without a plan. We are building carefully, in
+  one corridor first, and there is a lot more to come. Stay with us as it
+  takes shape."); Contact fully rewritten atomically (routes + feedback
+  invitation + hero + metadata + schema in one pass, so no "no inbox"
+  wording can survive alongside the new routes); Privacy/Terms decorative
+  figures cut; 404 owns OG/Twitter and links all 8 pages; footer gains a
+  labeled contact column (3 mailto + LinkedIn) on every page.
+- Deviations from reviewer advice, kept deliberately: Trust keeps its
+  micrometer figure (its unique image, not a repeat); About hero keeps its
+  GEO paragraph (the hero's only place-naming line, hero already minimal).
+  About "within the Mumbai Metropolitan Region" verified by public search
+  (multiple sources: Vasai East is in Palghar district and part of MMR);
+  stated as geography only, never as a service-area claim.
+- Contact integration (founder-provided, nothing invented): General
+  enquiries info@udyoghouse.com, Contact contact@udyoghouse.com, Team
+  feedback team@udyoghouse.com (all mailto, footer + Contact); LinkedIn
+  https://www.linkedin.com/company/udyog-house (footer + Contact, clean
+  icon, accessible label, target blank + rel noopener noreferrer). No
+  phone, address, office, hours, monitored/response claims, or verified-
+  page claims. No contactPoint/email/address/telephone/sameAs in
+  Organization schema (LinkedIn sameAs is launch-only, only if the founder
+  confirms and it is re-checked live).
+- Feedback invitation (Contact only, verbatim): "Have a suggestion,
+  question, or something we should improve? We'd love to hear from you."
+  then "Write to us: team@udyoghouse.com" (mailto), then the
+  shop-or-buyer guidance line.
+- SEO/GEO: all metadata titles use hyphen separators; OG/Twitter/schema
+  descriptions now equal the full meta descriptions on every page
+  (including 404, which previously inherited Home's); Organization schema
+  unchanged (name/URL/slogan only, no contact/social fields); sitemap
+  still Pages URLs only, lastmod 2026-11-03 (current), still NOT submitted
+  while Disallow-all stands; robots Disallow-all + per-page noindex
+  retained.
+- Responsive/technical fixes: per-placement image sizes (COLUMN 45vw /
+  FULL 1080px cap); corridor-evening 1600 variant generated from the
+  1920x1280 source (see size note below); Nav aria-current basePath
+  normalisation; JSON-LD `<` escaped as `\u003c`; RecordBuilder F-10
+  count now excludes placeholder values; BriefChecker notes grouped like
+  RecordBuilder (display only; copy/print keeps all notes); print CSS
+  override for `.reveal`; html/body overflow-x clip + break-word on
+  record dd/td; table overflow wrappers on all 4 tables (Buyers glossary
+  already had the wrapper class; the class itself was missing and is now
+  defined); corridor SVG container overflow hidden + max-width 100%
+  (no 460px min-width was found anywhere in source — the reviewer's
+  figure did not match the code); footer grid 4 columns; nav margin-left
+  0 at ≤1080px, nav padding trim + specimen 2x2 at ≤760px, tool/record
+  padding + specimen 1-column at ≤480px, checkbox-row min-height 44px;
+  dead CSS removed (`.preview-form` selector, no-op animation-delay).
+- Em dash evidence (absolute zero, U+2014): final command
+  `grep -rn "—" app components lib public next.config.js package.json`
+  returned no matches (exit 1). Built `out/` also contains 0 files with
+  the character. En dashes for ranges (e.g. ±0.02–0.05 mm) were NOT
+  touched. Root markdown docs and `out/` are excluded from the bar by
+  decision; `out/` was rebuilt after the cleanup.
+- Refinement build output (evidence, `npm run build`, basePath-free):
+  clean (types + lint); exactly 1 `<h1>` on each of the 9 checked pages
+  (8 routes + 404.html); First Load JS 107 kB Home/About/Contact/Trust,
+  113 kB Manufacturers/Buyers, 106 kB Privacy/Terms, shared 103 kB.
+  JS-budget waiver RESTATED (tool pages over the ≤110 kB target, shared
+  runtime ~103 kB; NOT claimed as met; no lazy-loading of tools).
+- Refinement checks (built HTML): anchor/link inventory — every href
+  resolves to an existing route or an on-page anchor (including
+  #record-builder, #brief-checker, #corridor-heading, #a-corridor,
+  #phases); all 3 mailto routes + LinkedIn present on Home (footer) and
+  Contact; image inventory now 18 files (6 images x 800/1200/1600), zero
+  references to deleted pillar-abstract/macro-mould; zero "preview form",
+  "preview-form", "form below", or "sends no data" strings in `out/`.
+- Size note (accepted, reported): corridor-evening-1600.webp is 148 KB at
+  q65, above the ≤100 KB target; q45 still measured 116 KB for this
+  detail-dense evening scene, so quality was kept and the target is
+  reported missed for this one variant. The 1200 variant is 90 KB and
+  covers most viewports; the 1600 loads only on very wide displays.
+- NOT TESTED (unchanged, plus this pass): live-browser screenshots,
+  interactive tool behaviour in a real browser, keyboard-only walk,
+  screen readers, Lighthouse/axe, 320 px full-page rendering,
+  real-phone/touch, 200% zoom, cross-browser FAQ chevron, automated
+  contrast tool run, print rendering, responsive behaviour at each
+  breakpoint in a live browser — all verified at source/CSS/build level
+  only. The parent runs the live-browser check after this build.
+- NOT DONE (held, unchanged): production, udyoghouse.com/DNS, paid
+  service, public announcement, external contact beyond publishing the
+  founder routes, legal/trademark/company clearance, Gate 0,
+  deposit-test displacement, Pass 3 replacement, directory/search/RFQ/
+  Order Room, form backend, third-party form service. Cost ₹0. Preview
+  NOINDEX retained.

@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import Link from "next/link";
 import { FOOTER_LINE, IMAGERY_NOTE, PREVIEW } from "../lib/site";
+import { LinkedInIcon } from "../components/Chrome";
 import "./globals.css";
 
 const display = Archivo({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-display", display: "swap" });
@@ -12,22 +13,22 @@ const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variabl
 
 export const metadata: Metadata = {
   metadataBase: new URL(`${PREVIEW}/`),
-  title: "Udyog House — Discover. Trust. Source. | Capability, on record.",
+  title: "Udyog House - Discover. Trust. Source. | Capability, on record.",
   description:
-    "Discover manufacturers by what they can make. A capability record for tool rooms and mould makers in Vasai East. Preview — planned, not live.",
+    "Discover manufacturers by what they can make. A capability record for tool rooms and mould makers in Vasai East. Preview: planned, not live.",
   robots: { index: false, follow: false },
   icons: { icon: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.png` },
   openGraph: {
-    title: "Udyog House — Discover. Trust. Source.",
-    description: "Capability, on record. A capability record for tool rooms and mould makers in Vasai East.",
+    title: "Udyog House - Discover. Trust. Source.",
+    description: "Discover manufacturers by what they can make. A capability record for tool rooms and mould makers in Vasai East. Preview: planned, not live.",
     url: `${PREVIEW}/`,
     siteName: "Udyog House",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "Udyog House — Discover. Trust. Source.",
-    description: "Capability, on record. A capability record for tool rooms and mould makers in Vasai East.",
+    title: "Udyog House - Discover. Trust. Source.",
+    description: "Discover manufacturers by what they can make. A capability record for tool rooms and mould makers in Vasai East. Preview: planned, not live.",
   },
 };
 
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Nav />
           </div>
           <div className="status-strip">
-            <strong>Preview — Planned, not live.</strong> No directory, search, match, or order system is live here.
+            <strong>Preview: Planned, not live.</strong> No directory, search, match, or order system is live here.
           </div>
         </header>
         <main id="main" tabIndex={-1}>{children}</main>
@@ -80,16 +81,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
             </div>
             <div>
-              <p className="foot-head">Drafts — legal review required</p>
+              <p className="foot-head">Drafts: legal review required</p>
               <p>
                 <Link href="/privacy">Privacy (draft)</Link><br />
                 <Link href="/terms">Terms (draft)</Link>
               </p>
               <p>Privacy and Terms here are drafts only. They require qualified legal review and make no compliance claim.</p>
             </div>
+            <div>
+              <p className="foot-head">Contact</p>
+              <p>
+                General enquiries: <a href="mailto:info@udyoghouse.com">info@udyoghouse.com</a><br />
+                Contact: <a href="mailto:contact@udyoghouse.com">contact@udyoghouse.com</a><br />
+                Team feedback: <a href="mailto:team@udyoghouse.com">team@udyoghouse.com</a>
+              </p>
+              <p>
+                <a href="https://www.linkedin.com/company/udyog-house" target="_blank" rel="noopener noreferrer" aria-label="Udyog House on LinkedIn">
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                    <LinkedInIcon /> Udyog House on LinkedIn
+                  </span>
+                </a>
+              </p>
+            </div>
           </div>
           <div className="wrap">
-            <p>Preview only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site. Forms on this site send no data.</p>
+            <p>Preview only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site. Tools on this site run in your browser only and send no data. Email links open your own mail client.</p>
             <p>{IMAGERY_NOTE}</p>
           </div>
         </footer>

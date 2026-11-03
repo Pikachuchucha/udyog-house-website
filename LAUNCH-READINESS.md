@@ -7,9 +7,17 @@ needs approval or a decision, and what is incomplete.
 ## Ready
 
 - Rebuilt site (9 routes) on `main`, preview on GitHub Pages, NOINDEX retained.
-- Design system "The Record", copy per audit D13, tools, forms, sample record,
+- Design system "The Record", copy per audit D13, tools, sample record,
   Trust methodology, onboarding specification, glossary, briefing guide,
-  imagery system (8 images, one per page), SEO/GEO foundations (preview).
+  imagery system (6 images, one per illustrated page; Privacy/Terms carry
+  no figure), SEO/GEO foundations (preview).
+- Contact routes live in preview: 3 founder mailto routes + LinkedIn in
+  the footer (every page) and on Contact, with the feedback invitation on
+  Contact. Forms removed entirely in the refinement pass: tools + mailto
+  are the functional routes.
+- BriefChecker note grouping complete (mirrors RecordBuilder; display
+  only, copy/print keeps all notes). 404 owns OG/Twitter and links all
+  pages. Sitemap lastmod current, still preview-only, still Disallow-all.
 - Content honesty: every page PLANNED, none Live, none In pilot; no invented
   members, counts, traffic, testimonials, partnerships, transactions,
   certifications, rankings, leads, revenue, or pricing.
@@ -24,13 +32,17 @@ needs approval or a decision, and what is incomplete.
 - **Permissioned photography**: all current images are AI-generated editorial
   illustrations. Real facility/member photography needs permission before any
   such image is used, and any such image must be captioned truthfully.
-- **Founder intro**: About carries an intent-only placeholder. The founder
-  must write the real introduction; nothing is invented meanwhile.
-- **Form backend decision**: choose service, privacy notice, retention period,
-  and response window — before any form claims receipt. Launch item verbatim:
+- **Founder intro**: About now carries the founder brand message ("We are
+  new, but we did not arrive without a plan. We are building carefully, in
+  one corridor first, and there is a lot more to come. Stay with us as it
+  takes shape.") in place of the old placeholder. A personal founder bio
+  is still not present and still not invented.
+- **Form backend decision**: no form exists on the site after the
+  refinement pass (forms cut; tools + mailto are the routes). The decision
+  below now applies to any FUTURE form only. Launch item verbatim:
   "Form backend decision required — choose service, privacy notice, retention,
-  response window — before any form claims receipt." Until then, forms stay
-  preview-only and send nothing.
+  response window — before any form claims receipt." Until then, nothing
+  on the site collects anything.
 - **P2/P3 recheck proposals**: annual recheck is a proposal, not a decision.
 - **P4 historical marking proposal**: marking P4 evidence "historical (date)"
   after 12 months unless refreshed is a proposal, not a decision.
@@ -77,17 +89,18 @@ needs approval or a decision, and what is incomplete.
   interactive/cross-browser/Lighthouse QA, npm audit review, live-browser
   screenshots, keyboard/screen-reader testing, 320 px full-page check,
   real-phone testing (see QA-REPORT.md "What was NOT tested").
-- First Load JS on tool pages: 115–116 KB vs the ≤110 KB target — FORMALLY
-  WAIVED for Manufacturers/Buyers (see QA-REPORT.md fix-pass section):
-  shared React/Next runtime ~106 KB, tool page chunks ~6 KB; lazy-loading
+- First Load JS on tool pages: 113 KB vs the ≤110 KB target — FORMALLY
+  WAIVED for Manufacturers/Buyers (see QA-REPORT.md refinement section):
+  shared React/Next runtime ~103 KB, tool page chunks ~6 KB; lazy-loading
   the tools to chase the target would risk the no-JS honest state. The
   budget is NOT claimed as met. All other routes are at or under 110 KB.
 - No og:image in preview (see above) — open launch item, restated in the
   fix pass; no image was faked and the logo was not redrawn.
 - No new open items were created by the fix pass (all 30 fixes implemented;
   see QA-REPORT.md fix-pass section).
-- Corridor-evening image ships at 800/1200 only (1600w cannot fit the 100 KB
-  budget at acceptable quality; see QA-REPORT.md).
+- Corridor-evening image now ships at 800/1200/1600, but the 1600 variant
+  is 148 KB, above the ≤100 KB target (accepted for quality; see
+  QA-REPORT.md refinement section).
 - No og:image in preview (see above).
 
 ## Production flip checklist (one coordinated change, NOT implemented now)

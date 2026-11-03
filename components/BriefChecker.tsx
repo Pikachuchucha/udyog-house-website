@@ -6,7 +6,7 @@ import {
   QUANTITY_BANDS, TOLERANCE_BANDS, FEATURE_TYPES, FINISHES, INSPECTION_METHODS,
   MACHINE_TYPES, joinList, shortProcess, articleFor, coherenceWarnings,
 } from "../lib/site";
-import { copyText, printText, prefillForm } from "./toolUtils";
+import { copyText, printText } from "./toolUtils";
 
 /* Mid-sentence lowercasing that never lowercases acronyms (CNC, VMC, EDM). */
 function lowerKeepAcronyms(s: string): string {
@@ -80,13 +80,13 @@ export default function BriefChecker() {
     if (!processes.length) return [];
     const processPhrase = joinList(shortNames.map(lowerKeepAcronyms));
     const out: string[] = [
-      `Do you regularly work in ${material ? lowerKeepAcronyms(material) : "this material"} for ${processPhrase} — or would this be a first?`,
+      `Do you regularly work in ${material ? lowerKeepAcronyms(material) : "this material"} for ${processPhrase}, or would this be a first?`,
       "What tolerance have you actually held on a comparable job, and what record shows it?",
     ];
     if (machineType && travel) {
-      out.push(`You named ${lowerKeepAcronyms(machineType)} with travel ${travel} — ask whether the job, including fixturing, fits that envelope.`);
+      out.push(`You named ${lowerKeepAcronyms(machineType)} with travel ${travel}: ask whether the job, including fixturing, fits that envelope.`);
     } else if (machineType) {
-      out.push(`You named ${lowerKeepAcronyms(machineType)} — ask for its travel, since a machine name without travel is half an answer.`);
+      out.push(`You named ${lowerKeepAcronyms(machineType)}: ask for its travel, since a machine name without travel is half an answer.`);
     } else {
       out.push("What machine and travel would this job need, and does it fit your current capacity, in plain terms?");
     }
@@ -94,10 +94,10 @@ export default function BriefChecker() {
       out.push("For a mould: how many cavities, what runner, what expected shots and mould life, and what are the tryout and correction terms?");
     }
     if (processes.includes("Mould-base machining")) {
-      out.push("For a mould-base: what plate scope, pocketing, guide pillar and bush, ejector arrangement, and water lines — and is heat treatment included?");
+      out.push("For a mould-base: what plate scope, pocketing, guide pillar and bush, ejector arrangement, and water lines, and is heat treatment included?");
     }
     if (tolerance.startsWith("Fine")) {
-      out.push("For a fine tolerance: what was measured, on what comparable job, with what instrument — and can that record be shown before any drawing is shared?");
+      out.push("For a fine tolerance: what was measured, on what comparable job, with what instrument, and can that record be shown before any drawing is shared?");
     }
     return out;
   }
@@ -118,39 +118,39 @@ export default function BriefChecker() {
       out.push("For maintenance: what is the scope and interval of the maintenance?");
     }
     if (serviceTypes.includes("New")) {
-      out.push("For new work: confirm the full specification up front — grade, tolerance, finish, and inspection — before any drawing is shared.");
+      out.push("For new work: confirm the full specification up front: grade, tolerance, finish, and inspection, before any drawing is shared.");
     }
     if (condition && condition !== "Condition not yet stated") {
-      out.push(`Material condition stated as ${condition.toLowerCase()} — ask whether the condition is certified or only declared, and whether heat treatment is included in the quote.`);
+      out.push(`Material condition stated as ${condition.toLowerCase()}: ask whether the condition is certified or only declared, and whether heat treatment is included in the quote.`);
     } else if (condition === "Condition not yet stated") {
-      out.push("Material condition not yet stated — ask what condition the quote assumes.");
+      out.push("Material condition not yet stated: ask what condition the quote assumes.");
     }
     if (size) {
-      out.push(`At size band ${size.toLowerCase()}, ask what machine travel and fixturing this needs — a part that does not fit the envelope cannot be made on that machine.`);
+      out.push(`At size band ${size.toLowerCase()}, ask what machine travel and fixturing this needs. A part that does not fit the envelope cannot be made on that machine.`);
     }
     if (feature && feature !== "Feature not yet specified") {
-      out.push(`Tolerance applies to ${feature.toLowerCase()} — ask how that feature will be measured, and from what datum.`);
+      out.push(`Tolerance applies to ${feature.toLowerCase()}: ask how that feature will be measured, and from what datum.`);
     } else if (feature === "Feature not yet specified") {
-      out.push("Feature not yet specified — a tolerance without a named feature cannot be checked; name the feature first.");
+      out.push("Feature not yet specified. A tolerance without a named feature cannot be checked; name the feature first.");
     }
     if (finish && finish !== "Not specified") {
-      out.push(`Finish ${finish} — ask how the finish will be achieved and checked.`);
+      out.push(`Finish ${finish}: ask how the finish will be achieved and checked.`);
     } else if (finish === "Not specified") {
-      out.push("Finish not specified — name the Ra, or state that finish is not critical, or quotes cannot be compared.");
+      out.push("Finish not specified. Name the Ra, or state that finish is not critical, or quotes cannot be compared.");
     }
     if (inspection === "Not yet decided") {
       out.push("Inspection method not yet decided: without a stated method and instrument, a tolerance claim cannot be checked above P0.");
     } else if (inspection) {
-      out.push(`Inspection by ${inspection.toLowerCase()} — ask for a sample inspection record for comparable work, and whether first-article inspection is included.`);
+      out.push(`Inspection by ${inspection.toLowerCase()}: ask for a sample inspection record for comparable work, and whether first-article inspection is included.`);
     }
     if (tolerance.startsWith("Fine")) {
-      out.push("Fine tolerance — raise the bar. Do not accept a declared claim alone. Ask for an observed record (P3) for a comparable tolerance, and be explicit about how the part will be measured. A factory visit or an identity document alone does not prove this capability.");
+      out.push("Fine tolerance: raise the bar. Do not accept a declared claim alone. Ask for an observed record (P3) for a comparable tolerance, and be explicit about how the part will be measured. A factory visit or an identity document alone does not prove this capability.");
     }
     if (quantity === "Over 100 pieces" || quantity === "Repeat batches") {
       out.push("For larger or repeat quantities, ask about batch-to-batch drift, acceptance criteria, and who bears inspection, rework, and scrap cost.");
     }
     if (cert === "No") {
-      out.push("No mill certificate stated: treat the grade as declared only (P0) until a document is received and logged (P1) — and remember receipt alone is not verification.");
+      out.push("No mill certificate stated: treat the grade as declared only (P0) until a document is received and logged (P1), and remember receipt alone is not verification.");
     }
     out.push(...coherenceWarnings(processes, machineType));
     return out;
@@ -158,6 +158,17 @@ export default function BriefChecker() {
 
   const asks = askFirst();
   const noteList = notes();
+  /* Grouping for display only, mirroring the record builder: "missing"
+     notes name a field or detail the brief still lacks; everything else is
+     a question to ask before relying on a supplier claim. Nothing is
+     dropped: the fallback group is "ask", and the copy/print sheet above
+     still carries every note, ungrouped. */
+  const noteGroup = (n: string): "missing" | "ask" =>
+    /still missing|not yet specified|not yet stated|not specified|not yet decided|also needs|must state the full specification|cannot be compared until/i.test(n)
+      ? "missing"
+      : "ask";
+  const missingNotes = noteList.filter((n) => noteGroup(n) === "missing");
+  const askNotes = noteList.filter((n) => noteGroup(n) === "ask");
   const evidenceLines = [
     "- P0 Supplier-declared: the shop's own words. A starting point; not a check.",
     "- P1 Document received: a document was received and logged. Receipt is not authenticity, currency, or capability.",
@@ -166,19 +177,19 @@ export default function BriefChecker() {
     "- P3 Observed capability: a named machine witnessed producing comparable work, measured as stated. Point in time only.",
     "- P4 Transaction-evidenced: only that specific past transaction, by stated evidence. Counterparty-confirmed is strongest; supplier-held documents are weakest. Not a rating or a future guarantee.",
   ];
-  /* Prefill carries ONLY the question sheet, never the diagnostic notes. */
-  const sheetPrefill = [
-    "Brief check — questions and evidence to request (local only, no supplier shown)",
+  /* Head of the question sheet; the full sheet below adds every note. */
+  const sheetHead = [
+    "Brief check: questions and evidence to request (local only, no supplier shown)",
     briefLine || "No brief chosen yet.",
     "",
     "Ask first:",
     ...(asks.length ? asks.map((a) => `- ${a}`) : ["- Choose a process above to see the questions."]),
     "",
-    "Evidence to request — and what each level does not prove:",
+    "Evidence to request, and what each level does not prove:",
     ...evidenceLines,
   ].join("\n");
   const sheetText = [
-    sheetPrefill,
+    sheetHead,
     "",
     ...(noteList.length ? ["Notes:", ...noteList.map((n) => `- ${n}`), ""] : []),
     "Do not send drawings or confidential specifications through this site. Describe the need in general terms first, and share drawings only through a direct, agreed channel once a shop and a scope are clear.",
@@ -203,7 +214,7 @@ export default function BriefChecker() {
 
   return (
     <div className="tool" aria-label="Sourcing brief checker">
-      <p className="eyebrow">Working tool — local only, no data sent, no match shown</p>
+      <p className="eyebrow">Working tool: local only, no data sent, no match shown</p>
       <h3>Check a brief. Get the questions, not a match.</h3>
       <p>
         No directory exists yet on this site, so this tool shows <em>no supplier, no price,
@@ -239,8 +250,8 @@ export default function BriefChecker() {
             <ul>{asks.map((a) => (<li key={a}>{a}</li>))}</ul>
           </>
         )}
-        <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check is claimed here — the list below is what to request, not what has been done.</p>
-        <h4>Evidence to request — and what each level does not prove</h4>
+        <p><span className="check-mark" aria-hidden="true">✓ </span>Check status: no check is claimed here: the list below is what to request, not what has been done.</p>
+        <h4>Evidence to request, and what each level does not prove</h4>
         <details>
           <summary>What the evidence levels mean</summary>
           <ul>
@@ -252,8 +263,17 @@ export default function BriefChecker() {
             <li><strong>P4 Transaction-evidenced:</strong> only that specific past transaction, by stated evidence. Counterparty-confirmed is strongest; supplier-held documents are weakest. Not a rating or a future guarantee.</li>
           </ul>
         </details>
-        {noteList.length > 0 && (
-          <ul>{noteList.map((n) => (<li key={n}>{n}</li>))}</ul>
+        {missingNotes.length > 0 && (
+          <>
+            <h4>Missing from this brief</h4>
+            <ul>{missingNotes.map((n) => (<li key={n}>{n}</li>))}</ul>
+          </>
+        )}
+        {askNotes.length > 0 && (
+          <>
+            <h4>Ask before anyone relies on it</h4>
+            <ul>{askNotes.map((n) => (<li key={n}>{n}</li>))}</ul>
+          </>
         )}
         <h4>Do not send yet</h4>
         <p>Do not send drawings or confidential specifications through this site, or through this tool. Describe the need in general terms first, and share drawings only through a direct, agreed channel once a shop and a scope are clear.</p>
@@ -261,13 +281,12 @@ export default function BriefChecker() {
         <p className="btn-row">
           <button className="btn" type="button" onClick={() => copyText(sheetText, setCopied, setCopyFailed)}>Copy question sheet</button>
           <button className="btn btn-outline" type="button" onClick={() => { if (!printText("Brief question sheet", sheetText)) setPrintFailed(true); else setPrintFailed(false); }}>Print question sheet</button>
-          <a className="btn btn-outline" href="#preview-form" onClick={() => prefillForm(sheetPrefill)}>Use this sheet in the form below</a>
           <button className="btn btn-outline" type="button" onClick={clearAll}>Clear brief</button>
         </p>
         {copied && <p role="status">Question sheet copied to your clipboard.</p>}
         {copyFailed && (
           <div>
-            <p role="alert">Copy did not work — select the text below.</p>
+            <p role="alert">Copy did not work. Select the text below.</p>
             <textarea readOnly value={sheetText} aria-label="Question sheet text to copy manually" rows={12} />
           </div>
         )}

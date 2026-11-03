@@ -1,4 +1,4 @@
-/* Udyog House — "The Record" (full rebuild, 2026-11-03; fix pass 2026-11-03).
+/* Udyog House: "The Record" (full rebuild, 2026-11-03; fix pass 2026-11-03).
    Tokens are locked. Contrast rules enforced in code:
    - Graphite on Ivory 14.04:1, Ivory on Deep 15.81:1, Steel on Ivory 5.15:1,
      White on Copper 4.99:1 (copper buttons only, never body copy on copper).
@@ -48,7 +48,7 @@ textarea:focus-visible, summary:focus-visible, [tabindex="-1"]:focus-visible {
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
 .wrap-narrow { max-width: var(--max-narrow); margin: 0 auto; }
 .mono { font-family: var(--font-mono), "IBM Plex Mono", monospace; font-size: 0.85rem; letter-spacing: 0.02em; }
-/* Eyebrows are Sans small caps bold — mono is reserved for measurements,
+/* Eyebrows are Sans small caps bold; mono is reserved for measurements,
    dates, drawing numbers and record fields only. */
 .eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); margin: 0 0 0.5rem; }
 /* Archivo is reserved for H1s, the wordmark, and record-sheet headings.
@@ -63,6 +63,8 @@ p { max-width: 70ch; }
 .small { font-size: 0.9rem; }
 
 /* ---- Header / footer ---- */
+html, body { overflow-x: clip; }
+.record-row dd, td { overflow-wrap: break-word; }
 /* Static header by decision (fix pass): position:sticky is dropped on all
    widths, eliminating the 1080–1180px anchor-obscuring bug class.
    scroll-margin below is kept as a harmless default, not relied on. */
@@ -81,7 +83,7 @@ p { max-width: 70ch; }
 .status-strip strong { letter-spacing: 0.04em; text-transform: uppercase; }
 .site-footer { border-top: 3px solid var(--graphite); padding: 3rem 0 2rem; }
 .site-footer a { min-height: 44px; display: inline-flex; align-items: center; padding: 0.25rem 0; }
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.5rem; }
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 2.5rem; }
 .foot-head { font-weight: 700; font-size: 1.05rem; margin: 0 0 0.75rem; }
 
 /* ---- Breadcrumbs ---- */
@@ -132,6 +134,7 @@ p { max-width: 70ch; }
 .ruled-list { list-style: none; margin: 1rem 0; padding: 0; }
 .ruled-list li { padding: 0.8rem 0; border-bottom: 1px solid var(--neutral); }
 table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; background: var(--white); color: var(--graphite); }
+.table-wrap { overflow-x: auto; }
 caption { text-align: left; font-weight: 700; padding: 0.5rem 0; }
 th { background: var(--deep); color: var(--ivory); text-align: left; padding: 0.75rem; font-weight: 600; }
 td { border: 1px solid var(--neutral); padding: 0.75rem; vertical-align: top; }
@@ -161,11 +164,11 @@ td { border: 1px solid var(--neutral); padding: 0.75rem; vertical-align: top; }
 .specimen i { display: block; height: 44px; border: 1px solid var(--graphite); margin-bottom: 0.5rem; }
 
 /* ---- Corridor schematic (engineering drawing, SVG in markup) ---- */
-.corridor-drawing { border: 2px solid var(--graphite); background: var(--white); padding: 1rem; margin: 1.5rem 0; }
-.corridor-drawing svg { width: 100%; height: auto; display: block; }
+.corridor-drawing { border: 2px solid var(--graphite); background: var(--white); padding: 1rem; margin: 1.5rem 0; overflow: hidden; }
+.corridor-drawing svg { width: 100%; max-width: 100%; height: auto; display: block; }
 
-/* ---- Tools & forms (white only) ---- */
-.tool, .preview-form { border: 2px solid var(--graphite); background: var(--white); color: var(--graphite); padding: 1.75rem; margin: 1.5rem 0; }
+/* ---- Tools (white only) ---- */
+.tool { border: 2px solid var(--graphite); background: var(--white); color: var(--graphite); padding: 1.75rem; margin: 1.5rem 0; }
 .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .tool-output { border-top: 3px solid var(--graphite); margin-top: 1.5rem; padding-top: 1rem; }
 label { display: block; font-weight: 600; margin-top: 1rem; }
@@ -173,7 +176,7 @@ input, select, textarea { width: 100%; padding: 0.75rem; margin-top: 0.35rem; bo
 textarea { min-height: 120px; }
 fieldset { border: 0; padding: 0; margin: 1rem 0 0; }
 fieldset legend { font-weight: 600; }
-.checkbox-row { display: flex; gap: 0.75rem; align-items: flex-start; margin-top: 1rem; }
+.checkbox-row { display: flex; gap: 0.75rem; align-items: flex-start; margin-top: 1rem; min-height: 44px; }
 .checkbox-row input { width: auto; min-height: 24px; margin-top: 0.25rem; }
 .field-error { color: var(--error); font-weight: 600; margin: 0.35rem 0 0; }
 .error-summary { border: 3px solid var(--error); padding: 1rem 1.25rem; margin: 1rem 0; }
@@ -194,11 +197,11 @@ details[open] summary::after { transform: rotate(180deg); }
 .reveal { opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), visibility 0.6s var(--ease); }
 .reveal-in { opacity: 1; visibility: visible; transform: translateY(0); }
 .hero-anim h1, .hero-anim .lede, .hero-anim .hero-cta { animation: heroRise 0.8s var(--ease) both; }
-.hero-anim .lede { animation-delay: 0ms; }
 
 @media (max-width: 1080px) {
   .hero-grid, .two-col { grid-template-columns: 1fr; }
   .span-7, .span-5, .span-6, .span-4, .span-8 { grid-column: span 12; }
+  .main-nav { margin-left: 0; }
 }
 @media (max-width: 760px) {
   html { scroll-padding-top: 16px; }
@@ -206,6 +209,8 @@ details[open] summary::after { transform: rotate(180deg); }
   .two-col, .footer-grid, .ed-grid { grid-template-columns: 1fr; }
   .span-7, .span-5, .span-6, .span-4, .span-8, .span-12 { grid-column: span 1; }
   .main-nav { margin-left: 0; }
+  .main-nav a { padding: 0.75rem 0.5rem; }
+  .specimen { flex: 1 1 calc(50% - 0.375rem); }
   .record-row { grid-template-columns: 1fr; }
   .record-row dt { border-bottom: 1px solid var(--neutral); }
   .tool-grid { grid-template-columns: 1fr; }
@@ -218,6 +223,9 @@ details[open] summary::after { transform: rotate(180deg); }
 @media (max-width: 480px) {
   h1 { font-size: 2.1rem; }
   .btn { width: 100%; justify-content: flex-start; }
+  .tool { padding: 1.25rem; }
+  .record-row dt { padding: 0.75rem; }
+  .record-row dd { padding: 1rem; }
   .specimen { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -226,5 +234,7 @@ details[open] summary::after { transform: rotate(180deg); }
 }
 @media print {
   .site-header, .site-footer, .btn-row, .crumbs, .skip-link { display: none !important; }
+  /* Reveal hides unscrolled sections; print must show everything. */
+  .reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
   body { background: #fff; }
 }

@@ -1,4 +1,4 @@
-/* Shared tool helpers: copy, print (local-only), prefill-into-form.
+/* Shared tool helpers: copy, print (local-only).
    Copy/print failures are never silent: callers pass a failure setter and
    render a visible fallback (textarea for copy, on-page printable block
    for print) when it fires. */
@@ -33,19 +33,10 @@ export function printText(title: string, text: string): boolean {
   if (!win) return false;
   const esc = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
   win.document.write(
-    `<!doctype html><html><head><title>${title}</title><style>body{font-family:system-ui,sans-serif;line-height:1.6;padding:2rem}pre{white-space:pre-wrap;font:inherit}</style></head><body><h1>${title}</h1><pre>${esc}</pre><p>Draft only — local copy, nothing sent, nothing published, nothing checked.</p></body></html>`,
+    `<!doctype html><html><head><title>${title}</title><style>body{font-family:system-ui,sans-serif;line-height:1.6;padding:2rem}pre{white-space:pre-wrap;font:inherit}</style></head><body><h1>${title}</h1><pre>${esc}</pre><p>Draft only: local copy, nothing sent, nothing published, nothing checked.</p></body></html>`,
   );
   win.document.close();
   win.focus();
   win.print();
   return true;
-}
-
-/* Prefill-into-form: the preview form on the same page listens for this
-   event. The form APPENDS the draft below any typed text (never overwrites
-   it). Nothing is sent by dispatching it. */
-export function prefillForm(message: string) {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("uh:prefill", { detail: { message } }));
-  }
 }

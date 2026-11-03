@@ -43,9 +43,10 @@ export default function SiteImage(props: {
 }
 
 /* One image per page, never repeated across pages (D11).
-   srcset sizes recomputed from the NEW layout: figures sit in a ~55vw
-   column at desktop, full width below 1080px. */
+   Per-placement sizes: column figures sit in a ~45vw column at desktop
+   (full width below 1080px); full-width figures cap at 1080px. */
 export function imgSet(name: string, widths: number[]) {
   return widths.map((w) => `/img/${name}-${w}.webp ${w}w`).join(", ");
 }
-export const FIGURE_SIZES = "(max-width: 1080px) 100vw, 55vw";
+export const COLUMN_SIZES = "(max-width: 1080px) 100vw, 45vw";
+export const FULL_SIZES = "(max-width: 1080px) 100vw, 1080px";

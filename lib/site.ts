@@ -18,8 +18,8 @@ export const OWNER_APPROVAL = "You approve every field. Or it does not go up.";
 export const PROCESSES = [
   "CNC milling (including vertical machining centre (VMC))",
   "CNC turning",
-  "EDM — wire-cut",
-  "EDM — sinker",
+  "EDM wire-cut",
+  "EDM sinker",
   "Grinding",
   "Mould making",
   "Mould-base machining",
@@ -49,8 +49,8 @@ export const GRADES: Record<string, string[]> = {
 export const SHORT_PROCESSES: Record<string, string> = {
   "CNC milling (including vertical machining centre (VMC))": "CNC milling",
   "CNC turning": "CNC turning",
-  "EDM — wire-cut": "EDM wire-cut",
-  "EDM — sinker": "EDM sinker",
+  "EDM wire-cut": "EDM wire-cut",
+  "EDM sinker": "EDM sinker",
   Grinding: "Grinding",
   "Mould making": "Mould making",
   "Mould-base machining": "Mould-base machining",
@@ -80,19 +80,19 @@ export function coherenceWarnings(processes: string[], machineType: string): str
   const hasEDM = processes.some((p) => p.startsWith("EDM"));
   const hasMilling = processes.includes("CNC milling (including vertical machining centre (VMC))");
   if (hasEDM && isVMC) {
-    out.push("Check this pairing: EDM work cannot be done on a vertical machining centre (VMC) alone — an EDM machine is needed for that process.");
+    out.push("Check this pairing: EDM work cannot be done on a vertical machining centre (VMC) alone. An EDM machine is needed for that process.");
   }
   if (processes.includes("Mould making") && isSurfaceGrinder) {
-    out.push("Check this pairing: mould making on a surface grinder alone is not a complete capability — milling and EDM capacity would also be needed.");
+    out.push("Check this pairing: mould making on a surface grinder alone is not a complete capability, since milling and EDM capacity would also be needed.");
   }
   if (processes.includes("Mould-base machining") && isSurfaceGrinder) {
-    out.push("Check this pairing: mould-base machining on a surface grinder alone is not a complete capability — milling capacity would also be needed.");
+    out.push("Check this pairing: mould-base machining on a surface grinder alone is not a complete capability, since milling capacity would also be needed.");
   }
   if (hasMilling && isLathe) {
-    out.push("Check this pairing: CNC milling cannot be done on a CNC lathe alone — a milling machine is needed for that process.");
+    out.push("Check this pairing: CNC milling cannot be done on a CNC lathe alone. A milling machine is needed for that process.");
   }
   if (processes.includes("CNC turning") && isVMC) {
-    out.push("Check this pairing: CNC turning cannot be done on a vertical machining centre (VMC) alone — a lathe or turning centre is needed for that process.");
+    out.push("Check this pairing: CNC turning cannot be done on a vertical machining centre (VMC) alone. A lathe or turning centre is needed for that process.");
   }
   return out;
 }
@@ -157,17 +157,17 @@ export const MACHINE_TYPES = [
   "Machine not yet listed",
 ];
 
-/* D8 sample record — the SAME record on Home and Trust. */
+/* D8 sample record: the SAME record on Home and Trust. */
 export const SAMPLE = {
-  heading: "ILLUSTRATIVE EXAMPLE — NOT A REAL MANUFACTURER",
+  heading: "ILLUSTRATIVE EXAMPLE: NOT A REAL MANUFACTURER",
   business: "Example Tool Room, Vasai East (illustrative example)",
   process: "CNC milling (including vertical machining centre (VMC))",
   serviceType: "New",
-  machine: "Vertical machining centre (VMC), 3-axis — travel 800 × 500 × 500 mm",
+  machine: "Vertical machining centre (VMC), 3-axis, travel 800 × 500 × 500 mm",
   material: "Stainless steel, SS 316, heat-treated, mill certificate available: yes",
   size: "150–300 mm",
   quantity: "2–10 pieces",
   tolerance: "Precision (±0.02–0.05 mm) on a bore, finish Ra 1.6 µm",
   inspection: "Bore gauge, with micrometer check",
-  evidence: "P0 — supplier-declared (draft only)",
+  evidence: "P0: supplier-declared (draft only)",
 };

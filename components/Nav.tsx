@@ -14,8 +14,14 @@ const LINKS = [
 
 export default function Nav() {
   const pathname = usePathname();
+  /* Normalise: on the Pages build the pathname may carry the basePath
+     prefix, which must be stripped before comparing against basePath-free
+     link hrefs, or aria-current never matches. */
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const path =
+    pathname && base && pathname.startsWith(base) ? pathname.slice(base.length) || "/" : pathname;
   const current = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+    href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
   return (
     <nav className="main-nav" aria-label="Main navigation">
       {LINKS.map((l) => (
