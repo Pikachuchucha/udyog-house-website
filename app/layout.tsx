@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteImage from "../components/SiteImage";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
@@ -10,8 +11,12 @@ const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variabl
 export const metadata: Metadata = {
   title: "Udyog House — Discover. Trust. Source. | Capability, on record.",
   description:
-    "Udyog House is building India's industrial discovery and sourcing network, beginning in Maharashtra. Discover manufacturers by what they can make — starting with structured, owner-approved capability records in Vasai East. Staging preview: all services PLANNED, none live.",
+    "Udyog House is building India's industrial discovery and sourcing network, beginning in Maharashtra. Discover manufacturers by what they can make — starting with structured, owner-approved capability records in Vasai East. Preview: all services PLANNED, none live.",
   robots: { index: false, follow: false },
+  // public/favicon.png exists. Next's metadata icons do NOT get the basePath
+  // prefix in a static export (verified: unprefixed /favicon.png in Pages
+  // out/), so prefix it explicitly with the same env var SiteImage uses.
+  icons: { icon: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.png` },
   openGraph: {
     title: "Udyog House — Discover. Trust. Source.",
     description: "Capability, on record. Building India's industrial discovery and sourcing network, beginning in Maharashtra.",
@@ -28,8 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="header-inner">
             <Link className="logo-link" href="/">
               <span className="logo-panel">
+                {/* Original logo on a white panel: the transparent variant must NOT be used on dark backgrounds (dark pillars disappear). */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo/uh-monogram-160.png" alt="Udyog House monogram" width="48" height="48" />
+                <SiteImage src="/logo/uh-monogram-160.png" alt="Udyog House monogram" width="48" height="48" />
               </span>
               <span className="wordmark">
                 Udyog House
@@ -46,15 +52,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </div>
           <div className="status-strip">
-            <div className="wrap">
-              <strong>Preview — Planned, not live.</strong> No directory, search, match, or order system is live here.
-            </div>
+            <strong>Preview — Planned, not live.</strong> No directory, search, match, or order system is live here.
           </div>
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">
           <div className="wrap footer-grid">
             <div>
+              <span className="logo-panel" style={{ display: "inline-flex", marginBottom: "1rem" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <SiteImage src="/logo/uh-monogram-160.png" alt="Udyog House monogram" width="48" height="48" />
+              </span>
               <h2>Udyog House</h2>
               <p>Discover. Trust. Source.</p>
               <p>Capability, on record.</p>
@@ -80,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
           <div className="wrap">
-            <p>Preview only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site. Forms on this site send no data.</p>
+            <p>Preview only. No manufacturer profile, directory, search, RFQ, dashboard, or order system is live on this site. Forms on this site send no data. Imagery on this site is AI-generated editorial illustration — not a Udyog House facility or member.</p>
           </div>
         </footer>
       </body>

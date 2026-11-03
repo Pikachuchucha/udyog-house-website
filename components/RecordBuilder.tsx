@@ -29,6 +29,9 @@ export default function RecordBuilder() {
         Every field below starts at P0 — supplier-declared — because that is all a
         selection on this page can ever be.
       </p>
+      <noscript>
+        <p>Without JavaScript this tool shows an example only — changing the options will not update the record, and nothing is sent.</p>
+      </noscript>
       <div className="tool-grid">
         <div>
           <label htmlFor="rb-business">Business name (optional, draft only)</label>

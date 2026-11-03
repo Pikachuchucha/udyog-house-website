@@ -30,7 +30,7 @@ export default function PlaceholderForm({ variant, title }: { variant: Variant; 
 
   return (
     <form onSubmit={onSubmit} noValidate aria-label={title}>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
       <p>
         Preview form only. Do not send confidential drawings, GST documents, identity
         documents, or financial information through this form.
@@ -104,6 +104,9 @@ export default function PlaceholderForm({ variant, title }: { variant: Variant; 
           </div>
 
           <button className="btn" type="submit">Preview interest — nothing is sent</button>
+          <noscript>
+            <p>Without JavaScript this form cannot be submitted; nothing is sent.</p>
+          </noscript>
           <p className="secondary">
             * Required. No reply timeframe is promised on this preview site, because no form backend is live yet.
           </p>

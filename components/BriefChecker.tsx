@@ -22,6 +22,9 @@ export default function BriefChecker() {
         and no lead time</em>. What it does show is what to ask, and what evidence to
         request, for the kind of job you describe — in general terms only.
       </p>
+      <noscript>
+        <p>Without JavaScript this tool shows an example only — changing the options will not update the questions, and nothing is sent.</p>
+      </noscript>
       <div className="tool-grid">
         <div>
           <label htmlFor="bc-process">Process needed</label>

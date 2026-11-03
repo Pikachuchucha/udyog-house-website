@@ -37,6 +37,40 @@ to misread as a live catalogue), and a pure "Ledger" book (clearest, but least d
 on its own). Borrowed from them: Ledger's blank-record honesty, Elevation's pillar-at-scale
 (using the real logo image, not a drawn building).
 
+## Visual redesign (3 Nov 2026) — "Workshop Editorial"
+
+At the founder's direction the rebuilt site above was visually redesigned and
+rebuilt, not patched: full-bleed image heroes, oversized Archivo type, animated
+copper connector, asymmetric 12-column editorial grids, pull quotes, large
+numerals, image bands, pillar strips, a spec ticker, hover lift/zoom, and the
+record as a visual artefact. Every page was recomposed (Home, Manufacturers,
+Buyers, Trust & Evidence, About, Contact; Privacy/Terms/404 inherit the new
+system). Animation is lightweight CSS + IntersectionObserver scroll reveals
+(`components/Reveal.tsx`), with `prefers-reduced-motion` support and content
+fully visible without JavaScript (server HTML carries no hiding class).
+
+Imagery (all AI-generated editorial illustrations supplied by the parent, NOT
+photographs of real facilities or members, captioned on-site as such):
+CNC editorial hero, macro mould plate + caliper, workbench hands inspecting a
+component, pillar abstract (echo of the monogram, not the logo). Optimised to
+800/1200/1600 px WebP in `public/img/` (largest 104 KB, down from 176 KB
+originals). Logo: original monogram on a white panel on dark sections;
+transparent variant ONLY on light backgrounds (About), never on dark — the
+transparent variant was tested and fails on graphite (dark pillars disappear).
+Cycle 2 (after an independent skeptical critique, saved at
+`~/workspace/udyog-house-website-discovery/redesign-critique.md`) fixed:
+contrast failures (graphite section numbers, graphite copper-column pill,
+grey image-band eyebrow, graphite figcaptions), the About logo stretching to
+full column width (new `.figure-logo` class, 160 px, no zoom), Reveal hiding
+content with opacity only (now `visibility` paired), a broken Contact
+`aria-labelledby`, `role="img"` hiding real text, no-JS tool notes, the H1
+floor lowered to 2.2 rem with `overflow-wrap`, the ticker loop gap jump,
+dead CSS classes, unreferenced 640 px logo files, and a reproducible Pages
+build (see Deployment). Remaining from that critique, NOT fixed here: only
+4 images carry 8 pages (heroes repeat; 2–3 new distinct images still needed),
+and live-browser checks (320 px render, keyboard/screen-reader, Lighthouse)
+remain NOT TESTED — see QA-REPORT.md.
+
 ## Run locally
 
 ```bash
@@ -52,17 +86,20 @@ in `next.config.js`). No server, database, CMS, auth, payments, or analytics are
 
 ## Deployment — GitHub Pages preview only
 
-Main stays basePath-free. Pages uses the same pattern as the previous preview:
+Main stays basePath-free. Pages uses a single reproducible command — one env
+var drives BOTH Next's `basePath` and the raw-`<img>` prefix in
+`components/SiteImage.tsx` (Next does not prefix raw `<img>` on its own, and
+it does not prefix the metadata favicon link either, so both are prefixed
+explicitly from the same var):
 
 ```bash
-# 1. Temporarily set basePath in next.config.js to "/udyog-house-website", then:
-npm run build
-# 2. Restore next.config.js to the basePath-free version on main, then:
-# 3. Copy out/ (plus an empty .nojekyll file) to an orphan gh-pages branch, commit, push.
-# 4. GitHub Pages source must be gh-pages / (root). Status is checked via:
+npm run build:pages   # NEXT_PUBLIC_BASE_PATH=/udyog-house-website next build
+# Copy out/ (plus an empty .nojekyll file) to the gh-pages branch, commit, push.
+# Main needs no config restore afterwards: with the env unset, next.config.js
+# emits no basePath (verified: base build outputs unprefixed /img, /logo, /favicon.png).
 gh api repos/Pikachuchucha/udyog-house-website/pages
-# 5. Verify the live URL returns 200 with the new content via text fetch before
-#    reporting it: https://pikachuchucha.github.io/udyog-house-website/
+# Verify the live URL returns 200 with the new content via text fetch before
+# reporting it: https://pikachuchucha.github.io/udyog-house-website/
 ```
 
 Do NOT connect udyoghouse.com, change DNS, or use any paid service for this preview.
@@ -73,7 +110,7 @@ Do NOT connect udyoghouse.com, change DNS, or use any paid service for this prev
 - `/manufacturers` — For Manufacturers (record anatomy, owner approval, founding invitation)
 - `/buyers` — For Buyers (Brief Checker, job starters, future discovery, conversation form)
 - `/trust-evidence` — Trust & Evidence (P0–P4 definitions only, as record sheets)
-- `/about` — About (founder intro is a placeholder until approved)
+- `/about` — About (founder introduction section states plainly that no biography, photograph, or personal claim is published yet)
 - `/contact` — Contact / Join
 - `/privacy` — Privacy, draft only
 - `/terms` — Terms, draft only
@@ -143,12 +180,15 @@ md5 `eab833dc5795c83970ca1bcc017f9042`, from
 Shipped derivatives only, in `public/logo/`:
 - `uh-monogram-160.png` — 9,195 bytes, header at 48px.
 - `uh-monogram-320.png` — 57,105 bytes, hero panel at scale.
+- `uh-transparent-320.png` — transparent variant, used ONLY on light
+  backgrounds (About page, 160 px via `.figure-logo`); never on dark.
+  The 640 px derivatives were removed in the redesign as unreferenced.
 
-Still missing, and NOT invented or auto-traced: SVG, transparent variant, reverse/dark
+Still missing, and NOT invented or auto-traced: SVG, reverse/dark
 variant, wordmark lockup, and a favicon tested at 16/32/48 px.
 `public/favicon.png` is a plain graphite square with "UH" text — a placeholder only,
-not a final logo favicon. Dark sections use a solid white logo panel or wordmark-only
-text, never a CSS filter/inversion fix. This is not trademark clearance.
+not a final logo favicon — but it is now linked via `metadata.icons` (prefixed
+for the Pages build) instead of relying on a browser `/favicon.ico` guess.
 Final canonical choice and a real logo system still need founder confirmation before
 any public use.
 

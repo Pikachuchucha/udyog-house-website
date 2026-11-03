@@ -7,6 +7,66 @@ Preview: https://pikachuchucha.github.io/udyog-house-website/ (GitHub Pages, gh-
 Scope: Track G checklists A–M. This is a preview QA pass only. It does NOT authorise
 production, domain/DNS, paid services, or public announcement.
 
+## Visual redesign QA — Cycle 1 + Cycle 2 (3 Nov 2026)
+
+Direction: "Workshop Editorial" (see README). Independent skeptical critique
+(`~/workspace/udyog-house-website-discovery/redesign-critique.md`, read-only,
+static code + built-HTML only) returned verdict DEPLOY AFTER FIXES. Cycle 2
+fixed all 10 ranked issues except Issue 9 (image count — needs new assets,
+not code) and the live-browser items it could not test:
+
+- **Pages build reproducible (Issues 1–2):** `next.config.js` now reads
+  `NEXT_PUBLIC_BASE_PATH` for `basePath`, and `npm run build:pages` sets that
+  var — one command drives both Next links and `SiteImage` prefixes. During
+  Cycle 2 verification a further gap was found and fixed: Next does NOT prefix
+  the metadata favicon link in a static export, so `layout.tsx` prefixes it
+  explicitly from the same var (verified prefixed in Pages `out/`,
+  unprefixed in base `out/`).
+- **About logo (Issue 3):** `.figure-logo` class, 160 px, no hover zoom;
+  caption corrected from "on ivory" to "on a light background" (figure
+  background is Neutral #E7E2D6).
+- **Contrast (Issue 4):** section numbers graphite on light (copper border
+  kept), copper-column pill graphite background (15.83:1), image-band eyebrow
+  grey on deep (8.12:1), figcaptions graphite. All computed from locked tokens.
+- **Reveal keyboard trap (Issue 5):** `visibility: hidden/visible` paired
+  with opacity, including the reduced-motion override.
+- **ARIA (Issue 6):** Contact section gained a real `<h2 id="c-routes">`;
+  `role="img"` removed from the home image-band and corridor (their text is
+  now ordinary text for screen readers).
+- **No-JS (Issue 7):** `<noscript>` notes added to RecordBuilder,
+  BriefChecker, and the form submit area.
+- **H1 overflow (Issue 8, estimated):** floor lowered 2.9 rem → 2.2 rem,
+  `overflow-wrap: break-word` added. Still NOT visually verified at 320 px.
+- **Image count (Issue 9) — NOT FIXED:** 4 images still carry 8 pages;
+  workbench-hands on 4 pages, CNC on 3, macro/pillar on 3 each. Acceptable for
+  preview only (every caption is honest); 2–3 new distinct editorial images
+  are the single biggest remaining visual weakness.
+- **About heading (Issue 10):** retitled "Founder introduction"; body
+  unchanged (no bio invented).
+- Also fixed from the critique's audit: ticker loop jump (gap → per-span
+  margin, so the −50% shift lands exactly), dead CSS (`door-dark`,
+  `tool-dark`, `parallax-band`, `btn-copper`) removed, unreferenced 640 px
+  logo files removed, AI wording unified (every caption now reads
+  "AI-generated editorial illustration — not a Udyog House facility or
+  member"), form titles demoted h2 → h3 (they follow a section h2), favicon
+  linked via `metadata.icons`.
+
+Cycle 2 build evidence (measured):
+- `npm run build` (basePath-free) — PASS, 11 static pages, First Load JS
+  103–110 kB per route (shared 103 kB).
+- `npm run build:pages` — PASS, 11 static pages; static check of Pages
+  `out/`: 310 internal href/src/srcset references, 0 missing, 0 unprefixed
+  `/img` or `/logo` references; favicon link correctly prefixed.
+- Headings: exactly 1 `<h1>` per page on all 10 HTML files; 0 `role="img"`
+  instances; Contact `aria-labelledby` resolves; "Placeholder until
+  approved" absent; `<noscript>` present in both tools and all forms.
+- Network: still no `fetch(`/`axios`/`XMLHttpRequest` in `app/` +
+  `components/` (unchanged from rebuild).
+- NOT TESTED (unchanged): live-browser screenshots/interactive tests,
+  cross-browser, Lighthouse, 320 px visual render, 200% zoom,
+  keyboard/screen-reader walkthroughs, `npm audit`. The parent can run a
+  live-browser check after this build; none is claimed here.
+
 ## Build evidence (measured, not claimed beyond this)
 
 - `npm run build` — PASS, compiled successfully, 11 static pages generated, on two
@@ -147,9 +207,11 @@ Fixes made and rebuilt:
 - PASS (static): logo derivatives are 160px (9 KB, header) and 320px (57 KB, hero);
   the ~1 MB originals are not in the repo. Favicon is a 64px placeholder, stated
   as such in README and here — NOT a final favicon.
-- FAIL / OPEN: no SVG, transparent variant, reverse/dark variant, wordmark lockup,
-  or favicon tested at 16/32/48 px. Dark sections use a white logo panel or
-  wordmark-only text, never a CSS filter/inversion fix.
+- FAIL / OPEN (redesign update): transparent variant now exists
+  (`uh-transparent-320.png`, light backgrounds only, About page) and the
+  favicon is linked via metadata, but still OPEN: no SVG, reverse/dark
+  variant, wordmark lockup, or favicon tested at 16/32/48 px. Dark sections
+  use a white logo panel or wordmark-only text, never a CSS filter/inversion fix.
 - OPEN: font licences not confirmed at the official source (secondary sources only,
   SIL OFL stated, not legal clearance). No permissioned photography is used — the
   site uses type, rules, and the logo only, so no fake-factory imagery is present.
