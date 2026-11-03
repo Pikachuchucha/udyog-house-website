@@ -77,7 +77,7 @@ needs approval or a decision, and what is incomplete.
   interactive/cross-browser/Lighthouse QA, npm audit review, live-browser
   screenshots, keyboard/screen-reader testing, 320 px full-page check,
   real-phone testing (see QA-REPORT.md "What was NOT tested").
-- First Load JS on tool pages: 115 KB vs the ≤110 KB target — FORMALLY
+- First Load JS on tool pages: 115–116 KB vs the ≤110 KB target — FORMALLY
   WAIVED for Manufacturers/Buyers (see QA-REPORT.md fix-pass section):
   shared React/Next runtime ~106 KB, tool page chunks ~6 KB; lazy-loading
   the tools to chase the target would risk the no-JS honest state. The

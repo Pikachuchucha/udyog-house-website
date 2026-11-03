@@ -254,6 +254,8 @@ Route (app)                                 Size  First Load JS
 ├ ○ /buyers                              5.86 kB         115 kB
 ├ ○ /contact                             179 B         110 kB
 ├ ○ /manufacturers                       6.04 kB         115 kB
+  (Pages build, basePath set: Manufacturers 116 kB, Buyers 115 kB,
+  Privacy/Terms 107 kB — same waiver, same cause.)
 ├ ○ /privacy                               163 B         106 kB
 ├ ○ /terms                                 163 B         106 kB
 └ ○ /trust-evidence                        492 B         107 kB
@@ -263,7 +265,8 @@ Route (app)                                 Size  First Load JS
 ### JS-budget waiver (formal, Manufacturers + Buyers only)
 
 The ≤110 KB gz First Load JS target is FORMALLY WAIVED for the two tool
-routes (Manufacturers 115 KB, Buyers 115 KB on Next's table). Reason: the
+routes (Manufacturers 115–116 KB, Buyers 115 KB on Next's table, depending
+on basePath-free vs Pages build). Reason: the
 shared React/Next runtime is ~106 KB (103 KB shared by all routes on the
 table) and the tool page chunks are ~6 KB; the excess is runtime, not tool
 code. Lazy-loading the tools to chase the target was rejected because it
